@@ -1,2 +1,2 @@
 all:
-	g++ -o xboy *.cpp -Wall -std=c++1z
+	g++ -o xboy *.cpp cpu/*.cpp -Wall -std=c++1z
