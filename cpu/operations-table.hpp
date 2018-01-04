@@ -4,10 +4,12 @@
 #include <memory>
 
 #include "operation.hpp"
-#include "operations/nop.hpp"
 
-const std::shared_ptr<Operation> operationsTable[] = {
-  std::make_shared<Nop>()
+struct OperationsTable {
+  std::shared_ptr<Operation> oneByteOpcodes[256];
+  std::shared_ptr<Operation> twoBytesOpcodes[256];
+
+  OperationsTable();
 };
 
 #endif
