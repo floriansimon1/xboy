@@ -4,7 +4,9 @@
 #include "../operation.hpp"
 
 struct Nop: Operation {
-  Execution execute(Gameboy &gameboy) override;
+  void execute(Gameboy &gameboy) override;
+
+  Nop();
 };
 
 #endif

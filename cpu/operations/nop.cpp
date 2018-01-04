@@ -1,6 +1,8 @@
 #include "nop.hpp"
 
-Execution Nop::execute(Gameboy &gameboy) {
-  return Execution { 1, 4 };
+Nop::Nop(): Operation(4, 1) {
+}
+
+void Nop::execute(Gameboy &gameboy) {
 }
 

@@ -1,12 +1,16 @@
 #ifndef OPERATION_HPP
 #define OPERATION_HPP
 
-#include "execution.hpp"
-
 struct Gameboy;
 
 struct Operation {
-  virtual Execution execute(Gameboy &gameboy) = 0;
+  const unsigned int ticks;
+  const unsigned int instructionSize;
+
+  virtual void execute(Gameboy &gameboy) = 0;
+
+  protected:
+    Operation(unsigned int ticks, unsigned int instructionSize);
 };
 
 #endif
