@@ -1,16 +1,16 @@
-#ifndef OPERATION_HPP
-#define OPERATION_HPP
+#ifndef INSTRUCTION_HPP
+#define INSTRUCTION_HPP
 
 struct Gameboy;
 
-struct Operation {
+struct Instruction {
   const unsigned int ticks;
   const unsigned int instructionSize;
 
   virtual void execute(Gameboy &gameboy) = 0;
 
   protected:
-    Operation(unsigned int ticks, unsigned int instructionSize);
+    Instruction(unsigned int ticks, unsigned int instructionSize);
 };
 
 #endif

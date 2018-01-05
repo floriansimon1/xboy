@@ -3,9 +3,13 @@
 
 #include <cstdint>
 
-#include "operations-table.hpp"
+#include "instructions-table.hpp"
+
+struct Gameboy;
 
 struct Cpu {
+  InstructionsTable table;
+
   uint16_t af;
   uint16_t bc;
   uint16_t de;

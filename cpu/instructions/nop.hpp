@@ -1,9 +1,9 @@
 #ifndef NOP_HPP
 #define NOP_HPP
 
-#include "../operation.hpp"
+#include "../instruction.hpp"
 
-struct Nop: Operation {
+struct Nop: Instruction {
   void execute(Gameboy &gameboy) override;
 
   Nop();
