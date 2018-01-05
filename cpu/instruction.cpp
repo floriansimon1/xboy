@@ -1,7 +1,8 @@
 #include "instruction.hpp"
 
-Instruction::Instruction(unsigned int ticks, unsigned int instructionSize):
+Instruction::Instruction(unsigned int ticks, unsigned int dataSize, unsigned int opcodeSize):
   ticks(ticks),
-  instructionSize(instructionSize)
+  dataSize(dataSize),
+  opcodeSize(opcodeSize)
 {
 }
