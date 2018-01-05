@@ -11,9 +11,10 @@ struct Instruction {
   const unsigned short dataSize;
   const unsigned short opcodeSize;
 
+  virtual void execute(Gameboy &gameboy, uint8_t *data) = 0;
+
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
-  virtual void execute(Gameboy &gameboy) = 0;
   unsigned short totalSize();
 
   protected:
