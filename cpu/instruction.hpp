@@ -1,12 +1,15 @@
 #ifndef INSTRUCTION_HPP
 #define INSTRUCTION_HPP
 
+#include <cstdint>
+
 struct Gameboy;
 
 struct Instruction {
-  const unsigned int ticks;
-  const unsigned int dataSize;
-  const unsigned int opcodeSize;
+  const unsigned long long ticks;
+
+  const unsigned short dataSize;
+  const unsigned short opcodeSize;
 
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
@@ -14,7 +17,7 @@ struct Instruction {
   unsigned short totalSize();
 
   protected:
-    Instruction(unsigned int ticks, unsigned int dataSize, unsigned int opcodeSize);
+    Instruction(unsigned long long ticks, unsigned short dataSize, unsigned short opcodeSize);
 };
 
 #endif
