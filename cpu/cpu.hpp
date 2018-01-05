@@ -23,6 +23,8 @@ struct Cpu {
   void reset();
 
   Cpu();
+
+  void process(Gameboy &gameboy);
 };
 
 #endif

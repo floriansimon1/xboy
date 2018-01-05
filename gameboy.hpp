@@ -7,6 +7,8 @@
 struct Gameboy {
   Mmu mmu;
   Cpu cpu;
+
+  void tick();
 };
 
 #endif
