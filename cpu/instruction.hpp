@@ -11,6 +11,7 @@ struct Instruction {
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
   virtual void execute(Gameboy &gameboy) = 0;
+  unsigned short totalSize();
 
   protected:
     Instruction(unsigned int ticks, unsigned int dataSize, unsigned int opcodeSize);

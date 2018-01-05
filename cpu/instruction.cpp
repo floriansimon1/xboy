@@ -10,3 +10,8 @@ Instruction::Instruction(unsigned int ticks, unsigned int dataSize, unsigned int
   opcodeSize(opcodeSize)
 {
 }
+
+unsigned short Instruction::totalSize() {
+  return dataSize + opcodeSize;
+}
+
