@@ -10,6 +10,8 @@ struct Gameboy;
 struct Cpu {
   InstructionsTable table;
 
+  unsigned long long ticks;
+
   uint16_t af;
   uint16_t bc;
   uint16_t de;

@@ -5,6 +5,8 @@ Cpu::Cpu() {
 }
 
 void Cpu::reset() {
+  ticks = 0;
+
   af = 0;
   bc = 0;
   de = 0;
