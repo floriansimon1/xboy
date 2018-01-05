@@ -8,6 +8,8 @@ struct Instruction {
   const unsigned int dataSize;
   const unsigned int opcodeSize;
 
+  static bool isExtendedInstruction(uint8_t firstOpcodeByte);
+
   virtual void execute(Gameboy &gameboy) = 0;
 
   protected:
