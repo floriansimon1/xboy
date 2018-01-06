@@ -4,7 +4,7 @@
 #include "../instruction.hpp"
 
 struct Nop: Instruction {
-  void execute(Gameboy &gameboy, uint8_t *data) override;
+  void execute(Gameboy &gameboy, const uint8_t *data) override;
 
   Nop();
 };
