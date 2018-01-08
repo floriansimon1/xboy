@@ -7,3 +7,7 @@ Nop::Nop(): Instruction(4, 0, 1) {
 void Nop::execute(Gameboy &gameboy, const uint8_t *data) {
 }
 
+std::string Nop::toString() {
+  return "NOP";
+}
+

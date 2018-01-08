@@ -10,6 +10,7 @@ struct LoadImmediate16: Instruction {
   LoadImmediate16(CpuRegisterPointer cpuRegister);
 
   void execute(Gameboy &gameboy, const uint8_t *data) override;
+  std::string toString() override;
 };
 
 #endif
