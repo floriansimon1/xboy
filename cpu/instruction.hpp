@@ -2,6 +2,7 @@
 #define INSTRUCTION_HPP
 
 #include <cstdint>
+#include <string>
 
 struct Gameboy;
 
@@ -12,6 +13,7 @@ struct Instruction {
   const unsigned short opcodeSize;
 
   virtual void execute(Gameboy &gameboy, const uint8_t *data) = 0;
+  virtual std::string toString() = 0;
 
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
