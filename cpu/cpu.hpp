@@ -6,6 +6,9 @@
 #include "instructions-table.hpp"
 
 struct Gameboy;
+struct Cpu;
+
+typedef uint16_t Cpu::* const CpuRegisterPointer;
 
 struct Cpu {
   InstructionsTable table;
@@ -25,9 +28,10 @@ struct Cpu {
   Cpu();
 
   void process(Gameboy &gameboy);
-};
 
-typedef uint16_t Cpu::* const CpuRegisterPointer;
+  uint16_t twoBytesRegister(CpuRegisterPointer cpuRegister);
+  uint8_t singleByteRegister(CpuRegisterPointer cpuRegister, bool low);
+};
 
 #endif
 
