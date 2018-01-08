@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "cpu.hpp"
 #include "../gameboy.hpp"
 
@@ -31,6 +33,8 @@ void Cpu::process(Gameboy &gameboy) {
     ? gameboy.mmu.memory + pc + instruction->opcodeSize
     : NULL
   );
+
+  std::cout << instruction->toString() << std::endl;
 
   instruction->execute(gameboy, data);
 
