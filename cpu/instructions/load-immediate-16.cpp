@@ -1,7 +1,7 @@
 #include "load-immediate-16.hpp"
 #include "../../gameboy.hpp"
 
-LoadImmediate16::LoadImmediate16(uint16_t Cpu::*cpuRegister):
+LoadImmediate16::LoadImmediate16(CpuRegisterPointer cpuRegister):
   Instruction(12, 2, 2),
   cpuRegister(cpuRegister)
 {

@@ -27,5 +27,7 @@ struct Cpu {
   void process(Gameboy &gameboy);
 };
 
+typedef uint16_t Cpu::* const CpuRegisterPointer;
+
 #endif
 

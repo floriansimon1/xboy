@@ -5,9 +5,9 @@
 #include "../cpu.hpp"
 
 struct LoadImmediate16: Instruction {
-  uint16_t Cpu::* const cpuRegister;
+  CpuRegisterPointer cpuRegister;
 
-  LoadImmediate16(uint16_t Cpu::*cpuRegister);
+  LoadImmediate16(CpuRegisterPointer cpuRegister);
 
   void execute(Gameboy &gameboy, const uint8_t *data) override;
 };
