@@ -30,15 +30,15 @@ const char* registerString(CpuRegisterPointer cpuRegister, bool singleByte, bool
     twoBytesRegisters[&Cpu::pc] = "pc";
     twoBytesRegisters[&Cpu::sp] = "sp";
 
-    lowBytesRegisters[&Cpu::af] = "a";
-    lowBytesRegisters[&Cpu::bc] = "b";
-    lowBytesRegisters[&Cpu::de] = "d";
-    lowBytesRegisters[&Cpu::hl] = "h";
+    lowBytesRegisters[&Cpu::af] = "f";
+    lowBytesRegisters[&Cpu::bc] = "c";
+    lowBytesRegisters[&Cpu::de] = "e";
+    lowBytesRegisters[&Cpu::hl] = "l";
 
-    highBytesRegisters[&Cpu::af] = "f";
-    highBytesRegisters[&Cpu::bc] = "c";
-    highBytesRegisters[&Cpu::de] = "e";
-    highBytesRegisters[&Cpu::hl] = "l";
+    highBytesRegisters[&Cpu::af] = "a";
+    highBytesRegisters[&Cpu::bc] = "b";
+    highBytesRegisters[&Cpu::de] = "d";
+    highBytesRegisters[&Cpu::hl] = "h";
   }
 
   prepared = true;
