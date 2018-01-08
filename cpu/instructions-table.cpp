@@ -1,3 +1,4 @@
+#include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions-table.hpp"
 #include "instructions/nop.hpp"
@@ -8,6 +9,7 @@
 InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x00] = std::make_shared<Nop>();
   oneByteOpcodes[0x01] = std::make_shared<LoadImmediate16>(&Cpu::bc);
+  oneByteOpcodes[0x02] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::bc, &Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
