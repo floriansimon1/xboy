@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "cpu.hpp"
+#include "../bit.hpp"
 #include "../gameboy.hpp"
 
 Cpu::Cpu() {
@@ -54,5 +55,21 @@ uint8_t Cpu::singleByteRegister(CpuRegisterPointer cpuRegister, bool low) {
   }
 
   return fullRegisterValue >> 8;
+}
+
+void Cpu::setZeroFlag(bool enable) {
+  af = setBit(af, 7, enable);
+}
+
+void Cpu::setCarryFlag(bool enable) {
+  af = setBit(af, 4, enable);
+}
+
+void Cpu::setSubtractFlag(bool enable) {
+  af = setBit(af, 6, enable);
+}
+
+void Cpu::setHalfCarryFlag(bool enable) {
+  af = setBit(af, 5, enable);
 }
 

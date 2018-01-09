@@ -29,6 +29,10 @@ struct Cpu {
 
   void process(Gameboy &gameboy);
 
+  void setZeroFlag(bool enable);
+  void setCarryFlag(bool enable);
+  void setSubtractFlag(bool enable);
+  void setHalfCarryFlag(bool enable);
   uint16_t twoBytesRegister(CpuRegisterPointer cpuRegister);
   uint8_t singleByteRegister(CpuRegisterPointer cpuRegister, bool low);
 };
