@@ -73,3 +73,16 @@ void Cpu::setHalfCarryFlag(bool enable) {
   af = setBit(af, 5, enable);
 }
 
+void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value) {
+  const auto registerValue = this->*cpuRegister;
+
+  uint16_t byteMask = 0b11111111;
+
+  uint16_t otherByteMask = low ? byteMask : byteMask << 8;
+
+  uint16_t widerValue = low ? value : value << 8;
+  uint16_t otherByte  = registerValue & otherByteMask;
+
+  this->*cpuRegister = widerValue | otherByte;
+}
+

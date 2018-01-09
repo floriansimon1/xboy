@@ -35,6 +35,7 @@ struct Cpu {
   void setHalfCarryFlag(bool enable);
   uint16_t twoBytesRegister(CpuRegisterPointer cpuRegister);
   uint8_t singleByteRegister(CpuRegisterPointer cpuRegister, bool low);
+  void setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value);
 };
 
 #endif
