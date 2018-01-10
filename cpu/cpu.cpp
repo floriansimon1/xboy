@@ -51,7 +51,7 @@ uint8_t Cpu::singleByteRegister(CpuRegisterPointer cpuRegister, bool low) {
   const auto fullRegisterValue = twoBytesRegister(cpuRegister);
 
   if (low) {
-    return fullRegisterValue & 0b11111111;
+    return fullRegisterValue & lowByteMask;
   }
 
   return fullRegisterValue >> 8;
@@ -75,10 +75,9 @@ void Cpu::setHalfCarryFlag(bool enable) {
 
 void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value) {
   const auto registerValue = this->*cpuRegister;
+  const auto otherIsLow    = !low;
 
-  uint16_t byteMask = 0b11111111;
-
-  uint16_t otherByteMask = low ? byteMask : byteMask << 8;
+  const auto otherByteMask = otherIsLow ? lowByteMask : highByteMask;
 
   uint16_t widerValue = low ? value : value << 8;
   uint16_t otherByte  = registerValue & otherByteMask;
