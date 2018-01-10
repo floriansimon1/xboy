@@ -1,6 +1,8 @@
 #ifndef BIT_HPP
 #define BIT_HPP
 
+#include <cstdint>
+
 template <typename T> T setBit(const T value, unsigned short bit, bool enable) {
   auto flag = 1 << bit;
 
@@ -11,5 +13,9 @@ template <typename T> T setBit(const T value, unsigned short bit, bool enable) {
   }
 }
 
-#endif
+const uint16_t lowByteMask     = 0b11111111;
+const uint8_t  lowHalfByteMask = 0b1111;
 
+const uint16_t highByteMask = lowByteMask << 8;
+
+#endif
