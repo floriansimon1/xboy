@@ -16,4 +16,3 @@ struct SingleByteIncrement: Instruction {
 };
 
 #endif
-

@@ -33,4 +33,3 @@ std::string SingleByteIncrement::toString() {
 
   return result.str();
 }
-

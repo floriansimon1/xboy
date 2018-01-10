@@ -24,4 +24,3 @@ std::string TwoBytesIncrement::toString() {
 
   return result.str();
 }
-
