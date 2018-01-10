@@ -23,13 +23,14 @@ struct Cpu {
   uint16_t pc;
   uint16_t sp;
 
-  void reset();
   static const short zeroFlag      = 7;
   static const short carryFlag     = 4;
   static const short subtractFlag  = 6;
   static const short halfCarryFlag = 5;
 
   Cpu();
+
+  void reset();
 
   void process(Gameboy &gameboy);
 
@@ -43,4 +44,3 @@ struct Cpu {
 };
 
 #endif
-
