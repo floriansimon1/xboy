@@ -3,6 +3,7 @@
 #include "../../debug/register-string.hpp"
 #include "single-byte-increment.hpp"
 #include "../../gameboy.hpp"
+#include "../../bit.hpp"
 
 SingleByteIncrement::SingleByteIncrement(CpuRegisterPointer cpuRegister, bool low, short sign):
   Instruction(8, 0, 1),
@@ -18,8 +19,13 @@ void SingleByteIncrement::execute(Gameboy &gameboy, const uint8_t*) {
   const auto result = value + sign;
 
   gameboy.cpu.setZeroFlag(!result);
-  gameboy.cpu.setSubtractFlag(sign === -1);
-  gameboy.cpu.setHalfCarryFlag(sign == 1 && !result);
+  gameboy.cpu.setSubtractFlag(sign == -1);
+
+  gameboy.cpu.setHalfCarryFlag(
+    sign == -1
+    ? !(value & lowHalfByteMask)
+    : (value & lowHalfByteMask) == lowHalfByteMask
+  );
 
   gameboy.cpu.setSingleByteRegister(cpuRegister, low, result);
 }
