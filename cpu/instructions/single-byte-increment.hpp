@@ -1,5 +1,5 @@
-#ifndef TWO_BYTES_INCREMENT_HPP
-#define TWO_BYTES_INCREMENT_HPP
+#ifndef SINGLE_BYTE_INCREMENT_HPP
+#define SINGLE_BYTE_INCREMENT_HPP
 
 #include "../instruction.hpp"
 #include "../cpu.hpp"
