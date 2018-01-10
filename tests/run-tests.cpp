@@ -4,8 +4,8 @@
 
 #include "test.hpp"
 #include "run-tests.hpp"
-#include "./instructions/two-bytes-increment-test.hpp"
-#include "./instructions/two-bytes-decrement-test.hpp"
+#include "instructions/two-bytes-increment-test.hpp"
+#include "instructions/two-bytes-decrement-test.hpp"
 
 using namespace std;
 
