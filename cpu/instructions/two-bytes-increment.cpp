@@ -12,9 +12,7 @@ TwoBytesIncrement::TwoBytesIncrement(CpuRegisterPointer cpuRegister, short sign)
 }
 
 void TwoBytesIncrement::execute(Gameboy &gameboy, const uint8_t*) {
-  const auto value = gameboy.cpu.twoBytesRegister(cpuRegister);
-
-  gameboy.cpu.*cpuRegister = value + sign;
+  gameboy.cpu.*cpuRegister += sign;
 }
 
 std::string TwoBytesIncrement::toString() {
