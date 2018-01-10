@@ -4,6 +4,7 @@
 
 #include "test.hpp"
 #include "run-tests.hpp"
+#include "./instructions/two-bytes-increment-test.hpp"
 
 using namespace std;
 
@@ -11,6 +12,8 @@ bool runTests() {
   bool success = true;
 
   list<std::shared_ptr<Test>> tests;
+
+  tests.push_back(make_shared<TwoBytesIncrementTest>());
 
   for (auto &&test: tests) {
     if (!test->run()) {
