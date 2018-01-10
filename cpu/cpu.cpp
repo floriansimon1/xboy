@@ -58,19 +58,19 @@ uint8_t Cpu::singleByteRegister(CpuRegisterPointer cpuRegister, bool low) {
 }
 
 void Cpu::setZeroFlag(bool enable) {
-  af = setBit(af, 7, enable);
+  af = setBit(af, Cpu::zeroFlag, enable);
 }
 
 void Cpu::setCarryFlag(bool enable) {
-  af = setBit(af, 4, enable);
+  af = setBit(af, Cpu::carryFlag, enable);
 }
 
 void Cpu::setSubtractFlag(bool enable) {
-  af = setBit(af, 6, enable);
+  af = setBit(af, Cpu::subtractFlag, enable);
 }
 
 void Cpu::setHalfCarryFlag(bool enable) {
-  af = setBit(af, 5, enable);
+  af = setBit(af, Cpu::halfCarryFlag, enable);
 }
 
 void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value) {
@@ -85,4 +85,3 @@ void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_
 
   this->*cpuRegister = widerValue | otherByte;
 }
-
