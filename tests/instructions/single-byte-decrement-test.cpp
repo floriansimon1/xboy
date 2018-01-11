@@ -3,7 +3,6 @@
 #include "../../cpu/instructions/single-byte-increment.hpp"
 #include "single-byte-decrement-test.hpp"
 #include "../../gameboy.hpp"
-#include "../../bit.hpp"
 
 SingleByteDecrementTest::SingleByteDecrementTest():
   Test("Single-byte decrement instruction")
