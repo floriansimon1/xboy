@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 LoadImmediate16::LoadImmediate16(CpuRegisterPointer cpuRegister):
-  Instruction(12, 2, 2),
+  Instruction(12, 2, 1),
   cpuRegister(cpuRegister)
 {
 }
@@ -21,4 +21,3 @@ std::string LoadImmediate16::toString() {
 
   return result.str();
 }
-
