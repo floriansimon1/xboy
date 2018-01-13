@@ -43,11 +43,11 @@ void Cpu::process(Gameboy &gameboy) {
   ticks += instruction->ticks;
 }
 
-uint16_t Cpu::twoBytesRegister(CpuRegisterPointer cpuRegister) {
+uint16_t Cpu::twoBytesRegister(CpuRegisterPointer cpuRegister) const {
   return this->*cpuRegister;
 }
 
-uint8_t Cpu::singleByteRegister(CpuRegisterPointer cpuRegister, bool low) {
+uint8_t Cpu::singleByteRegister(CpuRegisterPointer cpuRegister, bool low) const {
   const auto fullRegisterValue = twoBytesRegister(cpuRegister);
 
   if (low) {

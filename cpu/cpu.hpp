@@ -34,10 +34,12 @@ struct Cpu {
 
   void process(Gameboy &gameboy);
 
+  bool anyFlagSet() const;
   bool getZeroFlag() const;
   bool getCarryFlag() const;
   bool getSubtractFlag() const;
   bool getHalfCarryFlag() const;
+  bool onlyFlagSet(unsigned short flag) const;
 
   void setZeroFlag(bool enable);
   void setCarryFlag(bool enable);
