@@ -10,9 +10,8 @@ struct TwoBytesIncrement: Instruction {
 
   TwoBytesIncrement(CpuRegisterPointer cpuRegister, short sign);
 
-  void execute(Gameboy &gameboy, const uint8_t *data) override;
-  std::string toString() override;
+  void execute(Gameboy &gameboy, const uint8_t *data) const override;
+  std::string toString() const override;
 };
 
 #endif
-

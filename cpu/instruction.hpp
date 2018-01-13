@@ -12,8 +12,8 @@ struct Instruction {
   const unsigned short dataSize;
   const unsigned short opcodeSize;
 
-  virtual void execute(Gameboy &gameboy, const uint8_t *data) = 0;
-  virtual std::string toString() = 0;
+  virtual void execute(Gameboy &gameboy, const uint8_t *data) const = 0;
+  virtual std::string toString() const = 0;
 
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
@@ -24,4 +24,3 @@ struct Instruction {
 };
 
 #endif
-

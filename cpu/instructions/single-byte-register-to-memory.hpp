@@ -11,9 +11,8 @@ struct SingleByteRegisterToMemory: Instruction {
 
   SingleByteRegisterToMemory(CpuRegisterPointer memoryPointer, CpuRegisterPointer cpuRegister, bool low);
 
-  void execute(Gameboy &gameboy, const uint8_t *data) override;
-  std::string toString() override;
+  void execute(Gameboy &gameboy, const uint8_t *data) const override;
+  std::string toString() const override;
 };
 
 #endif
-

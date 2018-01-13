@@ -11,11 +11,11 @@ TwoBytesIncrement::TwoBytesIncrement(CpuRegisterPointer cpuRegister, short sign)
 {
 }
 
-void TwoBytesIncrement::execute(Gameboy &gameboy, const uint8_t*) {
+void TwoBytesIncrement::execute(Gameboy &gameboy, const uint8_t *) const {
   gameboy.cpu.*cpuRegister += sign;
 }
 
-std::string TwoBytesIncrement::toString() {
+std::string TwoBytesIncrement::toString() const {
   std::ostringstream result;
 
   const auto mnemonic = sign == 1 ? "INC " : "DEC ";

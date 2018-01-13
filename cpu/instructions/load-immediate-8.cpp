@@ -11,11 +11,11 @@ LoadImmediate8::LoadImmediate8(CpuRegisterPointer cpuRegister, bool low):
 {
 }
 
-void LoadImmediate8::execute(Gameboy &gameboy, const uint8_t *data) {
+void LoadImmediate8::execute(Gameboy &gameboy, const uint8_t *data) const {
   gameboy.cpu.setSingleByteRegister(cpuRegister, low, *data);
 }
 
-std::string LoadImmediate8::toString() {
+std::string LoadImmediate8::toString() const {
   std::ostringstream result;
 
   result << "LD " << registerString(cpuRegister, true, low) << ", d8";

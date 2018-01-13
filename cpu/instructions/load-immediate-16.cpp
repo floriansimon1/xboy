@@ -10,11 +10,11 @@ LoadImmediate16::LoadImmediate16(CpuRegisterPointer cpuRegister):
 {
 }
 
-void LoadImmediate16::execute(Gameboy &gameboy, const uint8_t *data) {
+void LoadImmediate16::execute(Gameboy &gameboy, const uint8_t *data) const {
   gameboy.cpu.*cpuRegister = *reinterpret_cast<const uint16_t*>(data);
 }
 
-std::string LoadImmediate16::toString() {
+std::string LoadImmediate16::toString() const {
   std::ostringstream result;
 
   result << "LD " << registerString(cpuRegister, false, false) << ", d16";

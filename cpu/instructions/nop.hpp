@@ -6,11 +6,10 @@
 #include "../instruction.hpp"
 
 struct Nop: Instruction {
-  void execute(Gameboy &gameboy, const uint8_t *data) override;
-  std::string toString() override;
+  void execute(Gameboy &gameboy, const uint8_t *data) const override;
+  std::string toString() const override;
 
   Nop();
 };
 
 #endif
-

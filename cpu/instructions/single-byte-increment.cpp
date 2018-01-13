@@ -13,7 +13,7 @@ SingleByteIncrement::SingleByteIncrement(CpuRegisterPointer cpuRegister, bool lo
 {
 }
 
-void SingleByteIncrement::execute(Gameboy &gameboy, const uint8_t*) {
+void SingleByteIncrement::execute(Gameboy &gameboy, const uint8_t*) const {
   const auto value = gameboy.cpu.singleByteRegister(cpuRegister, low);
 
   const auto result = value + sign;
@@ -30,7 +30,7 @@ void SingleByteIncrement::execute(Gameboy &gameboy, const uint8_t*) {
   gameboy.cpu.setSingleByteRegister(cpuRegister, low, result);
 }
 
-std::string SingleByteIncrement::toString() {
+std::string SingleByteIncrement::toString() const {
   std::ostringstream result;
 
   const auto mnemonic = sign == 1 ? "INC " : "DEC ";

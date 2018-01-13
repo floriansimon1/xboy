@@ -12,18 +12,17 @@ SingleByteRegisterToMemory::SingleByteRegisterToMemory(CpuRegisterPointer memory
 {
 }
 
-void SingleByteRegisterToMemory::execute(Gameboy &gameboy, const uint8_t*) {
+void SingleByteRegisterToMemory::execute(Gameboy &gameboy, const uint8_t *) const {
   const auto written = gameboy.cpu.singleByteRegister(cpuRegister, low);
   const auto address = gameboy.cpu.twoBytesRegister(memoryPointer);
 
   gameboy.mmu.memory[address] = written;
 }
 
-std::string SingleByteRegisterToMemory::toString() {
+std::string SingleByteRegisterToMemory::toString() const {
   std::ostringstream result;
 
   result << "LD (" << registerString(memoryPointer, false, false) << "), " << registerString(cpuRegister, true, true);
 
   return result.str();
 }
-
