@@ -46,8 +46,8 @@ struct Cpu {
   void setSubtractFlag(bool enable);
   void setHalfCarryFlag(bool enable);
 
-  uint16_t twoBytesRegister(CpuRegisterPointer cpuRegister);
-  uint8_t singleByteRegister(CpuRegisterPointer cpuRegister, bool low);
+  uint16_t twoBytesRegister(CpuRegisterPointer cpuRegister) const;
+  uint8_t singleByteRegister(CpuRegisterPointer cpuRegister, bool low) const;
   void setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value);
 };
 

@@ -73,6 +73,10 @@ void Cpu::setHalfCarryFlag(bool enable) {
   af = setBit(af, Cpu::halfCarryFlag, enable);
 }
 
+bool Cpu::anyFlagSet() const {
+  return singleByteRegister(&Cpu::af, true);
+}
+
 bool Cpu::getZeroFlag() const {
   return getBit(af, Cpu::zeroFlag);
 }
@@ -87,6 +91,10 @@ bool Cpu::getSubtractFlag() const {
 
 bool Cpu::getHalfCarryFlag() const {
   return getBit(af, Cpu::halfCarryFlag);
+}
+
+bool Cpu::onlyFlagSet(unsigned short flag) const {
+  return singleByteRegister(&Cpu::af, true) == (1 << flag);
 }
 
 void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value) {
