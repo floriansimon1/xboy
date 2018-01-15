@@ -43,6 +43,10 @@ void Cpu::process(Gameboy &gameboy) {
   ticks += instruction->ticks;
 }
 
+void Cpu::setTwoBytesRegister(CpuRegisterPointer cpuRegister, uint16_t value) {
+  this->*cpuRegister = value;
+}
+
 uint16_t Cpu::twoBytesRegister(CpuRegisterPointer cpuRegister) const {
   return this->*cpuRegister;
 }
