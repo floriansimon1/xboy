@@ -10,8 +10,8 @@ struct TwoBytesRegistersAddition: Instruction {
 
   TwoBytesRegistersAddition(CpuRegisterPointer source, CpuRegisterPointer destination);
 
-  void execute(Gameboy &gameboy, const uint8_t *data) const;
-  std::string toString() const;
+  void execute(Gameboy &gameboy, const uint8_t *data) const override;
+  std::string toString() const override;
 };
 
 #endif
