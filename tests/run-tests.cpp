@@ -12,6 +12,7 @@
 #include "instructions/register-rotate-left-carry-test.hpp"
 #include "instructions/two-bytes-registers-addition-test.hpp"
 #include "instructions/single-byte-register-to-memory-test.hpp"
+#include "instructions/dereference-combined-into-single-test.hpp"
 #include "instructions/write-two-bytes-register-to-address-test.hpp"
 
 using namespace std;
@@ -29,6 +30,7 @@ bool runTests() {
   tests.push_back(make_shared<RegisterRotateLeftCarryTest>());
   tests.push_back(make_shared<TwoBytesRegistersAdditionTest>());
   tests.push_back(make_shared<SingleByteRegisterToMemoryTest>());
+  tests.push_back(make_shared<DereferenceCombinedIntoSingleTest>());
   tests.push_back(make_shared<WriteTwoBytesRegisterToAddressTest>());
 
   for (auto &&test: tests) {
