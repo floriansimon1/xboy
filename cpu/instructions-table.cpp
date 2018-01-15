@@ -21,6 +21,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x06] = std::make_shared<LoadImmediate8>(&Cpu::bc, false);
   oneByteOpcodes[0x07] = std::make_shared<RotateLeftCarryA>();
   oneByteOpcodes[0x08] = std::make_shared<WriteTwoBytesRegisterToAddress>(&Cpu::sp);
+  oneByteOpcodes[0x09] = std::make_shared<WriteTwoBytesRegisterToAddress>(&Cpu::bc, &Cpu::hl);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {

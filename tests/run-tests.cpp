@@ -10,6 +10,7 @@
 #include "instructions/single-byte-increment-test.hpp"
 #include "instructions/single-byte-decrement-test.hpp"
 #include "instructions/register-rotate-left-carry-test.hpp"
+#include "instructions/two-bytes-registers-addition-test.hpp"
 #include "instructions/single-byte-register-to-memory-test.hpp"
 #include "instructions/write-two-bytes-register-to-address-test.hpp"
 
@@ -26,6 +27,7 @@ bool runTests() {
   tests.push_back(make_shared<SingleByteIncrementTest>());
   tests.push_back(make_shared<SingleByteDecrementTest>());
   tests.push_back(make_shared<RegisterRotateLeftCarryTest>());
+  tests.push_back(make_shared<TwoBytesRegistersAdditionTest>());
   tests.push_back(make_shared<SingleByteRegisterToMemoryTest>());
   tests.push_back(make_shared<WriteTwoBytesRegisterToAddressTest>());
 
