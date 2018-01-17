@@ -1,8 +1,6 @@
 #ifndef NOP_HPP
 #define NOP_HPP
 
-#include <string>
-
 #include "../instruction.hpp"
 
 struct Nop: Instruction {
