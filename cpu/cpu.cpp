@@ -37,7 +37,7 @@ void Cpu::process(Gameboy &gameboy) {
 
   std::cout << instruction->toString() << std::endl;
 
-  ticks += instruction->ticks(gameboy, data);
+  ticks += instruction->ticks(gameboy);
 
   instruction->execute(gameboy, data);
 

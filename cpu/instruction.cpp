@@ -15,6 +15,6 @@ unsigned short Instruction::totalSize() {
   return dataSize + opcodeSize;
 }
 
-unsigned short Instruction::ticks(Gameboy &, const uint8_t *) const {
+unsigned short Instruction::ticks(Gameboy &) const {
   return baseTicks;
 }
