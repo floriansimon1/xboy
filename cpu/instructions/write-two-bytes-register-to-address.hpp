@@ -10,8 +10,7 @@ struct WriteTwoBytesRegisterToAddress: Instruction {
   WriteTwoBytesRegisterToAddress(CpuRegisterPointer cpuRegister);
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
-  std::string toString() const;
+  std::string toString() const override;
 };
 
 #endif
-
