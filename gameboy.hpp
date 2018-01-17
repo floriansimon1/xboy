@@ -8,8 +8,12 @@ struct Gameboy {
   Mmu mmu;
   Cpu cpu;
 
+  bool lowPowerMode;
+
+  Gameboy();
+
   void tick();
+  void reset();
 };
 
 #endif
-

@@ -9,6 +9,7 @@
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions-table.hpp"
+#include "instructions/stop.hpp"
 #include "instructions/nop.hpp"
 #include "cpu.hpp"
 
@@ -31,6 +32,8 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x0d] = std::make_shared<SingleByteIncrement>(&Cpu::bc, true, -1);
   oneByteOpcodes[0x0e] = std::make_shared<LoadImmediate8>(&Cpu::bc, true);
   oneByteOpcodes[0x0f] = std::make_shared<RotateRightCarryA>();
+
+  oneByteOpcodes[0x10] = std::make_shared<Stop>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
