@@ -3,6 +3,7 @@
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
 #include "instructions/single-byte-increment.hpp"
+#include "instructions/a-rotate-right-carry.hpp"
 #include "instructions/two-bytes-increment.hpp"
 #include "instructions/a-rotate-left-carry.hpp"
 #include "instructions/load-immediate-16.hpp"
@@ -29,6 +30,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x0c] = std::make_shared<SingleByteIncrement>(&Cpu::bc, true, 1);
   oneByteOpcodes[0x0d] = std::make_shared<SingleByteIncrement>(&Cpu::bc, true, -1);
   oneByteOpcodes[0x0e] = std::make_shared<LoadImmediate8>(&Cpu::bc, true);
+  oneByteOpcodes[0x0f] = std::make_shared<RotateRightCarryA>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
