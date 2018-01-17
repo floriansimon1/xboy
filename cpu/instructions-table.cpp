@@ -34,6 +34,12 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x0f] = std::make_shared<RotateRightCarryA>();
 
   oneByteOpcodes[0x10] = std::make_shared<Stop>();
+  oneByteOpcodes[0x11] = std::make_shared<LoadImmediate16>(&Cpu::de);
+  oneByteOpcodes[0x12] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::de, &Cpu::af, false);
+  oneByteOpcodes[0x13] = std::make_shared<TwoBytesIncrement>(&Cpu::de, 1);
+  oneByteOpcodes[0x14] = std::make_shared<SingleByteIncrement>(&Cpu::de, false, 1);
+  oneByteOpcodes[0x15] = std::make_shared<SingleByteIncrement>(&Cpu::de, false, -1);
+  oneByteOpcodes[0x16] = std::make_shared<LoadImmediate8>(&Cpu::de, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
