@@ -7,8 +7,6 @@
 struct Gameboy;
 
 struct Instruction {
-  const unsigned long long baseTicks;
-
   const unsigned short dataSize;
   const unsigned short opcodeSize;
 
@@ -22,6 +20,9 @@ struct Instruction {
 
   protected:
     Instruction(unsigned long long ticks, unsigned short dataSize, unsigned short opcodeSize);
+
+  private:
+    const unsigned long long baseTicks;
 };
 
 #endif
