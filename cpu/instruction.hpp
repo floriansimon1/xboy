@@ -7,8 +7,8 @@
 struct Gameboy;
 
 struct Instruction {
-  const unsigned short dataSize;
   const unsigned short opcodeSize;
+  const unsigned short dataSize;
 
   virtual void execute(Gameboy &gameboy, const uint8_t *data) const = 0;
   virtual std::string toString() const = 0;

@@ -5,9 +5,9 @@ bool Instruction::isExtendedInstruction(uint8_t firstOpcodeByte) {
 }
 
 Instruction::Instruction(unsigned long long ticks, unsigned short dataSize, unsigned short opcodeSize):
-  baseTicks(ticks),
+  opcodeSize(opcodeSize),
   dataSize(dataSize),
-  opcodeSize(opcodeSize)
+  baseTicks(ticks)
 {
 }
 
