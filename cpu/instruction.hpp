@@ -7,7 +7,7 @@
 struct Gameboy;
 
 struct Instruction {
-  const unsigned long long ticks;
+  const unsigned long long baseTicks;
 
   const unsigned short dataSize;
   const unsigned short opcodeSize;
@@ -18,6 +18,7 @@ struct Instruction {
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
   unsigned short totalSize();
+  virtual unsigned short ticks(Gameboy &gameboy, const uint8_t *data) const;
 
   protected:
     Instruction(unsigned long long ticks, unsigned short dataSize, unsigned short opcodeSize);

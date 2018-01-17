@@ -5,7 +5,7 @@ bool Instruction::isExtendedInstruction(uint8_t firstOpcodeByte) {
 }
 
 Instruction::Instruction(unsigned long long ticks, unsigned short dataSize, unsigned short opcodeSize):
-  ticks(ticks),
+  baseTicks(ticks),
   dataSize(dataSize),
   opcodeSize(opcodeSize)
 {
@@ -15,3 +15,6 @@ unsigned short Instruction::totalSize() {
   return dataSize + opcodeSize;
 }
 
+unsigned short Instruction::ticks(Gameboy &, const uint8_t *) const {
+  return baseTicks;
+}

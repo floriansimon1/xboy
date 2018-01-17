@@ -37,10 +37,11 @@ void Cpu::process(Gameboy &gameboy) {
 
   std::cout << instruction->toString() << std::endl;
 
+  ticks += instruction->ticks(gameboy, data);
+
   instruction->execute(gameboy, data);
 
-  pc    += instruction->totalSize();
-  ticks += instruction->ticks;
+  pc += instruction->totalSize();;
 }
 
 void Cpu::setTwoBytesRegister(CpuRegisterPointer cpuRegister, uint16_t value) {
