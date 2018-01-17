@@ -8,6 +8,7 @@
 #include "instructions/two-bytes-increment-test.hpp"
 #include "instructions/two-bytes-decrement-test.hpp"
 #include "instructions/register-rotate-left-test.hpp"
+#include "instructions/register-rotate-right-test.hpp"
 #include "instructions/single-byte-increment-test.hpp"
 #include "instructions/single-byte-decrement-test.hpp"
 #include "instructions/register-rotate-left-carry-test.hpp"
@@ -30,6 +31,7 @@ bool runTests() {
   tests.push_back(make_shared<RegisterRotateLeftTest>());
   tests.push_back(make_shared<SingleByteIncrementTest>());
   tests.push_back(make_shared<SingleByteDecrementTest>());
+  tests.push_back(make_shared<RegisterRotateRightTest>());
   tests.push_back(make_shared<RegisterRotateLeftCarryTest>());
   tests.push_back(make_shared<RegisterRotateRightCarryTest>());
   tests.push_back(make_shared<TwoBytesRegistersAdditionTest>());
