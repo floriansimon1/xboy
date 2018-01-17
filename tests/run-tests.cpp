@@ -7,6 +7,7 @@
 #include "instructions/load-immediate-8-test.hpp"
 #include "instructions/two-bytes-increment-test.hpp"
 #include "instructions/two-bytes-decrement-test.hpp"
+#include "instructions/register-rotate-left-test.hpp"
 #include "instructions/single-byte-increment-test.hpp"
 #include "instructions/single-byte-decrement-test.hpp"
 #include "instructions/register-rotate-left-carry-test.hpp"
@@ -26,6 +27,7 @@ bool runTests() {
   tests.push_back(make_shared<LoadImmediate8Test>());
   tests.push_back(make_shared<TwoBytesIncrementTest>());
   tests.push_back(make_shared<TwoBytesDecrementTest>());
+  tests.push_back(make_shared<RegisterRotateLeftTest>());
   tests.push_back(make_shared<SingleByteIncrementTest>());
   tests.push_back(make_shared<SingleByteDecrementTest>());
   tests.push_back(make_shared<RegisterRotateLeftCarryTest>());
