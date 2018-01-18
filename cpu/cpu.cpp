@@ -103,7 +103,7 @@ bool Cpu::onlyFlagSet(unsigned short flag) const {
 }
 
 bool Cpu::flagHasValue(unsigned short flag, bool value) const {
-  return getBit(af, flag) == value;
+  return static_cast<bool>(getBit(af, flag)) == value;
 }
 
 void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value) {
