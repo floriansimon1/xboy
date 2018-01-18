@@ -55,6 +55,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x1f] = std::make_shared<RotateRightA>();
 
   oneByteOpcodes[0x20] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, false);
+  oneByteOpcodes[0x21] = std::make_shared<LoadImmediate16>(&Cpu::hl);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
