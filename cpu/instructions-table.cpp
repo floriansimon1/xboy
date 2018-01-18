@@ -6,6 +6,7 @@
 #include "instructions/a-rotate-right-carry.hpp"
 #include "instructions/two-bytes-increment.hpp"
 #include "instructions/a-rotate-left-carry.hpp"
+#include "instructions/relative-jump-flag.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions/a-rotate-right.hpp"
@@ -52,6 +53,8 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x1d] = std::make_shared<SingleByteIncrement>(&Cpu::de, true, -1);
   oneByteOpcodes[0x1e] = std::make_shared<LoadImmediate8>(&Cpu::de, true);
   oneByteOpcodes[0x1f] = std::make_shared<RotateRightA>();
+
+  oneByteOpcodes[0x20] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
