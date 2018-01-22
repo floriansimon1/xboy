@@ -117,3 +117,8 @@ void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_
 
   this->*cpuRegister = widerValue | otherByte;
 }
+
+const unsigned short Cpu::zeroFlag;
+const unsigned short Cpu::carryFlag;
+const unsigned short Cpu::subtractFlag;
+const unsigned short Cpu::halfCarryFlag;
