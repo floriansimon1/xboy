@@ -58,6 +58,10 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x20] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, false);
   oneByteOpcodes[0x21] = std::make_shared<LoadImmediate16>(&Cpu::hl);
   oneByteOpcodes[0x22] = std::make_shared<SingleByteRegisterToMemoryIncrement>(&Cpu::hl, &Cpu::af, 1, false);
+  oneByteOpcodes[0x23] = std::make_shared<TwoBytesIncrement>(&Cpu::hl, 1);
+  oneByteOpcodes[0x24] = std::make_shared<SingleByteIncrement>(&Cpu::hl, false, 1);
+  oneByteOpcodes[0x25] = std::make_shared<SingleByteIncrement>(&Cpu::hl, false, -1);
+  oneByteOpcodes[0x26] = std::make_shared<LoadImmediate8>(&Cpu::hl, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
