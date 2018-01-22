@@ -26,7 +26,7 @@ std::string DereferenceCombinedIntoSingle::toString() const {
   std::ostringstream result;
 
   result << "LD " << registerString(targetRegister, true, low)
-         << ", " << registerString(pointerRegister, false, false);
+         << ", (" << registerString(pointerRegister, false, false) << ')';
 
   return result.str();
 }
