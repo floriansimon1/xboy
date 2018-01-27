@@ -9,19 +9,19 @@ void DecimalAdjust::execute(Gameboy &gameboy, const uint8_t *) const {
     : adding(gameboy)
   );
 
-  gameboy.cpu.setSingleByteRegister(result);
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, result);
 
   gameboy.cpu.setHalfCarryFlag(false);
   gameboy.cpu.setCarryFlag(result > maxUint16);
-  gameboy.cpu.setZeroFlag(gameboy.cpu.singleByteRegister(&Cpu::af, false));
+  gameboy.cpu.setZeroFlag(!gameboy.cpu.singleByteRegister(&Cpu::af, false));
 }
 
 std::string DecimalAdjust::toString() const {
   return "DAA";
 }
 
-uint16_t DecimalAdjust::adding(Gameboy &gameboy) const {
-  uint16_t result = gameboy.cpu.singleByteRegister(&Cpu::af, false);
+uint32_t DecimalAdjust::subtracting(Gameboy &gameboy) const {
+  uint32_t result = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
   if (gameboy.cpu.getHalfCarryFlag()) {
     result = (result - 6) & lowByteMask;
@@ -34,8 +34,8 @@ uint16_t DecimalAdjust::adding(Gameboy &gameboy) const {
   return result;
 }
 
-uint16_t DecimalAdjust::subtracting(Gameboy &gameboy) const {
-  uint16_t result = gameboy.cpu.singleByteRegister(&Cpu::af, false);
+uint32_t DecimalAdjust::adding(Gameboy &gameboy) const {
+  uint32_t result = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
   if (gameboy.cpu.getHalfCarryFlag() || (result & lowHalfByteMask) > 9) {
     result += 6;

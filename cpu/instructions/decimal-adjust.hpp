@@ -10,8 +10,8 @@ struct DecimalAdjust: Instruction {
   std::string toString() const override;
 
   private:
-    uint16_t adding(Gameboy &gameboy) const;
-    uint16_t subtracting(Gameboy &gameboy) const;
+    uint32_t adding(Gameboy &gameboy) const;
+    uint32_t subtracting(Gameboy &gameboy) const;
 };
 
 #endif
