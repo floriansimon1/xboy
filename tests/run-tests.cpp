@@ -4,6 +4,7 @@
 
 #include "test.hpp"
 #include "run-tests.hpp"
+#include "instructions/decimal-adjust-test.hpp"
 #include "instructions/load-immediate-8-test.hpp"
 #include "instructions/relative-jump-flag-test.hpp"
 #include "instructions/two-bytes-increment-test.hpp"
@@ -26,6 +27,7 @@ bool runTests() {
 
   list<std::shared_ptr<Test>> tests;
 
+  tests.push_back(make_shared<DecimalAdjustTest>());
   tests.push_back(make_shared<LoadImmediate8Test>());
   tests.push_back(make_shared<RelativeJumpFlagTest>());
   tests.push_back(make_shared<TwoBytesIncrementTest>());
