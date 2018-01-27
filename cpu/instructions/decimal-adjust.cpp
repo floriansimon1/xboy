@@ -2,7 +2,7 @@
 #include "../../gameboy.hpp"
 #include "../../bit.hpp"
 #include "../cpu.hpp"
-
+#include <iostream>
 DecimalAdjust::DecimalAdjust(): Instruction(4, 0, 1) {
 }
 
@@ -15,8 +15,11 @@ void DecimalAdjust::execute(Gameboy &gameboy, const uint8_t *) const {
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, result);
 
+  if (!gameboy.cpu.getCarryFlag()) {
+    gameboy.cpu.setCarryFlag(result > maxTwoBytesBcd);
+  }
+
   gameboy.cpu.setHalfCarryFlag(false);
-  gameboy.cpu.setCarryFlag(result > maxUint16);
   gameboy.cpu.setZeroFlag(!gameboy.cpu.singleByteRegister(&Cpu::af, false));
 }
 
@@ -32,6 +35,7 @@ uint32_t DecimalAdjust::subtracting(Gameboy &gameboy) const {
   }
 
   if (gameboy.cpu.getCarryFlag()) {
+    // 6 on the high half-byte.
     result -= 0x60;
   }
 
@@ -45,7 +49,8 @@ uint32_t DecimalAdjust::adding(Gameboy &gameboy) const {
     result += 6;
   }
 
-  if (gameboy.cpu.getCarryFlag() || result > 0x9f) {
+  if (gameboy.cpu.getCarryFlag() || result >= 0x9f) {
+    // 6 on the high half-byte.
     result += 0x60;
   }
 
