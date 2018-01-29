@@ -21,7 +21,6 @@ bool DecimalAdjustTest::run() {
   return true;
 }
 
-
 bool DecimalAdjustTest::testCombinedCarriesAddition() const {
   Gameboy       gameboy;
   DecimalAdjust instruction;
@@ -221,29 +220,27 @@ bool DecimalAdjustTest::testHighByteSubtraction() const {
   Gameboy       gameboy;
   DecimalAdjust instruction;
 
-  const uint8_t halfCarryBit = setBit(0, Cpu::halfCarryFlag, true);
   const uint8_t subtractBit  = setBit(0, Cpu::subtractFlag, true);
   const uint8_t carryBit     = setBit(0, Cpu::carryFlag, true);
 
   // 50         - 90
   // 0b01010000 - 0b10010000
-  // 0b10101111 + 0b01101111
+  // 0b01010000 + 0b01110000
   // -----------------------
-  // 0b100011110 (286)
-  // Truncated: 0b11110 (30)
+  // 0b11000000 (192)
   // Expected signed BCD: -40
-  // Unsigned BCD w/ 10-complement: 59
-  // C = 1, H = 1, Z = 0, N = 1
+  // Unsigned BCD w/ 10-complement: 60
+  // C = 1, H = 0, Z = 0, N = 1
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, subtractBit | carryBit);
-  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 30);
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 192);
 
   instruction.execute(gameboy, gameboy.mmu.memory);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true) != (subtractBit | carryBit)
-    || gameboy.cpu.singleByteRegister(&Cpu::af, false) != 0x59
+    || gameboy.cpu.singleByteRegister(&Cpu::af, false) != 0x60
   ) {
-    std::cout << "90 - 50 != 0x59: f = "
+    std::cout << "90 - 50 != 0x60: f = "
               << (unsigned int) gameboy.cpu.singleByteRegister(&Cpu::af, true)
               << ", a = "
               << (unsigned int) gameboy.cpu.singleByteRegister(&Cpu::af, false)
@@ -256,5 +253,38 @@ bool DecimalAdjustTest::testHighByteSubtraction() const {
 }
 
 bool DecimalAdjustTest::testCombinedCarriesSubtraction() const {
+  Gameboy       gameboy;
+  DecimalAdjust instruction;
+
+  const uint8_t halfCarryBit = setBit(0, Cpu::halfCarryFlag, true);
+  const uint8_t subtractBit  = setBit(0, Cpu::subtractFlag, true);
+  const uint8_t carryBit     = setBit(0, Cpu::carryFlag, true);
+
+  // 98         - 99
+  // 0b10011000 - 0b10011001
+  // 0b10011000 + 0b01100111
+  // -----------------------
+  // 0b11111111 (255)
+  // Expected signed BCD: -1
+  // Unsigned BCD w/ 10-complement: 99
+  // C = 1, H = 1, Z = 0, N = 1
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, true, subtractBit | halfCarryBit | carryBit);
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 255);
+
+  instruction.execute(gameboy, gameboy.mmu.memory);
+
+  if (
+    gameboy.cpu.singleByteRegister(&Cpu::af, true) != (subtractBit | carryBit)
+    || gameboy.cpu.singleByteRegister(&Cpu::af, false) != 0x99
+  ) {
+    std::cout << "98 - 99 != 0x99: f = "
+              << (unsigned int) gameboy.cpu.singleByteRegister(&Cpu::af, true)
+              << ", a = "
+              << (unsigned int) gameboy.cpu.singleByteRegister(&Cpu::af, false)
+              << std::endl;
+
+    return false;
+  }
+
   return true;
 }

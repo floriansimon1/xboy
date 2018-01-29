@@ -2,7 +2,7 @@
 #include "../../gameboy.hpp"
 #include "../../bit.hpp"
 #include "../cpu.hpp"
-#include <iostream>
+
 DecimalAdjust::DecimalAdjust(): Instruction(4, 0, 1) {
 }
 
