@@ -1,3 +1,4 @@
+#include "instructions/dereference-combined-into-single-increment.hpp"
 #include "instructions/single-byte-register-to-memory-increment.hpp"
 #include "instructions/write-two-bytes-register-to-address.hpp"
 #include "instructions/dereference-combined-into-single.hpp"
@@ -10,6 +11,7 @@
 #include "instructions/relative-jump-flag.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
+#include "instructions/decimal-adjust.hpp"
 #include "instructions/a-rotate-right.hpp"
 #include "instructions/a-rotate-left.hpp"
 #include "instructions/relative-jump.hpp"
@@ -55,13 +57,18 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x1e] = std::make_shared<LoadImmediate8>(&Cpu::de, true);
   oneByteOpcodes[0x1f] = std::make_shared<RotateRightA>();
 
-  oneByteOpcodes[0x20] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, false);
+  oneByteOpcodes[0x20] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, true);
   oneByteOpcodes[0x21] = std::make_shared<LoadImmediate16>(&Cpu::hl);
   oneByteOpcodes[0x22] = std::make_shared<SingleByteRegisterToMemoryIncrement>(&Cpu::hl, &Cpu::af, 1, false);
   oneByteOpcodes[0x23] = std::make_shared<TwoBytesIncrement>(&Cpu::hl, 1);
   oneByteOpcodes[0x24] = std::make_shared<SingleByteIncrement>(&Cpu::hl, false, 1);
   oneByteOpcodes[0x25] = std::make_shared<SingleByteIncrement>(&Cpu::hl, false, -1);
   oneByteOpcodes[0x26] = std::make_shared<LoadImmediate8>(&Cpu::hl, false);
+  oneByteOpcodes[0x27] = std::make_shared<DecimalAdjust>();
+  oneByteOpcodes[0x28] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, false);
+  oneByteOpcodes[0x29] = std::make_shared<TwoBytesRegistersAddition>(&Cpu::hl, &Cpu::hl);
+  oneByteOpcodes[0x2a] = std::make_shared<DereferenceCombinedIntoSingleIncrement>(&Cpu::hl, &Cpu::af, 1, false);
+  oneByteOpcodes[0x2b] = std::make_shared<TwoBytesIncrement>(&Cpu::hl, -1);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
