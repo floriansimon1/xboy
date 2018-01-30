@@ -4,6 +4,7 @@
 #include "instructions/dereference-combined-into-single.hpp"
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
+#include "instructions/write-immediate-to-address.hpp"
 #include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
 #include "instructions/a-rotate-right-carry.hpp"
@@ -82,7 +83,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x33] = std::make_shared<TwoBytesIncrement>(&Cpu::sp, 1);
   oneByteOpcodes[0x34] = std::make_shared<IncrementDereference>(&Cpu::hl, 1);
   oneByteOpcodes[0x35] = std::make_shared<IncrementDereference>(&Cpu::hl, -1);
-  // oneByteOpcodes[0x36] = std::make_shared<LoadImmediate8>(&Cpu::hl, false);
+  oneByteOpcodes[0x36] = std::make_shared<WriteImmediateToAddress>(&Cpu::hl);
   // oneByteOpcodes[0x37] = std::make_shared<DecimalAdjust>();
   oneByteOpcodes[0x38] = std::make_shared<RelativeJumpFlag>(Cpu::carryFlag, false);
   oneByteOpcodes[0x39] = std::make_shared<TwoBytesRegistersAddition>(&Cpu::hl, &Cpu::sp);
