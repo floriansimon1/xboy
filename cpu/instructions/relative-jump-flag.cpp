@@ -26,7 +26,7 @@ unsigned short RelativeJumpFlag::ticks(Gameboy &gameboy) const {
 }
 
 bool RelativeJumpFlag::shouldJump(Gameboy &gameboy) const {
-  return gameboy.cpu.flagHasValue(flag, negate);
+  return gameboy.cpu.flagHasValue(flag, !negate);
 }
 
 std::string RelativeJumpFlag::toString() const {
