@@ -11,6 +11,7 @@
 #include "instructions/two-bytes-increment.hpp"
 #include "instructions/a-rotate-left-carry.hpp"
 #include "instructions/relative-jump-flag.hpp"
+#include "instructions/invert-carry-flag.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions/set-carry-flag.hpp"
@@ -93,7 +94,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x3c] = std::make_shared<SingleByteIncrement>(&Cpu::af, false, 1);
   oneByteOpcodes[0x3d] = std::make_shared<SingleByteIncrement>(&Cpu::af, false, -1);
   oneByteOpcodes[0x3e] = std::make_shared<LoadImmediate8>(&Cpu::af, false);
-  // oneByteOpcodes[0x3e] = std::make_shared<Negate>();
+  oneByteOpcodes[0x3f] = std::make_shared<InvertCarryFlag>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
