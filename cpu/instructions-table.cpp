@@ -15,6 +15,7 @@
 #include "instructions/a-rotate-right.hpp"
 #include "instructions/a-rotate-left.hpp"
 #include "instructions/relative-jump.hpp"
+#include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/stop.hpp"
 #include "instructions/nop.hpp"
@@ -69,6 +70,10 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x29] = std::make_shared<TwoBytesRegistersAddition>(&Cpu::hl, &Cpu::hl);
   oneByteOpcodes[0x2a] = std::make_shared<DereferenceCombinedIntoSingleIncrement>(&Cpu::hl, &Cpu::af, 1, false);
   oneByteOpcodes[0x2b] = std::make_shared<TwoBytesIncrement>(&Cpu::hl, -1);
+  oneByteOpcodes[0x2c] = std::make_shared<SingleByteIncrement>(&Cpu::hl, true, 1);
+  oneByteOpcodes[0x2d] = std::make_shared<SingleByteIncrement>(&Cpu::hl, true, -1);
+  oneByteOpcodes[0x2e] = std::make_shared<LoadImmediate8>(&Cpu::hl, true);
+  oneByteOpcodes[0x2e] = std::make_shared<Negate>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
