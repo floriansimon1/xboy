@@ -4,6 +4,7 @@
 #include "instructions/dereference-combined-into-single.hpp"
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
+#include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
 #include "instructions/a-rotate-right-carry.hpp"
 #include "instructions/two-bytes-increment.hpp"
@@ -74,6 +75,23 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x2d] = std::make_shared<SingleByteIncrement>(&Cpu::hl, true, -1);
   oneByteOpcodes[0x2e] = std::make_shared<LoadImmediate8>(&Cpu::hl, true);
   oneByteOpcodes[0x2e] = std::make_shared<Negate>();
+
+  oneByteOpcodes[0x30] = std::make_shared<RelativeJumpFlag>(Cpu::carryFlag, true);
+  oneByteOpcodes[0x31] = std::make_shared<LoadImmediate16>(&Cpu::sp);
+  oneByteOpcodes[0x32] = std::make_shared<SingleByteRegisterToMemoryIncrement>(&Cpu::hl, &Cpu::af, -1, false);
+  oneByteOpcodes[0x33] = std::make_shared<TwoBytesIncrement>(&Cpu::sp, 1);
+  oneByteOpcodes[0x34] = std::make_shared<IncrementDereference>(&Cpu::hl, 1);
+  oneByteOpcodes[0x35] = std::make_shared<IncrementDereference>(&Cpu::hl, -1);
+  // oneByteOpcodes[0x36] = std::make_shared<LoadImmediate8>(&Cpu::hl, false);
+  // oneByteOpcodes[0x37] = std::make_shared<DecimalAdjust>();
+  oneByteOpcodes[0x38] = std::make_shared<RelativeJumpFlag>(Cpu::carryFlag, false);
+  oneByteOpcodes[0x39] = std::make_shared<TwoBytesRegistersAddition>(&Cpu::hl, &Cpu::sp);
+  oneByteOpcodes[0x3a] = std::make_shared<DereferenceCombinedIntoSingleIncrement>(&Cpu::hl, &Cpu::af, -1, false);
+  oneByteOpcodes[0x3b] = std::make_shared<TwoBytesIncrement>(&Cpu::sp, -1);
+  oneByteOpcodes[0x3c] = std::make_shared<SingleByteIncrement>(&Cpu::af, false, 1);
+  oneByteOpcodes[0x3d] = std::make_shared<SingleByteIncrement>(&Cpu::af, false, -1);
+  oneByteOpcodes[0x3e] = std::make_shared<LoadImmediate8>(&Cpu::af, false);
+  // oneByteOpcodes[0x3e] = std::make_shared<Negate>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
