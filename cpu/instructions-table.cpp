@@ -13,6 +13,7 @@
 #include "instructions/relative-jump-flag.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
+#include "instructions/set-carry-flag.hpp"
 #include "instructions/decimal-adjust.hpp"
 #include "instructions/a-rotate-right.hpp"
 #include "instructions/a-rotate-left.hpp"
@@ -84,7 +85,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x34] = std::make_shared<IncrementDereference>(&Cpu::hl, 1);
   oneByteOpcodes[0x35] = std::make_shared<IncrementDereference>(&Cpu::hl, -1);
   oneByteOpcodes[0x36] = std::make_shared<WriteImmediateToAddress>(&Cpu::hl);
-  // oneByteOpcodes[0x37] = std::make_shared<DecimalAdjust>();
+  oneByteOpcodes[0x37] = std::make_shared<SetCarryFlag>();
   oneByteOpcodes[0x38] = std::make_shared<RelativeJumpFlag>(Cpu::carryFlag, false);
   oneByteOpcodes[0x39] = std::make_shared<TwoBytesRegistersAddition>(&Cpu::hl, &Cpu::sp);
   oneByteOpcodes[0x3a] = std::make_shared<DereferenceCombinedIntoSingleIncrement>(&Cpu::hl, &Cpu::af, -1, false);
