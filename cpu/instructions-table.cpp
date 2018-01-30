@@ -76,7 +76,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x2c] = std::make_shared<SingleByteIncrement>(&Cpu::hl, true, 1);
   oneByteOpcodes[0x2d] = std::make_shared<SingleByteIncrement>(&Cpu::hl, true, -1);
   oneByteOpcodes[0x2e] = std::make_shared<LoadImmediate8>(&Cpu::hl, true);
-  oneByteOpcodes[0x2e] = std::make_shared<Negate>();
+  oneByteOpcodes[0x2f] = std::make_shared<Negate>();
 
   oneByteOpcodes[0x30] = std::make_shared<RelativeJumpFlag>(Cpu::carryFlag, true);
   oneByteOpcodes[0x31] = std::make_shared<LoadImmediate16>(&Cpu::sp);
