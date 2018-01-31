@@ -22,6 +22,7 @@
 #include "instructions/copy-register.hpp"
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
+#include "instructions/halt.hpp"
 #include "instructions/stop.hpp"
 #include "instructions/nop.hpp"
 #include "cpu.hpp"
@@ -147,6 +148,23 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x6d] = std::make_shared<Nop>();
   oneByteOpcodes[0x6e] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::hl, true);
   oneByteOpcodes[0x6f] = std::make_shared<CopyRegister>(&Cpu::hl, true, &Cpu::af, false);
+
+  oneByteOpcodes[0x70] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::hl, &Cpu::bc, false);
+  oneByteOpcodes[0x71] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::hl, &Cpu::bc, true);
+  oneByteOpcodes[0x72] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::hl, &Cpu::de, false);
+  oneByteOpcodes[0x73] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::hl, &Cpu::de, true);
+  oneByteOpcodes[0x74] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::hl, &Cpu::hl, false);
+  oneByteOpcodes[0x75] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::hl, &Cpu::hl, true);
+  oneByteOpcodes[0x76] = std::make_shared<Halt>();
+  oneByteOpcodes[0x77] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::hl, &Cpu::af, false);
+  oneByteOpcodes[0x78] = std::make_shared<CopyRegister>(&Cpu::af, false, &Cpu::bc, false);
+  oneByteOpcodes[0x79] = std::make_shared<CopyRegister>(&Cpu::af, false, &Cpu::bc, true);
+  oneByteOpcodes[0x7a] = std::make_shared<CopyRegister>(&Cpu::af, false, &Cpu::de, false);
+  oneByteOpcodes[0x7b] = std::make_shared<CopyRegister>(&Cpu::af, false, &Cpu::de, true);
+  oneByteOpcodes[0x7c] = std::make_shared<CopyRegister>(&Cpu::af, false, &Cpu::hl, false);
+  oneByteOpcodes[0x7d] = std::make_shared<CopyRegister>(&Cpu::af, false, &Cpu::hl, true);
+  oneByteOpcodes[0x7e] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::af, false);
+  oneByteOpcodes[0x7f] = std::make_shared<Nop>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
