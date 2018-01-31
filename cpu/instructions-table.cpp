@@ -4,6 +4,7 @@
 #include "instructions/dereference-combined-into-single.hpp"
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
+#include "instructions/unsigned-registers-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
 #include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
@@ -165,6 +166,15 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x7d] = std::make_shared<CopyRegister>(&Cpu::af, false, &Cpu::hl, true);
   oneByteOpcodes[0x7e] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::af, false);
   oneByteOpcodes[0x7f] = std::make_shared<Nop>();
+
+  oneByteOpcodes[0x80] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::bc, false);
+  oneByteOpcodes[0x81] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::bc, true);
+  oneByteOpcodes[0x82] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::de, false);
+  oneByteOpcodes[0x83] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::de, true);
+  oneByteOpcodes[0x84] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::hl, false);
+  oneByteOpcodes[0x85] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::hl, true);
+
+  oneByteOpcodes[0x87] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
