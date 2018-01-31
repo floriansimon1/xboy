@@ -19,6 +19,7 @@
 #include "instructions/a-rotate-right.hpp"
 #include "instructions/a-rotate-left.hpp"
 #include "instructions/relative-jump.hpp"
+#include "instructions/copy-register.hpp"
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/stop.hpp"
@@ -95,6 +96,57 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x3d] = std::make_shared<SingleByteIncrement>(&Cpu::af, false, -1);
   oneByteOpcodes[0x3e] = std::make_shared<LoadImmediate8>(&Cpu::af, false);
   oneByteOpcodes[0x3f] = std::make_shared<InvertCarryFlag>();
+
+  oneByteOpcodes[0x40] = std::make_shared<Nop>();
+  oneByteOpcodes[0x41] = std::make_shared<CopyRegister>(&Cpu::bc, false, &Cpu::bc, true);
+  oneByteOpcodes[0x42] = std::make_shared<CopyRegister>(&Cpu::bc, false, &Cpu::de, false);
+  oneByteOpcodes[0x43] = std::make_shared<CopyRegister>(&Cpu::bc, false, &Cpu::de, true);
+  oneByteOpcodes[0x44] = std::make_shared<CopyRegister>(&Cpu::bc, false, &Cpu::hl, false);
+  oneByteOpcodes[0x45] = std::make_shared<CopyRegister>(&Cpu::bc, false, &Cpu::hl, true);
+  oneByteOpcodes[0x46] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::bc, false);
+  oneByteOpcodes[0x47] = std::make_shared<CopyRegister>(&Cpu::bc, false, &Cpu::af, false);
+  oneByteOpcodes[0x48] = std::make_shared<CopyRegister>(&Cpu::bc, true, &Cpu::bc, false);
+  oneByteOpcodes[0x49] = std::make_shared<Nop>();
+  oneByteOpcodes[0x4a] = std::make_shared<CopyRegister>(&Cpu::bc, true, &Cpu::de, false);
+  oneByteOpcodes[0x4b] = std::make_shared<CopyRegister>(&Cpu::bc, true, &Cpu::de, true);
+  oneByteOpcodes[0x4c] = std::make_shared<CopyRegister>(&Cpu::bc, true, &Cpu::hl, false);
+  oneByteOpcodes[0x4d] = std::make_shared<CopyRegister>(&Cpu::bc, true, &Cpu::hl, true);
+  oneByteOpcodes[0x4e] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::bc, true);
+  oneByteOpcodes[0x4f] = std::make_shared<CopyRegister>(&Cpu::bc, true, &Cpu::af, false);
+
+  oneByteOpcodes[0x50] = std::make_shared<CopyRegister>(&Cpu::de, false, &Cpu::bc, false);
+  oneByteOpcodes[0x51] = std::make_shared<CopyRegister>(&Cpu::de, false, &Cpu::bc, true);
+  oneByteOpcodes[0x52] = std::make_shared<Nop>();
+  oneByteOpcodes[0x53] = std::make_shared<CopyRegister>(&Cpu::de, false, &Cpu::de, true);
+  oneByteOpcodes[0x54] = std::make_shared<CopyRegister>(&Cpu::de, false, &Cpu::hl, false);
+  oneByteOpcodes[0x55] = std::make_shared<CopyRegister>(&Cpu::de, false, &Cpu::hl, true);
+  oneByteOpcodes[0x56] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::de, false);
+  oneByteOpcodes[0x57] = std::make_shared<CopyRegister>(&Cpu::de, false, &Cpu::af, false);
+  oneByteOpcodes[0x59] = std::make_shared<CopyRegister>(&Cpu::de, true, &Cpu::bc, false);
+  oneByteOpcodes[0x59] = std::make_shared<CopyRegister>(&Cpu::de, true, &Cpu::bc, true);
+  oneByteOpcodes[0x5a] = std::make_shared<CopyRegister>(&Cpu::de, true, &Cpu::de, false);
+  oneByteOpcodes[0x5b] = std::make_shared<Nop>();
+  oneByteOpcodes[0x5c] = std::make_shared<CopyRegister>(&Cpu::de, true, &Cpu::hl, false);
+  oneByteOpcodes[0x5d] = std::make_shared<CopyRegister>(&Cpu::de, true, &Cpu::hl, true);
+  oneByteOpcodes[0x5e] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::de, true);
+  oneByteOpcodes[0x5f] = std::make_shared<CopyRegister>(&Cpu::de, true, &Cpu::af, false);
+
+  oneByteOpcodes[0x60] = std::make_shared<CopyRegister>(&Cpu::hl, false, &Cpu::bc, false);
+  oneByteOpcodes[0x61] = std::make_shared<CopyRegister>(&Cpu::hl, false, &Cpu::bc, true);
+  oneByteOpcodes[0x62] = std::make_shared<CopyRegister>(&Cpu::hl, false, &Cpu::de, false);
+  oneByteOpcodes[0x63] = std::make_shared<CopyRegister>(&Cpu::hl, false, &Cpu::de, true);
+  oneByteOpcodes[0x64] = std::make_shared<Nop>();
+  oneByteOpcodes[0x65] = std::make_shared<CopyRegister>(&Cpu::hl, false, &Cpu::hl, true);
+  oneByteOpcodes[0x66] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::hl, false);
+  oneByteOpcodes[0x67] = std::make_shared<CopyRegister>(&Cpu::hl, false, &Cpu::af, false);
+  oneByteOpcodes[0x68] = std::make_shared<CopyRegister>(&Cpu::hl, true, &Cpu::bc, false);
+  oneByteOpcodes[0x69] = std::make_shared<CopyRegister>(&Cpu::hl, true, &Cpu::bc, true);
+  oneByteOpcodes[0x6a] = std::make_shared<CopyRegister>(&Cpu::hl, true, &Cpu::de, false);
+  oneByteOpcodes[0x6b] = std::make_shared<CopyRegister>(&Cpu::hl, true, &Cpu::de, true);
+  oneByteOpcodes[0x6c] = std::make_shared<CopyRegister>(&Cpu::hl, true, &Cpu::hl, false);
+  oneByteOpcodes[0x6d] = std::make_shared<Nop>();
+  oneByteOpcodes[0x6e] = std::make_shared<DereferenceCombinedIntoSingle>(&Cpu::hl, &Cpu::hl, true);
+  oneByteOpcodes[0x6f] = std::make_shared<CopyRegister>(&Cpu::hl, true, &Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
