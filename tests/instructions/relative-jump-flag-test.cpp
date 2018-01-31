@@ -11,8 +11,8 @@ RelativeJumpFlagTest::RelativeJumpFlagTest():
 
 bool RelativeJumpFlagTest::run() {
   Gameboy          gameboy;
-  RelativeJumpFlag onZero(Cpu::zeroFlag, true);
-  RelativeJumpFlag negated(Cpu::zeroFlag, false);
+  RelativeJumpFlag onZero(Cpu::zeroFlag, false);
+  RelativeJumpFlag negated(Cpu::zeroFlag, true);
 
   int8_t jump = 127;
 

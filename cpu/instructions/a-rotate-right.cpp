@@ -1,4 +1,3 @@
-#include "../../debug/register-string.hpp"
 #include "a-rotate-right.hpp"
 #include "../../gameboy.hpp"
 #include "../../bit.hpp"

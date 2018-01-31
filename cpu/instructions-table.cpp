@@ -1,18 +1,25 @@
+#include "instructions/dereference-combined-into-single-increment.hpp"
 #include "instructions/single-byte-register-to-memory-increment.hpp"
 #include "instructions/write-two-bytes-register-to-address.hpp"
 #include "instructions/dereference-combined-into-single.hpp"
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
+#include "instructions/write-immediate-to-address.hpp"
+#include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
 #include "instructions/a-rotate-right-carry.hpp"
 #include "instructions/two-bytes-increment.hpp"
 #include "instructions/a-rotate-left-carry.hpp"
 #include "instructions/relative-jump-flag.hpp"
+#include "instructions/invert-carry-flag.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
+#include "instructions/set-carry-flag.hpp"
+#include "instructions/decimal-adjust.hpp"
 #include "instructions/a-rotate-right.hpp"
 #include "instructions/a-rotate-left.hpp"
 #include "instructions/relative-jump.hpp"
+#include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/stop.hpp"
 #include "instructions/nop.hpp"
@@ -55,13 +62,39 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x1e] = std::make_shared<LoadImmediate8>(&Cpu::de, true);
   oneByteOpcodes[0x1f] = std::make_shared<RotateRightA>();
 
-  oneByteOpcodes[0x20] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, false);
+  oneByteOpcodes[0x20] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, true);
   oneByteOpcodes[0x21] = std::make_shared<LoadImmediate16>(&Cpu::hl);
   oneByteOpcodes[0x22] = std::make_shared<SingleByteRegisterToMemoryIncrement>(&Cpu::hl, &Cpu::af, 1, false);
   oneByteOpcodes[0x23] = std::make_shared<TwoBytesIncrement>(&Cpu::hl, 1);
   oneByteOpcodes[0x24] = std::make_shared<SingleByteIncrement>(&Cpu::hl, false, 1);
   oneByteOpcodes[0x25] = std::make_shared<SingleByteIncrement>(&Cpu::hl, false, -1);
   oneByteOpcodes[0x26] = std::make_shared<LoadImmediate8>(&Cpu::hl, false);
+  oneByteOpcodes[0x27] = std::make_shared<DecimalAdjust>();
+  oneByteOpcodes[0x28] = std::make_shared<RelativeJumpFlag>(Cpu::zeroFlag, false);
+  oneByteOpcodes[0x29] = std::make_shared<TwoBytesRegistersAddition>(&Cpu::hl, &Cpu::hl);
+  oneByteOpcodes[0x2a] = std::make_shared<DereferenceCombinedIntoSingleIncrement>(&Cpu::hl, &Cpu::af, 1, false);
+  oneByteOpcodes[0x2b] = std::make_shared<TwoBytesIncrement>(&Cpu::hl, -1);
+  oneByteOpcodes[0x2c] = std::make_shared<SingleByteIncrement>(&Cpu::hl, true, 1);
+  oneByteOpcodes[0x2d] = std::make_shared<SingleByteIncrement>(&Cpu::hl, true, -1);
+  oneByteOpcodes[0x2e] = std::make_shared<LoadImmediate8>(&Cpu::hl, true);
+  oneByteOpcodes[0x2f] = std::make_shared<Negate>();
+
+  oneByteOpcodes[0x30] = std::make_shared<RelativeJumpFlag>(Cpu::carryFlag, true);
+  oneByteOpcodes[0x31] = std::make_shared<LoadImmediate16>(&Cpu::sp);
+  oneByteOpcodes[0x32] = std::make_shared<SingleByteRegisterToMemoryIncrement>(&Cpu::hl, &Cpu::af, -1, false);
+  oneByteOpcodes[0x33] = std::make_shared<TwoBytesIncrement>(&Cpu::sp, 1);
+  oneByteOpcodes[0x34] = std::make_shared<IncrementDereference>(&Cpu::hl, 1);
+  oneByteOpcodes[0x35] = std::make_shared<IncrementDereference>(&Cpu::hl, -1);
+  oneByteOpcodes[0x36] = std::make_shared<WriteImmediateToAddress>(&Cpu::hl);
+  oneByteOpcodes[0x37] = std::make_shared<SetCarryFlag>();
+  oneByteOpcodes[0x38] = std::make_shared<RelativeJumpFlag>(Cpu::carryFlag, false);
+  oneByteOpcodes[0x39] = std::make_shared<TwoBytesRegistersAddition>(&Cpu::hl, &Cpu::sp);
+  oneByteOpcodes[0x3a] = std::make_shared<DereferenceCombinedIntoSingleIncrement>(&Cpu::hl, &Cpu::af, -1, false);
+  oneByteOpcodes[0x3b] = std::make_shared<TwoBytesIncrement>(&Cpu::sp, -1);
+  oneByteOpcodes[0x3c] = std::make_shared<SingleByteIncrement>(&Cpu::af, false, 1);
+  oneByteOpcodes[0x3d] = std::make_shared<SingleByteIncrement>(&Cpu::af, false, -1);
+  oneByteOpcodes[0x3e] = std::make_shared<LoadImmediate8>(&Cpu::af, false);
+  oneByteOpcodes[0x3f] = std::make_shared<InvertCarryFlag>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
