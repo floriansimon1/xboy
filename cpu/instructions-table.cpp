@@ -1,7 +1,9 @@
 #include "instructions/dereference-combined-into-single-increment.hpp"
 #include "instructions/single-byte-register-to-memory-increment.hpp"
 #include "instructions/write-two-bytes-register-to-address.hpp"
+#include "instructions/subtract-memory-byte-to-register.hpp"
 #include "instructions/dereference-combined-into-single.hpp"
+#include "instructions/unsigned-registers-subtraction.hpp"
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
 #include "instructions/add-memory-byte-to-register.hpp"
@@ -184,6 +186,23 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x8d] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::hl, true, true);
   oneByteOpcodes[0x8e] = std::make_shared<AddMemoryByteToRegister>(&Cpu::hl, &Cpu::af, false, true);
   oneByteOpcodes[0x8f] = std::make_shared<UnsignedRegistersAddition>(&Cpu::af, false, &Cpu::af, false, true);
+
+  oneByteOpcodes[0x90] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::bc, false, false);
+  oneByteOpcodes[0x91] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::bc, true, false);
+  oneByteOpcodes[0x92] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::de, false, false);
+  oneByteOpcodes[0x93] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::de, true, false);
+  oneByteOpcodes[0x94] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::hl, false, false);
+  oneByteOpcodes[0x95] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::hl, true, false);
+  oneByteOpcodes[0x96] = std::make_shared<SubtractMemoryByteToRegister>(&Cpu::hl, false);
+  oneByteOpcodes[0x97] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::af, false, false);
+  oneByteOpcodes[0x98] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::bc, false, true);
+  oneByteOpcodes[0x99] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::bc, true, true);
+  oneByteOpcodes[0x9a] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::de, false, true);
+  oneByteOpcodes[0x9b] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::de, true, true);
+  oneByteOpcodes[0x9c] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::hl, false, true);
+  oneByteOpcodes[0x9d] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::hl, true, true);
+  oneByteOpcodes[0x9e] = std::make_shared<SubtractMemoryByteToRegister>(&Cpu::hl, true);
+  oneByteOpcodes[0x9f] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::af, false, true);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
