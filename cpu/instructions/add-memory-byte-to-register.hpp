@@ -10,12 +10,14 @@ struct AddMemoryByteToRegister: Instruction {
 
   CpuRegisterPointer pointerRegister;
   CpuRegisterPointer targetRegister;
+  bool               carry;
   bool               low;
 
   AddMemoryByteToRegister(
     CpuRegisterPointer pointerRegister,
     CpuRegisterPointer targetRegister,
-    bool low
+    bool low,
+    bool carry
   );
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;

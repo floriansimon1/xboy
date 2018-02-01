@@ -24,6 +24,7 @@ const uint16_t maxTwoBytesBcd  = 0x99;
 constexpr uint16_t highByteMask     = lowByteMask << 8;
 constexpr uint8_t  highHalfByteMask = lowHalfByteMask << 4;
 
+constexpr uint8_t  maxUint8  = lowByteMask;
 constexpr uint16_t maxUint16 = highByteMask | lowByteMask;
 
 #endif

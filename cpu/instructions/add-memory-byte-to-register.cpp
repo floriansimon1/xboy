@@ -7,12 +7,14 @@
 AddMemoryByteToRegister::AddMemoryByteToRegister(
   CpuRegisterPointer pointerRegister,
   CpuRegisterPointer targetRegister,
-  bool low
+  bool low,
+  bool carry
 ):
   Instruction(8, 0, 1),
-  additionInstruction(targetRegister, low, targetRegister, !low),
+  additionInstruction(targetRegister, low, targetRegister, !low, carry),
   pointerRegister(pointerRegister),
   targetRegister(targetRegister),
+  carry(carry),
   low(low)
 {
 }
@@ -31,7 +33,7 @@ void AddMemoryByteToRegister::execute(Gameboy &gameboy, const uint8_t *data) con
 std::string AddMemoryByteToRegister::toString() const {
   std::ostringstream result;
 
-  result << "ADD " << registerString(targetRegister, true, low)
+  result << additionInstruction.mnemonic() << ' ' << registerString(targetRegister, true, low)
          << ", " << registerString(pointerRegister, false, false);
 
   return result.str();
