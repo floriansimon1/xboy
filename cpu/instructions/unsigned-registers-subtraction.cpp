@@ -18,7 +18,7 @@ UnsignedRegistersSubtraction::UnsignedRegistersSubtraction(
 }
 
 const char* UnsignedRegistersSubtraction::mnemonic() const {
-  return carry ? "SBC" : "SUB";
+  return carry ? "SBC A," : "SUB";
 }
 
 void UnsignedRegistersSubtraction::execute(Gameboy &gameboy, const uint8_t *) const {
