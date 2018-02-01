@@ -7,26 +7,23 @@ RegistersAdditionTest::RegistersAdditionTest(): Test("Registers addition test") 
 }
 
 bool RegistersAdditionTest::run() {
-  AddMemoryByteToRegister withCarry(&Cpu::hl, &Cpu::bc, false, true);
-  AddMemoryByteToRegister normal(&Cpu::hl, &Cpu::bc, false, false);
+  AddMemoryByteToRegister withCarry(&Cpu::hl, true);
+  AddMemoryByteToRegister normal(&Cpu::hl, false);
   Gameboy                 gameboy;
-
-  const auto someValue = 8;
 
   gameboy.cpu.hl = 0;
   gameboy.mmu.memory[gameboy.cpu.hl] = 1;
-  gameboy.cpu.setSingleByteRegister(&Cpu::bc, true, someValue);
-  gameboy.cpu.setSingleByteRegister(&Cpu::bc, false, maxUint8);
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, maxUint8);
 
   normal.execute(gameboy, gameboy.mmu.memory);
 
   if (
-    !gameboy.cpu.getZeroFlag()
+    gameboy.cpu.hl
+    || !gameboy.cpu.getZeroFlag()
     || !gameboy.cpu.getCarryFlag()
     || gameboy.cpu.getSubtractFlag()
     || !gameboy.cpu.getHalfCarryFlag()
-    || gameboy.cpu.singleByteRegister(&Cpu::bc, false)
-    || gameboy.cpu.singleByteRegister(&Cpu::bc, true) != someValue
+    || gameboy.cpu.singleByteRegister(&Cpu::af, false)
   ) {
     return false;
   }
@@ -34,12 +31,12 @@ bool RegistersAdditionTest::run() {
   withCarry.execute(gameboy, gameboy.mmu.memory);
 
   if (
-    gameboy.cpu.getZeroFlag()
+    gameboy.cpu.hl
+    || gameboy.cpu.getZeroFlag()
     || gameboy.cpu.getCarryFlag()
     || gameboy.cpu.getSubtractFlag()
     || gameboy.cpu.getHalfCarryFlag()
-    || gameboy.cpu.singleByteRegister(&Cpu::bc, false) != 2
-    || gameboy.cpu.singleByteRegister(&Cpu::bc, true) != someValue
+    || gameboy.cpu.singleByteRegister(&Cpu::af, false) != 2
   ) {
     return false;
   }

@@ -7,18 +7,10 @@
 
 struct AddMemoryByteToRegister: Instruction {
   const UnsignedRegistersAddition additionInstruction;
+  CpuRegisterPointer              pointerRegister;
+  const bool                      carry;
 
-  CpuRegisterPointer pointerRegister;
-  CpuRegisterPointer targetRegister;
-  bool               carry;
-  bool               low;
-
-  AddMemoryByteToRegister(
-    CpuRegisterPointer pointerRegister,
-    CpuRegisterPointer targetRegister,
-    bool low,
-    bool carry
-  );
+  AddMemoryByteToRegister(CpuRegisterPointer pointerRegister, bool carry);
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;

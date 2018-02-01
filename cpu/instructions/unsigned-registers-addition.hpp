@@ -5,17 +5,13 @@
 #include "../cpu.hpp"
 
 struct UnsignedRegistersAddition: Instruction {
-  bool               fromLow;
-  bool               toLow;
-  bool               carry;
+  const bool         low;
   CpuRegisterPointer from;
-  CpuRegisterPointer to;
+  const bool         carry;
 
   UnsignedRegistersAddition(
-    CpuRegisterPointer to,
-    bool toLow,
     CpuRegisterPointer from,
-    bool fromLow,
+    bool low,
     bool carry
   );
 

@@ -6,14 +6,14 @@
 #include "../../bit.hpp"
 
 UnsignedRegistersAddition::UnsignedRegistersAddition(
-  CpuRegisterPointer to, bool toLow, CpuRegisterPointer from, bool fromLow, bool carry
+  CpuRegisterPointer from,
+  bool low,
+  bool carry
 ):
   Instruction(4, 0, 1),
-  fromLow(fromLow),
-  toLow(toLow),
-  carry(carry),
+  low(low),
   from(from),
-  to(to)
+  carry(carry)
 {
 }
 
@@ -24,13 +24,13 @@ const char* UnsignedRegistersAddition::mnemonic() const {
 void UnsignedRegistersAddition::execute(Gameboy &gameboy, const uint8_t *) const {
   gameboy.cpu.setSubtractFlag(false);
 
-  const auto fromValue  = gameboy.cpu.singleByteRegister(to, toLow);
+  const auto fromValue  = gameboy.cpu.singleByteRegister(&Cpu::af, false);
   const auto carryValue = gameboy.cpu.getCarryFlag() && carry ? 1 : 0;
-  const auto toValue    = gameboy.cpu.singleByteRegister(from, fromLow);
+  const auto toValue    = gameboy.cpu.singleByteRegister(from, low);
 
   const uint8_t result = fromValue + toValue + carryValue;
 
-  gameboy.cpu.setSingleByteRegister(to, toLow, result);
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, result);
 
   gameboy.cpu.setZeroFlag(!result);
   gameboy.cpu.setCarryFlag(result < fromValue && result < toValue);
@@ -40,9 +40,7 @@ void UnsignedRegistersAddition::execute(Gameboy &gameboy, const uint8_t *) const
 std::string UnsignedRegistersAddition::toString() const {
   std::ostringstream result;
 
-  result << mnemonic() << ' '
-         << registerString(to, true, toLow) << ", "
-         << registerString(from, true, fromLow);
+  result << mnemonic() << " A, " << registerString(from, true, low);
 
   return result.str();
 }
