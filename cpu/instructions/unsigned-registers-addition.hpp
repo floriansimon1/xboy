@@ -7,12 +7,12 @@
 
 struct UnsignedRegistersAddition: Instruction {
   const bool         low;
-  CpuRegisterPointer from;
+  CpuRegisterPointer cpuRegister;
 
   UnsignedRegistersAddition(
-    CpuRegisterPointer from,
-    bool low,
-    bool carry
+    CpuRegisterPointer cpuRegister,
+    bool carry,
+    bool low
   );
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;

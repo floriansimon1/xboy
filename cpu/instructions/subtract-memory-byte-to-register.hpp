@@ -1,12 +1,12 @@
 #ifndef SUBTRACT_MEMORY_BYTE_TO_REGISTER_HPP
 #define SUBTRACT_MEMORY_BYTE_TO_REGISTER_HPP
 
-#include "unsigned-registers-subtraction.hpp"
+#include "unsigned-immediate-subtraction.hpp"
 #include "../instruction.hpp"
 #include "../cpu.hpp"
 
 struct SubtractMemoryByteToRegister: Instruction {
-  const UnsignedRegistersSubtraction subtractionInstruction;
+  const UnsignedImmediateSubtraction subtractionInstruction;
 
   CpuRegisterPointer pointerRegister;
   bool               carry;

@@ -1,13 +1,13 @@
 #ifndef UNSIGNED_REGISTERS_SUBTRACTION_HPP
 #define UNSIGNED_REGISTERS_SUBTRACTION_HPP
 
+#include "./unsigned-immediate-subtraction.hpp"
 #include "../instruction.hpp"
 #include "../cpu.hpp"
 
 struct UnsignedRegistersSubtraction: Instruction {
+  const bool         low;
   CpuRegisterPointer cpuRegister;
-  bool               carry;
-  bool               low;
 
   UnsignedRegistersSubtraction(
     CpuRegisterPointer cpuRegister,
@@ -17,7 +17,9 @@ struct UnsignedRegistersSubtraction: Instruction {
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;
-  const char* mnemonic() const;
+
+  private:
+    UnsignedImmediateSubtraction subtractionInstruction;
 };
 
 #endif

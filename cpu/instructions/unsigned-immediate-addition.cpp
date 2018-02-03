@@ -1,5 +1,3 @@
-#include <sstream>
-
 #include "../../debug/register-string.hpp"
 #include "unsigned-immediate-addition.hpp"
 #include "../../gameboy.hpp"
@@ -28,7 +26,12 @@ void UnsignedImmediateAddition::execute(Gameboy &gameboy, const uint8_t *data) c
 
   gameboy.cpu.setZeroFlag(!result);
   gameboy.cpu.setCarryFlag(result < aValue && result < addValue);
-  gameboy.cpu.setHalfCarryFlag((aValue & lowHalfByteMask) + (addValue & lowHalfByteMask) > lowHalfByteMask);
+
+  gameboy.cpu.setHalfCarryFlag(
+    (aValue & lowHalfByteMask)
+    + ((addValue + carryValue) & lowHalfByteMask)
+    > lowHalfByteMask
+  );
 }
 
 std::string UnsignedImmediateAddition::toString() const {
