@@ -8,27 +8,22 @@ AddMemoryByteToRegister::AddMemoryByteToRegister(
   CpuRegisterPointer pointerRegister, bool carry
 ):
   Instruction(8, 0, 1),
-  additionInstruction(pointerRegister, true, carry),
+  additionInstruction(carry),
   pointerRegister(pointerRegister),
   carry(carry)
 {
 }
 
-void AddMemoryByteToRegister::execute(Gameboy &gameboy, const uint8_t *data) const {
-  const auto cheatRegisterValue = gameboy.cpu.singleByteRegister(pointerRegister, additionInstruction.low);
-  const auto memoryValue        = gameboy.mmu.memory[gameboy.cpu.twoBytesRegister(pointerRegister)];
+void AddMemoryByteToRegister::execute(Gameboy &gameboy, const uint8_t *) const {
+  const auto dataPointer = gameboy.mmu.memory + gameboy.cpu.twoBytesRegister(pointerRegister);
 
-  gameboy.cpu.setSingleByteRegister(pointerRegister, additionInstruction.low, memoryValue);
-
-  additionInstruction.execute(gameboy, data);
-
-  gameboy.cpu.setSingleByteRegister(pointerRegister, additionInstruction.low, cheatRegisterValue);
+  additionInstruction.execute(gameboy, dataPointer);
 }
 
 std::string AddMemoryByteToRegister::toString() const {
   std::ostringstream result;
 
-  result << additionInstruction.mnemonic() << " A, ("
+  result << additionInstruction.mnemonic() << '('
          << registerString(pointerRegister, false, false) << ')';
 
   return result.str();

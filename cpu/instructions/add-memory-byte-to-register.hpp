@@ -1,12 +1,12 @@
 #ifndef ADD_MEMORY_BYTE_TO_REGISTER_HPP
 #define ADD_MEMORY_BYTE_TO_REGISTER_HPP
 
-#include "unsigned-registers-addition.hpp"
+#include "unsigned-immediate-addition.hpp"
 #include "../instruction.hpp"
 #include "../cpu.hpp"
 
 struct AddMemoryByteToRegister: Instruction {
-  const UnsignedRegistersAddition additionInstruction;
+  const UnsignedImmediateAddition additionInstruction;
   CpuRegisterPointer              pointerRegister;
   const bool                      carry;
 
