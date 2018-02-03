@@ -17,8 +17,6 @@ UnsignedRegistersAddition::UnsignedRegistersAddition(
 }
 
 void UnsignedRegistersAddition::execute(Gameboy &gameboy, const uint8_t *) const {
-  gameboy.cpu.setSubtractFlag(false);
-
   const auto added = gameboy.cpu.singleByteRegister(cpuRegister, low);
 
   additionInstruction.execute(gameboy, &added);
