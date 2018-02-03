@@ -1,4 +1,3 @@
-#include "../../debug/register-string.hpp"
 #include "unsigned-immediate-addition.hpp"
 #include "../../gameboy.hpp"
 #include "../../bit.hpp"

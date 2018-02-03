@@ -3,7 +3,6 @@
 #include "../../debug/register-string.hpp"
 #include "unsigned-registers-addition.hpp"
 #include "../../gameboy.hpp"
-#include "../../bit.hpp"
 
 UnsignedRegistersAddition::UnsignedRegistersAddition(
   CpuRegisterPointer cpuRegister,

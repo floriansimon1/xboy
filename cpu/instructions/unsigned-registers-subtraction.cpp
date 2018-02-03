@@ -3,7 +3,6 @@
 #include "unsigned-registers-subtraction.hpp"
 #include "../../debug/register-string.hpp"
 #include "../../gameboy.hpp"
-#include "../../bit.hpp"
 
 UnsignedRegistersSubtraction::UnsignedRegistersSubtraction(
   CpuRegisterPointer cpuRegister,
