@@ -7,9 +7,7 @@
 
 struct SubtractMemoryByteToRegister: Instruction {
   const UnsignedImmediateSubtraction subtractionInstruction;
-
-  CpuRegisterPointer pointerRegister;
-  bool               carry;
+  CpuRegisterPointer                 pointerRegister;
 
   SubtractMemoryByteToRegister(
     CpuRegisterPointer pointerRegister,

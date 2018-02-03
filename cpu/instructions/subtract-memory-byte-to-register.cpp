@@ -7,8 +7,7 @@
 SubtractMemoryByteToRegister::SubtractMemoryByteToRegister(CpuRegisterPointer pointerRegister, bool carry):
   Instruction(8, 0, 1),
   subtractionInstruction(carry),
-  pointerRegister(pointerRegister),
-  carry(carry)
+  pointerRegister(pointerRegister)
 {
 }
 

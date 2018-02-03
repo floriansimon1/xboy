@@ -8,7 +8,6 @@
 struct AddMemoryByteToRegister: Instruction {
   const UnsignedImmediateAddition additionInstruction;
   CpuRegisterPointer              pointerRegister;
-  const bool                      carry;
 
   AddMemoryByteToRegister(CpuRegisterPointer pointerRegister, bool carry);
 

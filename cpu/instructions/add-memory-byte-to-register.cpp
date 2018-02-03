@@ -9,8 +9,7 @@ AddMemoryByteToRegister::AddMemoryByteToRegister(
 ):
   Instruction(8, 0, 1),
   additionInstruction(carry),
-  pointerRegister(pointerRegister),
-  carry(carry)
+  pointerRegister(pointerRegister)
 {
 }
 
