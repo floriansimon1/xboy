@@ -18,12 +18,14 @@
 #include "instructions/invert-carry-flag.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
+#include "instructions/dereference-and.hpp"
 #include "instructions/set-carry-flag.hpp"
 #include "instructions/decimal-adjust.hpp"
 #include "instructions/a-rotate-right.hpp"
 #include "instructions/a-rotate-left.hpp"
 #include "instructions/relative-jump.hpp"
 #include "instructions/copy-register.hpp"
+#include "instructions/registers-and.hpp"
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/halt.hpp"
@@ -203,6 +205,15 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0x9d] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::hl, true, true);
   oneByteOpcodes[0x9e] = std::make_shared<SubtractMemoryByteToRegister>(&Cpu::hl, true);
   oneByteOpcodes[0x9f] = std::make_shared<UnsignedRegistersSubtraction>(&Cpu::af, false, true);
+
+  oneByteOpcodes[0xa0] = std::make_shared<RegistersAnd>(&Cpu::bc, false);
+  oneByteOpcodes[0xa1] = std::make_shared<RegistersAnd>(&Cpu::bc, true);
+  oneByteOpcodes[0xa2] = std::make_shared<RegistersAnd>(&Cpu::de, false);
+  oneByteOpcodes[0xa3] = std::make_shared<RegistersAnd>(&Cpu::de, true);
+  oneByteOpcodes[0xa4] = std::make_shared<RegistersAnd>(&Cpu::hl, false);
+  oneByteOpcodes[0xa5] = std::make_shared<RegistersAnd>(&Cpu::hl, true);
+  oneByteOpcodes[0xa6] = std::make_shared<DereferenceAnd>(&Cpu::hl);
+  oneByteOpcodes[0xa7] = std::make_shared<RegistersAnd>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
