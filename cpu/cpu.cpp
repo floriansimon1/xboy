@@ -62,6 +62,10 @@ uint8_t Cpu::singleByteRegister(CpuRegisterPointer cpuRegister, bool low) const 
   return fullRegisterValue >> 8;
 }
 
+void Cpu::clearAllFlags() {
+  setSingleByteRegister(&Cpu::af, true, 0);
+}
+
 void Cpu::setZeroFlag(bool enable) {
   af = setBit(af, Cpu::zeroFlag, enable);
 }

@@ -4,6 +4,8 @@
 
 #include "test.hpp"
 #include "run-tests.hpp"
+#include "instructions/registers-or-test.hpp"
+#include "instructions/registers-and-test.hpp"
 #include "instructions/decimal-adjust-test.hpp"
 #include "instructions/load-immediate-8-test.hpp"
 #include "instructions/relative-jump-flag-test.hpp"

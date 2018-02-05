@@ -5,13 +5,15 @@
 #include "../cpu.hpp"
 
 struct DereferenceAnd: Instruction {
-  const ImmediateAnd andInstruction;
   CpuRegisterPointer pointerRegister;
 
   DereferenceAnd(CpuRegisterPointer pointerRegister);
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;
+
+  private:
+    const ImmediateAnd andInstruction;
 };
 
 #endif

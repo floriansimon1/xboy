@@ -42,6 +42,7 @@ struct Cpu {
   bool onlyFlagSet(unsigned short flag) const;
   bool flagHasValue(unsigned short flag, bool value) const;
 
+  void clearAllFlags();
   void setZeroFlag(bool enable);
   void setCarryFlag(bool enable);
   void setSubtractFlag(bool enable);
