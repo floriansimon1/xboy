@@ -33,6 +33,8 @@
 #include "instructions/return-flag.hpp"
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
+#include "instructions/jump.hpp"
+#include "instructions/call.hpp"
 #include "instructions/halt.hpp"
 #include "instructions/stop.hpp"
 #include "instructions/nop.hpp"
@@ -247,6 +249,9 @@ InstructionsTable::InstructionsTable() {
 
   oneByteOpcodes[0xc0] = std::make_shared<ReturnFlag>(true, Cpu::zeroFlag, true);
   oneByteOpcodes[0xc1] = std::make_shared<PopTwoBytes>(&Cpu::bc);
+  oneByteOpcodes[0xc2] = std::make_shared<Jump>(true, Cpu::zeroFlag, true);
+  oneByteOpcodes[0xc2] = std::make_shared<Jump>(false);
+  oneByteOpcodes[0xc3] = std::make_shared<Call>(true, Cpu::zeroFlag, true);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
