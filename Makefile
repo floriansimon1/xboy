@@ -3,7 +3,10 @@ tests           := $(shell find tests/ -iname "*.cpp")
 compiledTests   := $(patsubst %.cpp, obj/%.o, $(tests))
 compiledSources := $(patsubst %.cpp, obj/%.o, $(sources))
 
-.PHONY: clean
+.PHONY: clean test
+
+test: bin/xboy
+	bin/xboy
 
 obj/%.o: %.cpp
 	@mkdir -p `dirname $@`
