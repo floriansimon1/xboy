@@ -19,6 +19,7 @@
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions/dereference-and.hpp"
+#include "instructions/dereference-or.hpp"
 #include "instructions/set-carry-flag.hpp"
 #include "instructions/decimal-adjust.hpp"
 #include "instructions/a-rotate-right.hpp"
@@ -26,6 +27,7 @@
 #include "instructions/relative-jump.hpp"
 #include "instructions/copy-register.hpp"
 #include "instructions/registers-and.hpp"
+#include "instructions/registers-or.hpp"
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/halt.hpp"
@@ -214,6 +216,23 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xa5] = std::make_shared<RegistersAnd>(&Cpu::hl, true);
   oneByteOpcodes[0xa6] = std::make_shared<DereferenceAnd>(&Cpu::hl);
   oneByteOpcodes[0xa7] = std::make_shared<RegistersAnd>(&Cpu::af, false);
+  oneByteOpcodes[0xa8] = std::make_shared<RegistersOr>(&Cpu::bc, false, true);
+  oneByteOpcodes[0xa9] = std::make_shared<RegistersOr>(&Cpu::bc, true, true);
+  oneByteOpcodes[0xaa] = std::make_shared<RegistersOr>(&Cpu::de, false, true);
+  oneByteOpcodes[0xab] = std::make_shared<RegistersOr>(&Cpu::de, true, true);
+  oneByteOpcodes[0xac] = std::make_shared<RegistersOr>(&Cpu::hl, false, true);
+  oneByteOpcodes[0xad] = std::make_shared<RegistersOr>(&Cpu::hl, true, true);
+  oneByteOpcodes[0xae] = std::make_shared<DereferenceOr>(&Cpu::hl, true);
+  oneByteOpcodes[0xaf] = std::make_shared<RegistersOr>(&Cpu::af, false, true);
+
+  oneByteOpcodes[0xb0] = std::make_shared<RegistersOr>(&Cpu::bc, false, false);
+  oneByteOpcodes[0xb1] = std::make_shared<RegistersOr>(&Cpu::bc, true, false);
+  oneByteOpcodes[0xb2] = std::make_shared<RegistersOr>(&Cpu::de, false, false);
+  oneByteOpcodes[0xb3] = std::make_shared<RegistersOr>(&Cpu::de, true, false);
+  oneByteOpcodes[0xb4] = std::make_shared<RegistersOr>(&Cpu::hl, false, false);
+  oneByteOpcodes[0xb5] = std::make_shared<RegistersOr>(&Cpu::hl, true, false);
+  oneByteOpcodes[0xb6] = std::make_shared<DereferenceOr>(&Cpu::hl, false);
+  oneByteOpcodes[0xb7] = std::make_shared<RegistersOr>(&Cpu::af, false, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
