@@ -4,7 +4,7 @@
 #include "immediate-compare.hpp"
 #include "../cpu.hpp"
 
-struct DereferenceCompare: Instruction {
+struct DereferenceCompare: ConstantTimeInstruction {
   CpuRegisterPointer pointerRegister;
 
   DereferenceCompare(CpuRegisterPointer pointerRegister);

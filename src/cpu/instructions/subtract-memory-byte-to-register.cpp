@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 SubtractMemoryByteToRegister::SubtractMemoryByteToRegister(CpuRegisterPointer pointerRegister, bool carry):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   subtractionInstruction(carry),
   pointerRegister(pointerRegister)
 {

@@ -3,7 +3,7 @@
 #include "../../bit.hpp"
 
 UnsignedImmediateAddition::UnsignedImmediateAddition(bool carry):
-  Instruction(8, 1, 1),
+  ConstantTimeInstruction(8, 1, 1),
   carry(carry)
 {
 }

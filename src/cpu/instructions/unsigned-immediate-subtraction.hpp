@@ -1,10 +1,10 @@
 #ifndef UNSIGNED_IMMEDIATE_SUBTRACTION_HPP
 #define UNSIGNED_IMMEDIATE_SUBTRACTION_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct UnsignedImmediateSubtraction: Instruction {
+struct UnsignedImmediateSubtraction: ConstantTimeInstruction {
   const bool carry;
 
   UnsignedImmediateSubtraction(bool carry);

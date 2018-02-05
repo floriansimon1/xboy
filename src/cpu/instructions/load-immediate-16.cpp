@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 LoadImmediate16::LoadImmediate16(CpuRegisterPointer cpuRegister):
-  Instruction(12, 2, 1),
+  ConstantTimeInstruction(12, 2, 1),
   cpuRegister(cpuRegister)
 {
 }

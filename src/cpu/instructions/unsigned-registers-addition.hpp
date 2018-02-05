@@ -2,10 +2,10 @@
 #define UNSIGNED_REGISTERS_ADDITION_HPP
 
 #include "./unsigned-immediate-addition.hpp"
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct UnsignedRegistersAddition: Instruction {
+struct UnsignedRegistersAddition: ConstantTimeInstruction {
   const bool         low;
   CpuRegisterPointer cpuRegister;
 

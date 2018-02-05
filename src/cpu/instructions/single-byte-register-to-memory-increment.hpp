@@ -3,7 +3,7 @@
 
 #include "single-byte-register-to-memory.hpp"
 
-struct SingleByteRegisterToMemoryIncrement: Instruction {
+struct SingleByteRegisterToMemoryIncrement: ConstantTimeInstruction {
   SingleByteRegisterToMemory dereferenceInstruction;
   const short                sign;
 

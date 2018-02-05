@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 TwoBytesIncrement::TwoBytesIncrement(CpuRegisterPointer cpuRegister, short sign):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   cpuRegister(cpuRegister),
   sign(sign)
 {

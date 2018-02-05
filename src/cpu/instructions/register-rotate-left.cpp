@@ -6,7 +6,7 @@
 #include "../../bit.hpp"
 
 RegisterRotateLeft::RegisterRotateLeft(CpuRegisterPointer cpuRegister, bool low):
-  Instruction(8, 1, 1),
+  ConstantTimeInstruction(8, 1, 1),
   cpuRegister(cpuRegister),
   low(low)
 {

@@ -1,7 +1,7 @@
 #include "set-carry-flag.hpp"
 #include "../../gameboy.hpp"
 
-SetCarryFlag::SetCarryFlag(): Instruction(4, 0, 1) {
+SetCarryFlag::SetCarryFlag(): ConstantTimeInstruction(4, 0, 1) {
 }
 
 void SetCarryFlag::execute(Gameboy &gameboy, const uint8_t *) const {

@@ -16,13 +16,10 @@ struct Instruction {
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
   unsigned short totalSize();
-  virtual unsigned short ticks(Gameboy &gameboy) const;
+  virtual unsigned short ticks(Gameboy &gameboy) const = 0;
 
   protected:
-    Instruction(unsigned long long ticks, unsigned short dataSize, unsigned short opcodeSize);
-
-  private:
-    const unsigned long long baseTicks;
+    Instruction(unsigned short dataSize, unsigned short opcodeSize);
 };
 
 #endif

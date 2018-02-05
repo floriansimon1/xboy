@@ -2,10 +2,10 @@
 #define REGISTER_AND_HPP
 
 #include "./immediate-and.hpp"
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct RegistersAnd: Instruction {
+struct RegistersAnd: ConstantTimeInstruction {
   const bool         low;
   CpuRegisterPointer cpuRegister;
 

@@ -10,7 +10,7 @@ DereferenceCombinedIntoSingleIncrement::DereferenceCombinedIntoSingleIncrement(
   const short        sign,
   bool               low
 ):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   dereferenceInstruction(pointerRegister, targetRegister, low),
   sign(sign)
 {

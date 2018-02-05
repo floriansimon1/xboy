@@ -1,10 +1,10 @@
 #ifndef WRITE_IMMEDIATE_TO_ADDRESS_HPP
 #define WRITE_IMMEDIATE_TO_ADDRESS_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct WriteImmediateToAddress: Instruction {
+struct WriteImmediateToAddress: ConstantTimeInstruction {
   CpuRegisterPointer pointerRegister;
 
   WriteImmediateToAddress(CpuRegisterPointer pointerRegister);

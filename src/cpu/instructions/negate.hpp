@@ -1,9 +1,9 @@
 #ifndef NEGATE_HPP
 #define NEGATE_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 
-struct Negate: Instruction {
+struct Negate: ConstantTimeInstruction {
   Negate();
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;

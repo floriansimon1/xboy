@@ -1,10 +1,10 @@
 #ifndef TWO_BYTES_INCREMENT_HPP
 #define TWO_BYTES_INCREMENT_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct TwoBytesIncrement: Instruction {
+struct TwoBytesIncrement: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
   const short sign;
 

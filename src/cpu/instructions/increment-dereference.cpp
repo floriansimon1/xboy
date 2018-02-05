@@ -6,7 +6,7 @@
 #include "../../bit.hpp"
 
 IncrementDereference::IncrementDereference(CpuRegisterPointer pointerRegister, const short sign):
-  Instruction(12, 0, 1),
+  ConstantTimeInstruction(12, 0, 1),
   pointerRegister(pointerRegister),
   sign(sign)
 {

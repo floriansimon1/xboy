@@ -1,10 +1,10 @@
 #ifndef UNSIGNED_IMMEDIATE_ADDITION_HPP
 #define UNSIGNED_IMMEDIATE_ADDITION_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct UnsignedImmediateAddition: Instruction {
+struct UnsignedImmediateAddition: ConstantTimeInstruction {
   const bool carry;
 
   UnsignedImmediateAddition(bool carry);

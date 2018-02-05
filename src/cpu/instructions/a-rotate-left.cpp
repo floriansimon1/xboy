@@ -4,7 +4,7 @@
 #include "../../bit.hpp"
 
 RotateLeftA::RotateLeftA():
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   standardRotateLeft(&Cpu::af, false)
 {
 }

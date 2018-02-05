@@ -2,10 +2,10 @@
 #define IMMEDIATE_COMPARE_HPP
 
 #include "./unsigned-immediate-subtraction.hpp"
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct ImmediateCompare: Instruction {
+struct ImmediateCompare: ConstantTimeInstruction {
   ImmediateCompare();
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;

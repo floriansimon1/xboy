@@ -1,10 +1,10 @@
 #ifndef REGISTER_ROTATE_RIGHT_HPP
 #define REGISTER_ROTATE_RIGHT_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct RegisterRotateRight: Instruction {
+struct RegisterRotateRight: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
   const bool         low;
 

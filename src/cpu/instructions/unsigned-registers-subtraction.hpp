@@ -2,10 +2,10 @@
 #define UNSIGNED_REGISTERS_SUBTRACTION_HPP
 
 #include "./unsigned-immediate-subtraction.hpp"
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct UnsignedRegistersSubtraction: Instruction {
+struct UnsignedRegistersSubtraction: ConstantTimeInstruction {
   const bool         low;
   CpuRegisterPointer cpuRegister;
 

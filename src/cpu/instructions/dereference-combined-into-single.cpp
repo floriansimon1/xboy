@@ -9,7 +9,7 @@ DereferenceCombinedIntoSingle::DereferenceCombinedIntoSingle(
   CpuRegisterPointer targetRegister,
   bool               low
 ):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   pointerRegister(pointerRegister),
   targetRegister(targetRegister),
   low(low)

@@ -2,7 +2,7 @@
 #include "../../gameboy.hpp"
 #include "../../bit.hpp"
 
-ImmediateCompare::ImmediateCompare(): Instruction(8, 1, 1), subtractionInstruction(false) {
+ImmediateCompare::ImmediateCompare(): ConstantTimeInstruction(8, 1, 1), subtractionInstruction(false) {
 }
 
 void ImmediateCompare::execute(Gameboy &gameboy, const uint8_t *data) const {

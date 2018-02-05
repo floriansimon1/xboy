@@ -4,7 +4,7 @@
 #include "immediate-or.hpp"
 #include "../../bit.hpp"
 
-ImmediateOr::ImmediateOr(bool exclusive): Instruction(8, 1, 1), exclusive(exclusive) {
+ImmediateOr::ImmediateOr(bool exclusive): ConstantTimeInstruction(8, 1, 1), exclusive(exclusive) {
 }
 
 void ImmediateOr::execute(Gameboy &gameboy, const uint8_t *data) const {

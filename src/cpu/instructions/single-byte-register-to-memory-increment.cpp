@@ -10,7 +10,7 @@ SingleByteRegisterToMemoryIncrement::SingleByteRegisterToMemoryIncrement(
   short sign,
   bool low
 ):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   dereferenceInstruction(memoryPointer, cpuRegister, low),
   sign(sign)
 {

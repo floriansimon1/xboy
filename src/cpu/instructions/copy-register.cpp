@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 CopyRegister::CopyRegister(CpuRegisterPointer to, bool toLow, CpuRegisterPointer from, bool fromLow):
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   fromLow(fromLow),
   toLow(toLow),
   from(from),

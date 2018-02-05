@@ -4,7 +4,7 @@
 #include "immediate-and.hpp"
 #include "../cpu.hpp"
 
-struct DereferenceAnd: Instruction {
+struct DereferenceAnd: ConstantTimeInstruction {
   CpuRegisterPointer pointerRegister;
 
   DereferenceAnd(CpuRegisterPointer pointerRegister);

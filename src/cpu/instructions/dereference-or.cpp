@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 DereferenceOr::DereferenceOr(CpuRegisterPointer pointerRegister, bool exclusive):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   pointerRegister(pointerRegister),
   orInstruction(exclusive)
 {

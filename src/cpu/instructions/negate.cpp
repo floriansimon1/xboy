@@ -2,7 +2,7 @@
 #include "../../bit.hpp"
 #include "negate.hpp"
 
-Negate::Negate(): Instruction(4, 0, 1) {
+Negate::Negate(): ConstantTimeInstruction(4, 0, 1) {
 }
 
 void Negate::execute(Gameboy &gameboy, const uint8_t *) const {

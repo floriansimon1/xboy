@@ -6,7 +6,7 @@
 #include "../../bit.hpp"
 
 SingleByteIncrement::SingleByteIncrement(CpuRegisterPointer cpuRegister, bool low, short sign):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   cpuRegister(cpuRegister),
   sign(sign),
   low(low)

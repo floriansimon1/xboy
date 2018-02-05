@@ -1,9 +1,9 @@
 #ifndef DECIMAL_ADJUST_HPP
 #define DECIMAL_ADJUST_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 
-struct DecimalAdjust: Instruction {
+struct DecimalAdjust: ConstantTimeInstruction {
   DecimalAdjust();
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;

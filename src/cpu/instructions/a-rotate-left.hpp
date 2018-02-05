@@ -1,11 +1,11 @@
 #ifndef A_ROTATE_LEFT_HPP
 #define A_ROTATE_LEFT_HPP
 
+#include "../constant-time-instruction.hpp"
 #include "register-rotate-left.hpp"
-#include "../instruction.hpp"
 #include "../cpu.hpp"
 
-struct RotateLeftA: Instruction {
+struct RotateLeftA: ConstantTimeInstruction {
   const RegisterRotateLeft standardRotateLeft;
 
   RotateLeftA();

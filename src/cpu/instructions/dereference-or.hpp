@@ -4,7 +4,7 @@
 #include "immediate-or.hpp"
 #include "../cpu.hpp"
 
-struct DereferenceOr: Instruction {
+struct DereferenceOr: ConstantTimeInstruction {
   CpuRegisterPointer pointerRegister;
 
   DereferenceOr(CpuRegisterPointer pointerRegister, bool exclusive);

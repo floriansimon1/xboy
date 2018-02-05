@@ -1,10 +1,10 @@
 #ifndef DEREFERENCE_COMBINED_INTO_SINGLE_HPP
 #define DEREFERENCE_COMBINED_INTO_SINGLE_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct DereferenceCombinedIntoSingle: Instruction {
+struct DereferenceCombinedIntoSingle: ConstantTimeInstruction {
   CpuRegisterPointer pointerRegister;
   CpuRegisterPointer targetRegister;
   const bool         low;

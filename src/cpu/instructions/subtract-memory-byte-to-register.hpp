@@ -2,10 +2,10 @@
 #define SUBTRACT_MEMORY_BYTE_TO_REGISTER_HPP
 
 #include "unsigned-immediate-subtraction.hpp"
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct SubtractMemoryByteToRegister: Instruction {
+struct SubtractMemoryByteToRegister: ConstantTimeInstruction {
   const UnsignedImmediateSubtraction subtractionInstruction;
   CpuRegisterPointer                 pointerRegister;
 

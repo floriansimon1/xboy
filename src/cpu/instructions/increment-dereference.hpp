@@ -1,10 +1,10 @@
 #ifndef INCREMENT_DEREFERENCE_HPP
 #define INCREMENT_DEREFERENCE_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct IncrementDereference: Instruction {
+struct IncrementDereference: ConstantTimeInstruction {
   CpuRegisterPointer pointerRegister;
   const short sign;
 

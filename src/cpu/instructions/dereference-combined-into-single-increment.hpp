@@ -3,7 +3,7 @@
 
 #include "dereference-combined-into-single.hpp"
 
-struct DereferenceCombinedIntoSingleIncrement: Instruction {
+struct DereferenceCombinedIntoSingleIncrement: ConstantTimeInstruction {
   const DereferenceCombinedIntoSingle dereferenceInstruction;
   const short                         sign;
 

@@ -1,10 +1,10 @@
 #ifndef SINGLE_BYTE_INCREMENT_HPP
 #define SINGLE_BYTE_INCREMENT_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct SingleByteIncrement: Instruction {
+struct SingleByteIncrement: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
   const short sign;
   const bool low;

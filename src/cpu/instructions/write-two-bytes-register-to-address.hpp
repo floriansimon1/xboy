@@ -1,10 +1,10 @@
 #ifndef WRITE_TWO_BYTES_REGISTER_TO_ADDRESS_HPP
 #define WRITE_TWO_BYTES_REGISTER_TO_ADDRESS_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct WriteTwoBytesRegisterToAddress: Instruction {
+struct WriteTwoBytesRegisterToAddress: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
 
   WriteTwoBytesRegisterToAddress(CpuRegisterPointer cpuRegister);

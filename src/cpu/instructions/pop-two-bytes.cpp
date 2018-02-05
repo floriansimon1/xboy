@@ -4,7 +4,7 @@
 #include "pop-two-bytes.hpp"
 #include "../../gameboy.hpp"
 
-PopTwoBytes::PopTwoBytes(CpuRegisterPointer cpuRegister): Instruction(12, 0, 1), cpuRegister(cpuRegister) {
+PopTwoBytes::PopTwoBytes(CpuRegisterPointer cpuRegister): ConstantTimeInstruction(12, 0, 1), cpuRegister(cpuRegister) {
 }
 
 void PopTwoBytes::execute(Gameboy &gameboy, const uint8_t *) const {

@@ -3,7 +3,7 @@
 #include "../../bit.hpp"
 #include "../cpu.hpp"
 
-DecimalAdjust::DecimalAdjust(): Instruction(4, 0, 1) {
+DecimalAdjust::DecimalAdjust(): ConstantTimeInstruction(4, 0, 1) {
 }
 
 void DecimalAdjust::execute(Gameboy &gameboy, const uint8_t *) const {

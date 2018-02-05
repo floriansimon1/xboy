@@ -5,7 +5,7 @@
 #include "jump.hpp"
 
 Jump::Jump(bool conditional, unsigned short flag, bool negate):
-  Instruction(8, 1, 1),
+  Instruction(1, 1),
   conditional(conditional),
   negate(negate),
   flag(flag)

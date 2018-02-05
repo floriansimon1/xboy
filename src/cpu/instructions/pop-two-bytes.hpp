@@ -2,9 +2,9 @@
 #define POP_TWO_BYTES_HPP
 
 #include "../cpu.hpp"
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 
-struct PopTwoBytes: Instruction {
+struct PopTwoBytes: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;

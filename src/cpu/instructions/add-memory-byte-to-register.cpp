@@ -7,7 +7,7 @@
 AddMemoryByteToRegister::AddMemoryByteToRegister(
   CpuRegisterPointer pointerRegister, bool carry
 ):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   additionInstruction(carry),
   pointerRegister(pointerRegister)
 {

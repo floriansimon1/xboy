@@ -1,10 +1,10 @@
 #ifndef IMMEDIATE_OR_HPP
 #define IMMEDIATE_OR_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct ImmediateOr: Instruction {
+struct ImmediateOr: ConstantTimeInstruction {
   const bool exclusive;
 
   ImmediateOr(bool exclusive);

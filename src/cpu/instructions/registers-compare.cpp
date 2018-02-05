@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 RegistersCompare::RegistersCompare(CpuRegisterPointer cpuRegister, bool low):
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   cpuRegister(cpuRegister),
   low(low),
   compareInstruction()

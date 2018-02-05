@@ -6,7 +6,7 @@
 #include "../../bit.hpp"
 
 TwoBytesRegistersAddition::TwoBytesRegistersAddition(CpuRegisterPointer source, CpuRegisterPointer destination):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   source(source),
   destination(destination)
 {

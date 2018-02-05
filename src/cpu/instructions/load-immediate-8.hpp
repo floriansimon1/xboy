@@ -1,10 +1,10 @@
 #ifndef LOAD_IMMEDIATE_8_HPP
 #define LOAD_IMMEDIATE_8_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct LoadImmediate8: Instruction {
+struct LoadImmediate8: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
   const bool         low;
 

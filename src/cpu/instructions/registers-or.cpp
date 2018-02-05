@@ -5,7 +5,7 @@
 #include "registers-or.hpp"
 
 RegistersOr::RegistersOr(CpuRegisterPointer cpuRegister, bool low, bool exclusive):
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   low(low),
   cpuRegister(cpuRegister),
   orInstruction(exclusive)

@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 WriteTwoBytesRegisterToAddress::WriteTwoBytesRegisterToAddress(CpuRegisterPointer cpuRegister):
-  Instruction(20, 2, 1),
+  ConstantTimeInstruction(20, 2, 1),
   cpuRegister(cpuRegister)
 {
 }

@@ -3,7 +3,7 @@
 #include "../../bit.hpp"
 
 RotateRightA::RotateRightA():
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   standardRotateRight(&Cpu::af, false)
 {
 }

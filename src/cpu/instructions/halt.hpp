@@ -1,9 +1,9 @@
 #ifndef HALT_HPP
 #define HALT_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 
-struct Halt: Instruction {
+struct Halt: ConstantTimeInstruction {
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;
 

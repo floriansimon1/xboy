@@ -1,10 +1,10 @@
 #ifndef IMMEDIATE_AND_HPP
 #define IMMEDIATE_AND_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct ImmediateAnd: Instruction {
+struct ImmediateAnd: ConstantTimeInstruction {
   ImmediateAnd();
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;

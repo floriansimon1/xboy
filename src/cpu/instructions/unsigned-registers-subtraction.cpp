@@ -9,7 +9,7 @@ UnsignedRegistersSubtraction::UnsignedRegistersSubtraction(
   bool carry,
   bool low
 ):
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   low(low),
   cpuRegister(cpuRegister),
   subtractionInstruction(carry)

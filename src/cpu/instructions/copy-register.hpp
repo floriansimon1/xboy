@@ -1,10 +1,10 @@
 #ifndef COPY_REGISTER_HPP
 #define COPY_REGISTER_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct CopyRegister: Instruction {
+struct CopyRegister: ConstantTimeInstruction {
   bool               fromLow;
   bool               toLow;
   CpuRegisterPointer from;

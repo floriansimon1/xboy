@@ -2,7 +2,7 @@
 #include "../../gameboy.hpp"
 
 // The data byte is always 0 and ignored.
-Stop::Stop(): Instruction(4, 1, 1) {
+Stop::Stop(): ConstantTimeInstruction(4, 1, 1) {
 }
 
 void Stop::execute(Gameboy &gameboy, const uint8_t *) const {

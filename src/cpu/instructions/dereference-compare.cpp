@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 DereferenceCompare::DereferenceCompare(CpuRegisterPointer pointerRegister):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   pointerRegister(pointerRegister),
   compareInstruction()
 {

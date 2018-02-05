@@ -6,7 +6,7 @@
 #include "../../bit.hpp"
 
 WriteImmediateToAddress::WriteImmediateToAddress(CpuRegisterPointer pointerRegister):
-  Instruction(12, 1, 1),
+  ConstantTimeInstruction(12, 1, 1),
   pointerRegister(pointerRegister)
 {
 }

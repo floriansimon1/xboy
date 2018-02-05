@@ -1,7 +1,7 @@
 #include "invert-carry-flag.hpp"
 #include "../../gameboy.hpp"
 
-InvertCarryFlag::InvertCarryFlag(): Instruction(4, 0, 1) {
+InvertCarryFlag::InvertCarryFlag(): ConstantTimeInstruction(4, 0, 1) {
 }
 
 void InvertCarryFlag::execute(Gameboy &gameboy, const uint8_t *) const {

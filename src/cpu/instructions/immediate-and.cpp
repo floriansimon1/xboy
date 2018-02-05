@@ -2,7 +2,7 @@
 #include "../../gameboy.hpp"
 #include "../../bit.hpp"
 
-ImmediateAnd::ImmediateAnd(): Instruction(8, 1, 1) {
+ImmediateAnd::ImmediateAnd(): ConstantTimeInstruction(8, 1, 1) {
 }
 
 void ImmediateAnd::execute(Gameboy &gameboy, const uint8_t *data) const {

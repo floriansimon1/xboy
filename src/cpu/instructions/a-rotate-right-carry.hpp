@@ -1,11 +1,11 @@
 #ifndef A_ROTATE_RIGHT_CARRY_HPP
 #define A_ROTATE_RIGHT_CARRY_HPP
 
+#include "../constant-time-instruction.hpp"
 #include "register-rotate-right-carry.hpp"
-#include "../instruction.hpp"
 #include "../cpu.hpp"
 
-struct RotateRightCarryA: Instruction {
+struct RotateRightCarryA: ConstantTimeInstruction {
   const RegisterRotateRightCarry standardRotateRightCarry;
 
   RotateRightCarryA();

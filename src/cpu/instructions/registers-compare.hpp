@@ -2,10 +2,10 @@
 #define REGISTERS_COMPARE_HPP
 
 #include "./immediate-compare.hpp"
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct RegistersCompare: Instruction {
+struct RegistersCompare: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
   const bool         low;
 

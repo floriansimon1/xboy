@@ -1,10 +1,10 @@
 #ifndef SINGLE_BYTE_REGISTER_TO_MEMORY_HPP
 #define SINGLE_BYTE_REGISTER_TO_MEMORY_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct SingleByteRegisterToMemory: Instruction {
+struct SingleByteRegisterToMemory: ConstantTimeInstruction {
   CpuRegisterPointer memoryPointer;
   CpuRegisterPointer cpuRegister;
   const bool         low;

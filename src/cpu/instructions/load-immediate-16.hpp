@@ -1,10 +1,10 @@
 #ifndef LOAD_IMMEDIATE_16_HPP
 #define LOAD_IMMEDIATE_16_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct LoadImmediate16: Instruction {
+struct LoadImmediate16: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
 
   LoadImmediate16(CpuRegisterPointer cpuRegister);

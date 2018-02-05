@@ -1,11 +1,11 @@
 #ifndef ADD_MEMORY_BYTE_TO_REGISTER_HPP
 #define ADD_MEMORY_BYTE_TO_REGISTER_HPP
 
+#include "../constant-time-instruction.hpp"
 #include "unsigned-immediate-addition.hpp"
-#include "../instruction.hpp"
 #include "../cpu.hpp"
 
-struct AddMemoryByteToRegister: Instruction {
+struct AddMemoryByteToRegister: ConstantTimeInstruction {
   const UnsignedImmediateAddition additionInstruction;
   CpuRegisterPointer              pointerRegister;
 

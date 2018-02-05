@@ -1,10 +1,10 @@
 #ifndef TWO_BYTES_REGISTERS_ADDITION_HPP
 #define TWO_BYTES_REGISTERS_ADDITION_HPP
 
-#include "../instruction.hpp"
+#include "../constant-time-instruction.hpp"
 #include "../cpu.hpp"
 
-struct TwoBytesRegistersAddition: Instruction {
+struct TwoBytesRegistersAddition: ConstantTimeInstruction {
   CpuRegisterPointer source;
   CpuRegisterPointer destination;
 

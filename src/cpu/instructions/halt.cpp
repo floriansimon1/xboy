@@ -1,7 +1,7 @@
 #include "halt.hpp"
 #include "../../gameboy.hpp"
 
-Halt::Halt(): Instruction(4, 0, 1) {
+Halt::Halt(): ConstantTimeInstruction(4, 0, 1) {
 }
 
 void Halt::execute(Gameboy &, const uint8_t *) const {

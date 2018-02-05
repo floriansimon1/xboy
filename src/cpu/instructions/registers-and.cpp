@@ -5,7 +5,7 @@
 #include "registers-and.hpp"
 
 RegistersAnd::RegistersAnd(CpuRegisterPointer cpuRegister, bool low):
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   low(low),
   cpuRegister(cpuRegister),
   andInstruction()

@@ -4,7 +4,7 @@
 #include "../../bit.hpp"
 
 RotateLeftCarryA::RotateLeftCarryA():
-  Instruction(4, 0, 1),
+  ConstantTimeInstruction(4, 0, 1),
   standardRotateLeftCarry(&Cpu::af, false)
 {
 }

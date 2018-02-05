@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 SingleByteRegisterToMemory::SingleByteRegisterToMemory(CpuRegisterPointer memoryPointer, CpuRegisterPointer cpuRegister, bool low):
-  Instruction(8, 0, 1),
+  ConstantTimeInstruction(8, 0, 1),
   memoryPointer(memoryPointer),
   cpuRegister(cpuRegister),
   low(low)

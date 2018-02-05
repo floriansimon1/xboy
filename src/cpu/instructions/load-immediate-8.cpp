@@ -5,7 +5,7 @@
 #include "../../gameboy.hpp"
 
 LoadImmediate8::LoadImmediate8(CpuRegisterPointer cpuRegister, bool low):
-  Instruction(8, 1, 1),
+  ConstantTimeInstruction(8, 1, 1),
   cpuRegister(cpuRegister),
   low(low)
 {
