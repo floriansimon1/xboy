@@ -30,6 +30,7 @@
 #include "instructions/copy-register.hpp"
 #include "instructions/registers-and.hpp"
 #include "instructions/registers-or.hpp"
+#include "instructions/return-flag.hpp"
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/halt.hpp"
@@ -235,7 +236,6 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xb5] = std::make_shared<RegistersOr>(&Cpu::hl, true, false);
   oneByteOpcodes[0xb6] = std::make_shared<DereferenceOr>(&Cpu::hl, false);
   oneByteOpcodes[0xb7] = std::make_shared<RegistersOr>(&Cpu::af, false, false);
-
   oneByteOpcodes[0xb8] = std::make_shared<RegistersCompare>(&Cpu::bc, false);
   oneByteOpcodes[0xb9] = std::make_shared<RegistersCompare>(&Cpu::bc, true);
   oneByteOpcodes[0xba] = std::make_shared<RegistersCompare>(&Cpu::de, false);
@@ -244,6 +244,8 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xbd] = std::make_shared<RegistersCompare>(&Cpu::hl, true);
   oneByteOpcodes[0xbe] = std::make_shared<DereferenceCompare>(&Cpu::hl);
   oneByteOpcodes[0xbf] = std::make_shared<RegistersCompare>(&Cpu::af, false);
+
+  oneByteOpcodes[0xc0] = std::make_shared<ReturnFlag>(Cpu::zeroFlag, true);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
