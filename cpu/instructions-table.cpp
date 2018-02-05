@@ -28,6 +28,7 @@
 #include "instructions/a-rotate-left.hpp"
 #include "instructions/relative-jump.hpp"
 #include "instructions/copy-register.hpp"
+#include "instructions/pop-two-bytes.hpp"
 #include "instructions/registers-and.hpp"
 #include "instructions/registers-or.hpp"
 #include "instructions/return-flag.hpp"
@@ -246,6 +247,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xbf] = std::make_shared<RegistersCompare>(&Cpu::af, false);
 
   oneByteOpcodes[0xc0] = std::make_shared<ReturnFlag>(Cpu::zeroFlag, true);
+  oneByteOpcodes[0xc1] = std::make_shared<PopTwoBytes>(&Cpu::bc);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
