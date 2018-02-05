@@ -21,6 +21,7 @@
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions/dereference-and.hpp"
+#include "instructions/push-two-bytes.hpp"
 #include "instructions/dereference-or.hpp"
 #include "instructions/set-carry-flag.hpp"
 #include "instructions/decimal-adjust.hpp"
@@ -252,6 +253,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xc2] = std::make_shared<Jump>(true, Cpu::zeroFlag, true);
   oneByteOpcodes[0xc2] = std::make_shared<Jump>(false);
   oneByteOpcodes[0xc3] = std::make_shared<Call>(true, Cpu::zeroFlag, true);
+  oneByteOpcodes[0xc4] = std::make_shared<PushTwoBytes>(&Cpu::bc);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
