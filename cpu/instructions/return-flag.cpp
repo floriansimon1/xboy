@@ -4,8 +4,9 @@
 #include "return-flag.hpp"
 #include "../../gameboy.hpp"
 
-ReturnFlag::ReturnFlag(unsigned short flag, bool negate):
+ReturnFlag::ReturnFlag(bool conditional, unsigned short flag, bool negate):
   Instruction(8, 1, 1),
+  conditional(conditional),
   negate(negate),
   flag(flag)
 {
@@ -18,7 +19,9 @@ void ReturnFlag::execute(Gameboy &gameboy, const uint8_t *) const {
 }
 
 unsigned short ReturnFlag::ticks(Gameboy &gameboy) const {
-  if (shouldJump(gameboy)) {
+  if (!conditional) {
+    return 16;
+  } else if (shouldJump(gameboy)) {
     return 20;
   }
 
@@ -26,7 +29,7 @@ unsigned short ReturnFlag::ticks(Gameboy &gameboy) const {
 }
 
 bool ReturnFlag::shouldJump(Gameboy &gameboy) const {
-  return gameboy.cpu.flagHasValue(flag, !negate);
+  return !conditional || gameboy.cpu.flagHasValue(flag, !negate);
 }
 
 std::string ReturnFlag::toString() const {

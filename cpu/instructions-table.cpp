@@ -246,7 +246,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xbe] = std::make_shared<DereferenceCompare>(&Cpu::hl);
   oneByteOpcodes[0xbf] = std::make_shared<RegistersCompare>(&Cpu::af, false);
 
-  oneByteOpcodes[0xc0] = std::make_shared<ReturnFlag>(Cpu::zeroFlag, true);
+  oneByteOpcodes[0xc0] = std::make_shared<ReturnFlag>(true, Cpu::zeroFlag, true);
   oneByteOpcodes[0xc1] = std::make_shared<PopTwoBytes>(&Cpu::bc);
 }
 
