@@ -33,6 +33,10 @@ bool RelativeJumpFlag::shouldJump(Gameboy &gameboy) const {
 std::string RelativeJumpFlag::toString() const {
   std::ostringstream result;
 
+  if (!conditional) {
+    return "JR r8";
+  }
+
   result << "JR"
          << (negate ? " N" : " ")
          << flagString(flag)
