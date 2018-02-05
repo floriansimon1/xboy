@@ -1,7 +1,7 @@
-#include "../../bit.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/bit.hpp"
+#include "../../src/gameboy.hpp"
 #include "./registers-addition-test.hpp"
-#include "../../cpu/instructions/add-memory-byte-to-register.hpp"
+#include "../../src/cpu/instructions/add-memory-byte-to-register.hpp"
 
 RegistersAdditionTest::RegistersAdditionTest(): Test("Registers addition test") {
 }

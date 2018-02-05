@@ -1,6 +1,6 @@
-#include "../../cpu/instructions/dereference-combined-into-single.hpp"
+#include "../../src/cpu/instructions/dereference-combined-into-single.hpp"
 #include "dereference-combined-into-single-test.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/gameboy.hpp"
 
 DereferenceCombinedIntoSingleTest::DereferenceCombinedIntoSingleTest():
   Test("Derefence combined registers into single-byte register instruction")

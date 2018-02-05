@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../cpu/instructions/register-rotate-left-carry.hpp"
+#include "../../src/cpu/instructions/register-rotate-left-carry.hpp"
 #include "register-rotate-left-carry-test.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/gameboy.hpp"
 
 RegisterRotateLeftCarryTest::RegisterRotateLeftCarryTest():
   Test("Register rotate left carry")
@@ -17,7 +17,7 @@ bool RegisterRotateLeftCarryTest::run() {
 
   for (auto i = 0; i < 7; i++) {
     instruction.execute(gameboy, gameboy.mmu.memory);
-    
+
     const auto value = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
     if (value != (1 << (i + 1)) || gameboy.cpu.anyFlagSet()) {
@@ -43,4 +43,3 @@ bool RegisterRotateLeftCarryTest::run() {
 
   return true;
 }
-

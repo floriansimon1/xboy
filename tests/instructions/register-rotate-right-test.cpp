@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../cpu/instructions/register-rotate-right.hpp"
+#include "../../src/cpu/instructions/register-rotate-right.hpp"
 #include "register-rotate-right-test.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/gameboy.hpp"
 
 RegisterRotateRightTest::RegisterRotateRightTest():
   Test("Register rotate right carry")

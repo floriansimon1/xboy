@@ -1,7 +1,7 @@
-#include "../../bit.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/bit.hpp"
+#include "../../src/gameboy.hpp"
 #include "./registers-and-test.hpp"
-#include "../../cpu/instructions/dereference-and.hpp"
+#include "../../src/cpu/instructions/dereference-and.hpp"
 
 RegistersAndTest::RegistersAndTest(): Test("Registers AND test") {
 }

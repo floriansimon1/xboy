@@ -10,4 +10,3 @@ struct WriteTwoBytesRegisterToAddressTest: Test {
 };
 
 #endif
-

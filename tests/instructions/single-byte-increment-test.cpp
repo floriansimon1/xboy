@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../cpu/instructions/single-byte-increment.hpp"
+#include "../../src/cpu/instructions/single-byte-increment.hpp"
 #include "single-byte-increment-test.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/gameboy.hpp"
 
 SingleByteIncrementTest::SingleByteIncrementTest():
   Test("Single-byte increment instruction")

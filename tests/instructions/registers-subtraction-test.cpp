@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "../../bit.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/bit.hpp"
+#include "../../src/gameboy.hpp"
 #include "./registers-subtraction-test.hpp"
-#include "../../cpu/instructions/subtract-memory-byte-to-register.hpp"
+#include "../../src/cpu/instructions/subtract-memory-byte-to-register.hpp"
 
 RegistersSubtractionTest::RegistersSubtractionTest(): Test("Registers subtraction test") {
 }

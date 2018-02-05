@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "../../bit.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/bit.hpp"
+#include "../../src/gameboy.hpp"
 #include "two-bytes-registers-addition-test.hpp"
-#include "../../cpu/instructions/two-bytes-registers-addition.hpp"
+#include "../../src/cpu/instructions/two-bytes-registers-addition.hpp"
 
 TwoBytesRegistersAdditionTest::TwoBytesRegistersAdditionTest():
   Test("Two-bytes registers addition")

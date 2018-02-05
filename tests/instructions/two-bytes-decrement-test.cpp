@@ -1,7 +1,7 @@
-#include "../../bit.hpp"
-#include "../../gameboy.hpp"
+#include "../../src/bit.hpp"
+#include "../../src/gameboy.hpp"
 #include "two-bytes-decrement-test.hpp"
-#include "../../cpu/instructions/two-bytes-increment.hpp"
+#include "../../src/cpu/instructions/two-bytes-increment.hpp"
 
 TwoBytesDecrementTest::TwoBytesDecrementTest():
   Test("Two-bytes decrement instruction")

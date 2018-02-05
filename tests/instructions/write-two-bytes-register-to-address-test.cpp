@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../gameboy.hpp"
+#include "../../src/gameboy.hpp"
 #include "write-two-bytes-register-to-address-test.hpp"
-#include "../../cpu/instructions/write-two-bytes-register-to-address.hpp"
+#include "../../src/cpu/instructions/write-two-bytes-register-to-address.hpp"
 
 WriteTwoBytesRegisterToAddressTest::WriteTwoBytesRegisterToAddressTest():
   Test("Write 2-bytes register to address instruction")
@@ -34,4 +34,3 @@ bool WriteTwoBytesRegisterToAddressTest::run() {
 
   return success;
 }
-
