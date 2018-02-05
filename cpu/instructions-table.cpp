@@ -14,8 +14,10 @@
 #include "instructions/a-rotate-right-carry.hpp"
 #include "instructions/two-bytes-increment.hpp"
 #include "instructions/a-rotate-left-carry.hpp"
+#include "instructions/dereference-compare.hpp"
 #include "instructions/relative-jump-flag.hpp"
 #include "instructions/invert-carry-flag.hpp"
+#include "instructions/registers-compare.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions/dereference-and.hpp"
@@ -233,6 +235,15 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xb5] = std::make_shared<RegistersOr>(&Cpu::hl, true, false);
   oneByteOpcodes[0xb6] = std::make_shared<DereferenceOr>(&Cpu::hl, false);
   oneByteOpcodes[0xb7] = std::make_shared<RegistersOr>(&Cpu::af, false, false);
+
+  oneByteOpcodes[0xb8] = std::make_shared<RegistersCompare>(&Cpu::bc, false);
+  oneByteOpcodes[0xb9] = std::make_shared<RegistersCompare>(&Cpu::bc, true);
+  oneByteOpcodes[0xba] = std::make_shared<RegistersCompare>(&Cpu::de, false);
+  oneByteOpcodes[0xbb] = std::make_shared<RegistersCompare>(&Cpu::de, true);
+  oneByteOpcodes[0xbc] = std::make_shared<RegistersCompare>(&Cpu::hl, false);
+  oneByteOpcodes[0xbd] = std::make_shared<RegistersCompare>(&Cpu::hl, true);
+  oneByteOpcodes[0xbe] = std::make_shared<DereferenceCompare>(&Cpu::hl);
+  oneByteOpcodes[0xbf] = std::make_shared<RegistersCompare>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
