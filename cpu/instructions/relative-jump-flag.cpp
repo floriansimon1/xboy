@@ -4,8 +4,9 @@
 #include "relative-jump-flag.hpp"
 #include "../../gameboy.hpp"
 
-RelativeJumpFlag::RelativeJumpFlag(unsigned short flag, bool negate):
+RelativeJumpFlag::RelativeJumpFlag(bool conditional, unsigned short flag, bool negate):
   Instruction(8, 1, 1),
+  conditional(conditional),
   negate(negate),
   flag(flag)
 {
@@ -26,7 +27,7 @@ unsigned short RelativeJumpFlag::ticks(Gameboy &gameboy) const {
 }
 
 bool RelativeJumpFlag::shouldJump(Gameboy &gameboy) const {
-  return gameboy.cpu.flagHasValue(flag, !negate);
+  return !conditional || gameboy.cpu.flagHasValue(flag, !negate);
 }
 
 std::string RelativeJumpFlag::toString() const {
