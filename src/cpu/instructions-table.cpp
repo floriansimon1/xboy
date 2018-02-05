@@ -8,6 +8,7 @@
 #include "instructions/two-bytes-registers-addition.hpp"
 #include "instructions/add-memory-byte-to-register.hpp"
 #include "instructions/unsigned-registers-addition.hpp"
+#include "instructions/unsigned-immediate-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
 #include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
@@ -254,6 +255,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xc2] = std::make_shared<Jump>(false);
   oneByteOpcodes[0xc3] = std::make_shared<Call>(true, Cpu::zeroFlag, true);
   oneByteOpcodes[0xc4] = std::make_shared<PushTwoBytes>(&Cpu::bc);
+  oneByteOpcodes[0xc5] = std::make_shared<UnsignedImmediateAddition>(false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
