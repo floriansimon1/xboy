@@ -33,6 +33,8 @@
 #include "instructions/registers-and.hpp"
 #include "instructions/registers-or.hpp"
 #include "instructions/return-flag.hpp"
+#include "instructions/short-call.hpp"
+#include "instructions/unmapped.hpp"
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/jump.hpp"
@@ -252,10 +254,36 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xc0] = std::make_shared<ReturnFlag>(true, Cpu::zeroFlag, true);
   oneByteOpcodes[0xc1] = std::make_shared<PopTwoBytes>(&Cpu::bc);
   oneByteOpcodes[0xc2] = std::make_shared<Jump>(true, Cpu::zeroFlag, true);
-  oneByteOpcodes[0xc2] = std::make_shared<Jump>(false);
-  oneByteOpcodes[0xc3] = std::make_shared<Call>(true, Cpu::zeroFlag, true);
-  oneByteOpcodes[0xc4] = std::make_shared<PushTwoBytes>(&Cpu::bc);
-  oneByteOpcodes[0xc5] = std::make_shared<UnsignedImmediateAddition>(false);
+  oneByteOpcodes[0xc3] = std::make_shared<Jump>(false);
+  oneByteOpcodes[0xc4] = std::make_shared<Call>(true, Cpu::zeroFlag, true);
+  oneByteOpcodes[0xc5] = std::make_shared<PushTwoBytes>(&Cpu::bc);
+  oneByteOpcodes[0xc6] = std::make_shared<UnsignedImmediateAddition>(false);
+  oneByteOpcodes[0xc7] = std::make_shared<ShortCall>(0);
+  oneByteOpcodes[0xc8] = std::make_shared<ReturnFlag>(true, Cpu::zeroFlag, false);
+  oneByteOpcodes[0xc9] = std::make_shared<ReturnFlag>(false);
+  oneByteOpcodes[0xca] = std::make_shared<Jump>(true, Cpu::zeroFlag, false);
+  // oneByteOpcodes[0xcb] is unmapped (refers to the second table).
+  oneByteOpcodes[0xcc] = std::make_shared<Call>(true, Cpu::zeroFlag, true);
+  oneByteOpcodes[0xcd] = std::make_shared<Call>(false);
+  oneByteOpcodes[0xce] = std::make_shared<UnsignedImmediateAddition>(true);
+  oneByteOpcodes[0xcf] = std::make_shared<ShortCall>(8);
+
+  oneByteOpcodes[0xd0] = std::make_shared<ReturnFlag>(true, Cpu::carryFlag, true);
+  oneByteOpcodes[0xd1] = std::make_shared<PopTwoBytes>(&Cpu::de);
+  oneByteOpcodes[0xd2] = std::make_shared<Jump>(true, Cpu::carryFlag, true);
+  oneByteOpcodes[0xd3] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xd4] = std::make_shared<Call>(true, Cpu::carryFlag, true);
+  oneByteOpcodes[0xd5] = std::make_shared<PushTwoBytes>(&Cpu::de);
+  oneByteOpcodes[0xd6] = std::make_shared<UnsignedImmediateSubtraction>(false);
+  oneByteOpcodes[0xd7] = std::make_shared<ShortCall>(0x10);
+  oneByteOpcodes[0xd8] = std::make_shared<ReturnFlag>(true, Cpu::carryFlag, false);
+  // oneByteOpcodes[0xd9] = std::make_shared<ReturnFlag>(false); TODO
+  oneByteOpcodes[0xda] = std::make_shared<Jump>(true, Cpu::carryFlag, false);
+  oneByteOpcodes[0xdb] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xdc] = std::make_shared<Call>(true, Cpu::carryFlag, true);
+  oneByteOpcodes[0xdd] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xde] = std::make_shared<UnsignedImmediateSubtraction>(true);
+  oneByteOpcodes[0xdf] = std::make_shared<ShortCall>(0x18);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
