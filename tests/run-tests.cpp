@@ -4,6 +4,7 @@
 
 #include "test.hpp"
 #include "run-tests.hpp"
+#include "instructions/short-call-test.hpp"
 #include "instructions/registers-or-test.hpp"
 #include "instructions/registers-and-test.hpp"
 #include "instructions/decimal-adjust-test.hpp"
@@ -32,6 +33,7 @@ bool runTests() {
 
   list<std::shared_ptr<Test>> tests;
 
+  tests.push_back(make_shared<ShortCallTest>());
   tests.push_back(make_shared<DecimalAdjustTest>());
   tests.push_back(make_shared<LoadImmediate8Test>());
   tests.push_back(make_shared<RelativeJumpFlagTest>());
