@@ -2,6 +2,7 @@
 #define RETURN_FLAG_HPP
 
 #include "../instruction.hpp"
+#include "../cpu.hpp"
 
 struct ReturnFlag: Instruction {
   const bool           conditional;
@@ -12,7 +13,8 @@ struct ReturnFlag: Instruction {
   unsigned short ticks(Gameboy &gameboy) const override;
   std::string toString() const override;
 
-  ReturnFlag(bool conditional, unsigned short flag, bool negate);
+  // Default values are meaningless, just meant to help creating the unconditional return.
+  ReturnFlag(bool conditional, unsigned short flag = Cpu::zeroFlag, bool negate = true);
 
   private:
     bool shouldJump(Gameboy &gameboy) const;
