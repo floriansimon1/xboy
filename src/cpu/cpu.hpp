@@ -15,6 +15,9 @@ struct Cpu {
 
   unsigned long long ticks;
 
+  bool inInterrupt = false;
+  bool halted      = false;
+
   uint16_t af;
   uint16_t bc;
   uint16_t de;
