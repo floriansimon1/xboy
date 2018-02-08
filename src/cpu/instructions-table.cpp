@@ -10,6 +10,7 @@
 #include "instructions/unsigned-registers-addition.hpp"
 #include "instructions/unsigned-immediate-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
+#include "instructions/dereference-high-byte.hpp"
 #include "instructions/return-from-interrupt.hpp"
 #include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
@@ -285,6 +286,8 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xdd] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xde] = std::make_shared<UnsignedImmediateSubtraction>(true);
   oneByteOpcodes[0xdf] = std::make_shared<ShortCall>(0x18);
+
+  oneByteOpcodes[0xf1] = std::make_shared<DereferenceHighByte>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
