@@ -10,6 +10,7 @@
 #include "instructions/unsigned-registers-addition.hpp"
 #include "instructions/unsigned-immediate-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
+#include "instructions/return-from-interrupt.hpp"
 #include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
 #include "instructions/a-rotate-right-carry.hpp"
@@ -277,7 +278,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xd6] = std::make_shared<UnsignedImmediateSubtraction>(false);
   oneByteOpcodes[0xd7] = std::make_shared<ShortCall>(0x10);
   oneByteOpcodes[0xd8] = std::make_shared<ReturnFlag>(true, Cpu::carryFlag, false);
-  // oneByteOpcodes[0xd9] = std::make_shared<ReturnFlag>(false); TODO
+  oneByteOpcodes[0xd9] = std::make_shared<ReturnFromInterrupt>();
   oneByteOpcodes[0xda] = std::make_shared<Jump>(true, Cpu::carryFlag, false);
   oneByteOpcodes[0xdb] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xdc] = std::make_shared<Call>(true, Cpu::carryFlag, true);
