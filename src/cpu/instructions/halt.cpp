@@ -4,8 +4,8 @@
 Halt::Halt(): ConstantTimeInstruction(4, 0, 1) {
 }
 
-void Halt::execute(Gameboy &, const uint8_t *) const {
-  throw "Not implemented yet!";
+void Halt::execute(Gameboy &gameboy, const uint8_t *) const {
+  gameboy.cpu.halted = true;
 }
 
 std::string Halt::toString() const {
