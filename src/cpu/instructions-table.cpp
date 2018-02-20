@@ -13,6 +13,7 @@
 #include "instructions/unsigned-immediate-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
 #include "instructions/signed-immediate-addition.hpp"
+#include "instructions/write-register-to-address.hpp"
 #include "instructions/dereference-high-byte.hpp"
 #include "instructions/return-from-interrupt.hpp"
 #include "instructions/increment-dereference.hpp"
@@ -302,6 +303,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xe7] = std::make_shared<ShortCall>(0x20);
   oneByteOpcodes[0xe8] = std::make_shared<SignedImmediateAddition>();
   oneByteOpcodes[0xe9] = std::make_shared<DereferenceJump>();
+  oneByteOpcodes[0xea] = std::make_shared<WriteRegisterToAddress>(&Cpu::af, false);
 
   oneByteOpcodes[0xf1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
   oneByteOpcodes[0xf2] = std::make_shared<DereferenceSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
