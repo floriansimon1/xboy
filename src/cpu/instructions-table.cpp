@@ -3,13 +3,16 @@
 #include "instructions/write-two-bytes-register-to-address.hpp"
 #include "instructions/subtract-memory-byte-to-register.hpp"
 #include "instructions/dereference-combined-into-single.hpp"
+#include "instructions/dereference-into-single-register.hpp"
 #include "instructions/unsigned-registers-subtraction.hpp"
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
 #include "instructions/add-memory-byte-to-register.hpp"
 #include "instructions/unsigned-registers-addition.hpp"
+#include "instructions/dereference-single-register.hpp"
 #include "instructions/unsigned-immediate-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
+#include "instructions/signed-immediate-addition.hpp"
 #include "instructions/dereference-high-byte.hpp"
 #include "instructions/return-from-interrupt.hpp"
 #include "instructions/increment-dereference.hpp"
@@ -20,6 +23,7 @@
 #include "instructions/dereference-compare.hpp"
 #include "instructions/relative-jump-flag.hpp"
 #include "instructions/invert-carry-flag.hpp"
+#include "instructions/enable-interrupts.hpp"
 #include "instructions/registers-compare.hpp"
 #include "instructions/load-immediate-16.hpp"
 #include "instructions/load-immediate-8.hpp"
@@ -287,7 +291,19 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xde] = std::make_shared<UnsignedImmediateSubtraction>(true);
   oneByteOpcodes[0xdf] = std::make_shared<ShortCall>(0x18);
 
-  oneByteOpcodes[0xf1] = std::make_shared<DereferenceHighByte>();
+  oneByteOpcodes[0xe0] = std::make_shared<DereferenceHighByte>();
+  oneByteOpcodes[0xe1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
+  oneByteOpcodes[0xe2] = std::make_shared<DereferenceIntoSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
+  oneByteOpcodes[0xe3] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xe4] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xe5] = std::make_shared<PushTwoBytes>(&Cpu::hl);
+  oneByteOpcodes[0xe6] = std::make_shared<ImmediateAnd>();
+  oneByteOpcodes[0xe7] = std::make_shared<ShortCall>(0x20);
+  oneByteOpcodes[0xe8] = std::make_shared<SignedImmediateAddition>();
+
+  oneByteOpcodes[0xf1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
+  oneByteOpcodes[0xf2] = std::make_shared<DereferenceSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
+  oneByteOpcodes[0xf3] = std::make_shared<EnableInterrupts>(false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
