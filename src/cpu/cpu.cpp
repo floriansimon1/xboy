@@ -11,6 +11,9 @@ Cpu::Cpu() {
 void Cpu::reset() {
   ticks = 0;
 
+  interruptsEnabled = true;
+  inInterrupt       = false;
+
   af = 0;
   bc = 0;
   de = 0;
