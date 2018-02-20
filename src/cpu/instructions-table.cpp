@@ -26,6 +26,7 @@
 #include "instructions/enable-interrupts.hpp"
 #include "instructions/registers-compare.hpp"
 #include "instructions/load-immediate-16.hpp"
+#include "instructions/dereference-jump.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions/dereference-and.hpp"
 #include "instructions/push-two-bytes.hpp"
@@ -300,6 +301,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xe6] = std::make_shared<ImmediateAnd>();
   oneByteOpcodes[0xe7] = std::make_shared<ShortCall>(0x20);
   oneByteOpcodes[0xe8] = std::make_shared<SignedImmediateAddition>();
+  oneByteOpcodes[0xe9] = std::make_shared<DereferenceJump>();
 
   oneByteOpcodes[0xf1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
   oneByteOpcodes[0xf2] = std::make_shared<DereferenceSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
