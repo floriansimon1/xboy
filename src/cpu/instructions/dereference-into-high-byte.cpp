@@ -1,4 +1,4 @@
-#include "dereference-high-byte.hpp"
+#include "dereference-into-high-byte.hpp"
 #include "../../gameboy.hpp"
 
 DereferenceIntoHighByte::DereferenceIntoHighByte():
