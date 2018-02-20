@@ -12,9 +12,9 @@
 #include "instructions/dereference-single-register.hpp"
 #include "instructions/unsigned-immediate-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
+#include "instructions/dereference-into-high-byte.hpp"
 #include "instructions/signed-immediate-addition.hpp"
 #include "instructions/write-register-to-address.hpp"
-#include "instructions/dereference-high-byte.hpp"
 #include "instructions/return-from-interrupt.hpp"
 #include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
@@ -293,7 +293,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xde] = std::make_shared<UnsignedImmediateSubtraction>(true);
   oneByteOpcodes[0xdf] = std::make_shared<ShortCall>(0x18);
 
-  oneByteOpcodes[0xe0] = std::make_shared<DereferenceHighByte>();
+  oneByteOpcodes[0xe0] = std::make_shared<DereferenceIntoHighByte>();
   oneByteOpcodes[0xe1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
   oneByteOpcodes[0xe2] = std::make_shared<DereferenceIntoSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
   oneByteOpcodes[0xe3] = std::make_shared<Unmapped>();
