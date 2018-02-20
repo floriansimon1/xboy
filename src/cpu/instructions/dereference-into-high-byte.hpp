@@ -9,9 +9,6 @@ struct DereferenceIntoHighByte: ConstantTimeInstruction {
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;
-
-  private:
-    LoadImmediate8 loadInstruction;
 };
 
 #endif

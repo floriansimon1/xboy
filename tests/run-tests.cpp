@@ -19,6 +19,7 @@
 #include "instructions/single-byte-increment-test.hpp"
 #include "instructions/single-byte-decrement-test.hpp"
 #include "instructions/registers-subtraction-test.hpp"
+#include "instructions/high-byte-dereference-test.hpp"
 #include "instructions/register-rotate-left-carry-test.hpp"
 #include "instructions/register-rotate-right-carry-test.hpp"
 #include "instructions/two-bytes-registers-addition-test.hpp"
@@ -45,6 +46,7 @@ bool runTests() {
   tests.push_back(make_shared<SingleByteIncrementTest>());
   tests.push_back(make_shared<SingleByteDecrementTest>());
   tests.push_back(make_shared<RegisterRotateRightTest>());
+  tests.push_back(make_shared<HighByteDereferenceTest>());
   tests.push_back(make_shared<RegistersSubtractionTest>());
   tests.push_back(make_shared<RegisterRotateLeftCarryTest>());
   tests.push_back(make_shared<RegisterRotateRightCarryTest>());
