@@ -15,6 +15,8 @@
 #include "instructions/dereference-into-high-byte.hpp"
 #include "instructions/signed-immediate-addition.hpp"
 #include "instructions/write-register-to-address.hpp"
+#include "instructions/copy-combined-register.hpp"
+#include "instructions/copy-shifted-sp-to-hl.hpp"
 #include "instructions/return-from-interrupt.hpp"
 #include "instructions/increment-dereference.hpp"
 #include "instructions/single-byte-increment.hpp"
@@ -315,6 +317,12 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xf1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
   oneByteOpcodes[0xf2] = std::make_shared<DereferenceSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
   oneByteOpcodes[0xf3] = std::make_shared<EnableInterrupts>(false);
+  oneByteOpcodes[0xf4] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xf5] = std::make_shared<PushTwoBytes>(&Cpu::af);
+  oneByteOpcodes[0xf6] = std::make_shared<ImmediateOr>(false);
+  oneByteOpcodes[0xf7] = std::make_shared<ShortCall>(0x30);
+  oneByteOpcodes[0xf8] = std::make_shared<CopyShiftedSpToHl>();
+  oneByteOpcodes[0xf9] = std::make_shared<CopyCombinedRegister>(&Cpu::sp, &Cpu::hl);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
