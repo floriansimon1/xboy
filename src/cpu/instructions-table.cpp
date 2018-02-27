@@ -43,6 +43,7 @@
 #include "instructions/pop-two-bytes.hpp"
 #include "instructions/registers-and.hpp"
 #include "instructions/registers-or.hpp"
+#include "instructions/dereference.hpp"
 #include "instructions/return-flag.hpp"
 #include "instructions/short-call.hpp"
 #include "instructions/unmapped.hpp"
@@ -323,6 +324,7 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xf7] = std::make_shared<ShortCall>(0x30);
   oneByteOpcodes[0xf8] = std::make_shared<CopyShiftedSpToHl>();
   oneByteOpcodes[0xf9] = std::make_shared<CopyCombinedRegister>(&Cpu::sp, &Cpu::hl);
+  oneByteOpcodes[0xfa] = std::make_shared<Dereference>();
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
