@@ -326,6 +326,10 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xf9] = std::make_shared<CopyCombinedRegister>(&Cpu::sp, &Cpu::hl);
   oneByteOpcodes[0xfa] = std::make_shared<Dereference>();
   oneByteOpcodes[0xfb] = std::make_shared<EnableInterrupts>(true);
+  oneByteOpcodes[0xfc] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xfd] = std::make_shared<Unmapped>();
+  oneByteOpcodes[0xfe] = std::make_shared<ImmediateCompare>();
+  oneByteOpcodes[0xff] = std::make_shared<ShortCall>(0x38);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
