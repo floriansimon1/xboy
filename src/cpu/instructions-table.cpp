@@ -59,6 +59,11 @@
 // See http://www.pastraiser.com/cpu/gameboy/gameboy_opcodes.html
 
 InstructionsTable::InstructionsTable() {
+  mapFirstTable();
+  mapExtendedTable();
+}
+
+void InstructionsTable::mapFirstTable() {
   oneByteOpcodes[0x00] = std::make_shared<Nop>();
   oneByteOpcodes[0x01] = std::make_shared<LoadImmediate16>(&Cpu::bc);
   oneByteOpcodes[0x02] = std::make_shared<SingleByteRegisterToMemory>(&Cpu::bc, &Cpu::af, false);
@@ -330,6 +335,9 @@ InstructionsTable::InstructionsTable() {
   oneByteOpcodes[0xfd] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xfe] = std::make_shared<ImmediateCompare>();
   oneByteOpcodes[0xff] = std::make_shared<ShortCall>(0x38);
+}
+
+void InstructionsTable::mapExtendedTable() {
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {

@@ -13,7 +13,10 @@ struct InstructionsTable {
   InstructionsTable();
 
   std::shared_ptr<Instruction> get(const bool fromExtendedSet, const uint8_t opcode);
+
+  private:
+    void mapFirstTable();
+    void mapExtendedTable();
 };
 
 #endif
-
