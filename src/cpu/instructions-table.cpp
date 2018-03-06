@@ -347,7 +347,6 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x05] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::hl, true);
   twoBytesOpcodes[0x06] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterRotateLeftCarry>>();
   twoBytesOpcodes[0x07] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::af, false);
-
   twoBytesOpcodes[0x08] = std::make_shared<RegisterRotateRightCarry>(&Cpu::bc, false);
   twoBytesOpcodes[0x09] = std::make_shared<RegisterRotateRightCarry>(&Cpu::bc, true);
   twoBytesOpcodes[0x0a] = std::make_shared<RegisterRotateRightCarry>(&Cpu::de, false);
@@ -356,6 +355,23 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x0d] = std::make_shared<RegisterRotateRightCarry>(&Cpu::hl, true);
   twoBytesOpcodes[0x0e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterRotateRightCarry>>();
   twoBytesOpcodes[0x0f] = std::make_shared<RegisterRotateRightCarry>(&Cpu::af, false);
+
+  twoBytesOpcodes[0x10] = std::make_shared<RegisterRotateLeft>(&Cpu::bc, false);
+  twoBytesOpcodes[0x11] = std::make_shared<RegisterRotateLeft>(&Cpu::bc, true);
+  twoBytesOpcodes[0x12] = std::make_shared<RegisterRotateLeft>(&Cpu::de, false);
+  twoBytesOpcodes[0x13] = std::make_shared<RegisterRotateLeft>(&Cpu::de, true);
+  twoBytesOpcodes[0x14] = std::make_shared<RegisterRotateLeft>(&Cpu::hl, false);
+  twoBytesOpcodes[0x15] = std::make_shared<RegisterRotateLeft>(&Cpu::hl, true);
+  twoBytesOpcodes[0x16] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterRotateLeft>>();
+  twoBytesOpcodes[0x17] = std::make_shared<RegisterRotateLeft>(&Cpu::af, false);
+  twoBytesOpcodes[0x18] = std::make_shared<RegisterRotateRight>(&Cpu::bc, false);
+  twoBytesOpcodes[0x19] = std::make_shared<RegisterRotateRight>(&Cpu::bc, true);
+  twoBytesOpcodes[0x1a] = std::make_shared<RegisterRotateRight>(&Cpu::de, false);
+  twoBytesOpcodes[0x1b] = std::make_shared<RegisterRotateRight>(&Cpu::de, true);
+  twoBytesOpcodes[0x1c] = std::make_shared<RegisterRotateRight>(&Cpu::hl, false);
+  twoBytesOpcodes[0x1d] = std::make_shared<RegisterRotateRight>(&Cpu::hl, true);
+  twoBytesOpcodes[0x1e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterRotateRight>>();
+  twoBytesOpcodes[0x1f] = std::make_shared<RegisterRotateRight>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
