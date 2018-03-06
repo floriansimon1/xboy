@@ -26,6 +26,7 @@
 #include "instructions/single-byte-register-to-memory-test.hpp"
 #include "instructions/dereference-combined-into-single-test.hpp"
 #include "instructions/write-two-bytes-register-to-address-test.hpp"
+#include "instructions/register-instruction-on-dereferenced-hl-test.hpp"
 
 using namespace std;
 
@@ -54,6 +55,7 @@ bool runTests() {
   tests.push_back(make_shared<SingleByteRegisterToMemoryTest>());
   tests.push_back(make_shared<DereferenceCombinedIntoSingleTest>());
   tests.push_back(make_shared<WriteTwoBytesRegisterToAddressTest>());
+  tests.push_back(make_shared<RegisterInstructionOnDereferencedHlTest>());
 
   for (auto &&test: tests) {
     if (!test->run()) {

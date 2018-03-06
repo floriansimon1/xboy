@@ -1,5 +1,6 @@
 #include "instructions/dereference-combined-into-single-increment.hpp"
 #include "instructions/single-byte-register-to-memory-increment.hpp"
+#include "instructions/register-instruction-on-dereferenced-hl.hpp"
 #include "instructions/write-two-bytes-register-to-address.hpp"
 #include "instructions/subtract-memory-byte-to-register.hpp"
 #include "instructions/dereference-combined-into-single.hpp"
@@ -344,6 +345,7 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x03] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::de, true);
   twoBytesOpcodes[0x04] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::hl, false);
   twoBytesOpcodes[0x05] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::hl, true);
+  twoBytesOpcodes[0x06] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterRotateLeftCarry>>();
   twoBytesOpcodes[0x07] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::af, false);
 }
 
