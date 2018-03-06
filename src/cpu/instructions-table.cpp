@@ -338,6 +338,13 @@ void InstructionsTable::mapFirstTable() {
 }
 
 void InstructionsTable::mapExtendedTable() {
+  twoBytesOpcodes[0x00] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::bc, false);
+  twoBytesOpcodes[0x01] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::bc, true);
+  twoBytesOpcodes[0x02] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::de, false);
+  twoBytesOpcodes[0x03] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::de, true);
+  twoBytesOpcodes[0x04] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::hl, false);
+  twoBytesOpcodes[0x05] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::hl, true);
+  twoBytesOpcodes[0x07] = std::make_shared<RegisterRotateLeftCarry>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
