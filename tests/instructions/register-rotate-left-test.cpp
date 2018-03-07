@@ -10,7 +10,7 @@ RegisterRotateLeftTest::RegisterRotateLeftTest():
 }
 
 bool RegisterRotateLeftTest::run() {
-  Gameboy                 gameboy;
+  Gameboy            gameboy;
   RegisterRotateLeft instruction(&Cpu::af, false);
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1);
