@@ -11,7 +11,7 @@ struct RegisterInstructionOnDereferencedHl: ConstantTimeInstruction {
   const WrappedInstruction instruction;
 
   RegisterInstructionOnDereferencedHl():
-    ConstantTimeInstruction(16, 1, 1),
+    ConstantTimeInstruction(16, 0, 2),
     instruction(&Cpu::de, true)
   {
   }
