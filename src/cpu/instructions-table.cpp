@@ -23,6 +23,7 @@
 #include "instructions/single-byte-increment.hpp"
 #include "instructions/dereference-high-byte.hpp"
 #include "instructions/a-rotate-right-carry.hpp"
+#include "instructions/register-shift-left.hpp"
 #include "instructions/two-bytes-increment.hpp"
 #include "instructions/a-rotate-left-carry.hpp"
 #include "instructions/dereference-compare.hpp"
@@ -372,6 +373,15 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x1d] = std::make_shared<RegisterRotateRight>(&Cpu::hl, true);
   twoBytesOpcodes[0x1e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterRotateRight>>();
   twoBytesOpcodes[0x1f] = std::make_shared<RegisterRotateRight>(&Cpu::af, false);
+
+  twoBytesOpcodes[0x20] = std::make_shared<RegisterShiftLeft>(&Cpu::bc, false);
+  twoBytesOpcodes[0x21] = std::make_shared<RegisterShiftLeft>(&Cpu::bc, true);
+  twoBytesOpcodes[0x22] = std::make_shared<RegisterShiftLeft>(&Cpu::de, false);
+  twoBytesOpcodes[0x23] = std::make_shared<RegisterShiftLeft>(&Cpu::de, true);
+  twoBytesOpcodes[0x24] = std::make_shared<RegisterShiftLeft>(&Cpu::hl, false);
+  twoBytesOpcodes[0x25] = std::make_shared<RegisterShiftLeft>(&Cpu::hl, true);
+  twoBytesOpcodes[0x26] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftLeft>>();
+  twoBytesOpcodes[0x27] = std::make_shared<RegisterShiftLeft>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
