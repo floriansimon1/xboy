@@ -391,6 +391,15 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x2d] = std::make_shared<RegisterShiftRight<true>>(&Cpu::hl, true);
   twoBytesOpcodes[0x2e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftRight<true>>>();
   twoBytesOpcodes[0x2f] = std::make_shared<RegisterShiftRight<true>>(&Cpu::af, false);
+
+  twoBytesOpcodes[0x38] = std::make_shared<RegisterShiftRight<false>>(&Cpu::bc, false);
+  twoBytesOpcodes[0x39] = std::make_shared<RegisterShiftRight<false>>(&Cpu::bc, true);
+  twoBytesOpcodes[0x3a] = std::make_shared<RegisterShiftRight<false>>(&Cpu::de, false);
+  twoBytesOpcodes[0x3b] = std::make_shared<RegisterShiftRight<false>>(&Cpu::de, true);
+  twoBytesOpcodes[0x3c] = std::make_shared<RegisterShiftRight<false>>(&Cpu::hl, false);
+  twoBytesOpcodes[0x3d] = std::make_shared<RegisterShiftRight<false>>(&Cpu::hl, true);
+  twoBytesOpcodes[0x3e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftRight<false>>>();
+  twoBytesOpcodes[0x3f] = std::make_shared<RegisterShiftRight<false>>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
