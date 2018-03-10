@@ -16,7 +16,7 @@ void RegisterShiftRight::execute(Gameboy &gameboy, const uint8_t *) const {
   const auto value = gameboy.cpu.singleByteRegister(cpuRegister, low);
 
   // http://z80-heaven.wikidot.com/instructions-set:sra
-  const auto result = (value & (1 << 7)) | value >> 1;
+  const auto result = (value & highBitInByte) | value >> 1;
 
   gameboy.cpu.setCarryFlag(getBit(value, 0));
   gameboy.cpu.setHalfCarryFlag(false);
