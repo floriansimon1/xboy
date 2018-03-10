@@ -24,7 +24,7 @@ struct Clear: ConstantTimeInstruction {
   void execute(Gameboy &gameboy, const uint8_t *) const override {
     const auto value = gameboy.cpu.singleByteRegister(cpuRegister, low);
 
-    const uint8_t mask = ~(1 << bit);
+    const uint8_t mask = static_cast<uint8_t>(~(1 << bit));
 
     gameboy.cpu.setSingleByteRegister(cpuRegister, low, value & mask);
   }
