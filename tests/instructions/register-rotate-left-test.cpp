@@ -10,8 +10,18 @@ RegisterRotateLeftTest::RegisterRotateLeftTest():
 }
 
 bool RegisterRotateLeftTest::run() {
-  Gameboy            gameboy;
   RegisterRotateLeft instruction(&Cpu::af, false);
+  Gameboy            gameboy;
+
+  // This should have an influence.
+  gameboy.cpu.setCarryFlag(true);
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1);
+
+  instruction.execute(gameboy, gameboy.mmu.memory);
+
+  if (gameboy.cpu.singleByteRegister(&Cpu::af, false) != 0b11 || gameboy.cpu.anyFlagSet()) {
+    return false;
+  }
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1);
 

@@ -3,6 +3,7 @@
 #include "../../src/cpu/instructions/register-rotate-right.hpp"
 #include "register-rotate-right-test.hpp"
 #include "../../src/gameboy.hpp"
+#include "../../src/bit.hpp"
 
 RegisterRotateRightTest::RegisterRotateRightTest():
   Test("Register rotate right carry")
@@ -12,6 +13,18 @@ RegisterRotateRightTest::RegisterRotateRightTest():
 bool RegisterRotateRightTest::run() {
   Gameboy             gameboy;
   RegisterRotateRight instruction(&Cpu::af, false);
+
+  // This should have an influence.
+  gameboy.cpu.setCarryFlag(true);
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 0b10);
+
+  instruction.execute(gameboy, gameboy.mmu.memory);
+
+  if (gameboy.cpu.singleByteRegister(&Cpu::af, false) != (1 | highBitInByte) || gameboy.cpu.anyFlagSet()) {
+    return false;
+  }
+
+  gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1);
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1 << 7);
 

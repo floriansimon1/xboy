@@ -15,12 +15,14 @@ RegisterRotateRight::RegisterRotateRight(CpuRegisterPointer cpuRegister, bool lo
 void RegisterRotateRight::execute(Gameboy &gameboy, const uint8_t *) const {
   const auto value = gameboy.cpu.singleByteRegister(cpuRegister, low);
 
+  const auto leftBit = gameboy.cpu.getCarryFlag() ? highBitInByte : 0;
+
   gameboy.cpu.setCarryFlag(getBit(value, 0));
   gameboy.cpu.setHalfCarryFlag(false);
   gameboy.cpu.setSubtractFlag(false);
   gameboy.cpu.setZeroFlag(false);
 
-  gameboy.cpu.setSingleByteRegister(cpuRegister, low, value >> 1);
+  gameboy.cpu.setSingleByteRegister(cpuRegister, low, leftBit | (value >> 1));
 }
 
 std::string RegisterRotateRight::toString() const {

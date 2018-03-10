@@ -23,7 +23,7 @@ void RegisterRotateRightCarry::execute(Gameboy &gameboy, const uint8_t *) const 
   gameboy.cpu.setZeroFlag(false);
 
   gameboy.cpu.setSingleByteRegister(cpuRegister, low, (
-    (value >> 1) | ((rightBitSet ? 1 : 0) << 7)
+    (value >> 1) | (rightBitSet ? highBitInByte : 0)
   ));
 }
 
