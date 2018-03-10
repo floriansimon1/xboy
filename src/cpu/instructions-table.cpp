@@ -50,13 +50,16 @@
 #include "instructions/return-flag.hpp"
 #include "instructions/short-call.hpp"
 #include "instructions/unmapped.hpp"
+#include "instructions/get-bit.hpp"
 #include "instructions/negate.hpp"
+#include "instructions/clear.hpp"
 #include "instructions-table.hpp"
 #include "instructions/jump.hpp"
 #include "instructions/swap.hpp"
 #include "instructions/call.hpp"
 #include "instructions/halt.hpp"
 #include "instructions/stop.hpp"
+#include "instructions/set.hpp"
 #include "instructions/nop.hpp"
 #include "cpu.hpp"
 
@@ -409,6 +412,15 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x3d] = std::make_shared<RegisterShiftRight<false>>(&Cpu::hl, true);
   twoBytesOpcodes[0x3e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftRight<false>>>();
   twoBytesOpcodes[0x3f] = std::make_shared<RegisterShiftRight<false>>(&Cpu::af, false);
+
+  twoBytesOpcodes[0x40] = std::make_shared<GetBit<0>>(&Cpu::bc, false);
+  twoBytesOpcodes[0x41] = std::make_shared<GetBit<0>>(&Cpu::bc, true);
+  twoBytesOpcodes[0x42] = std::make_shared<GetBit<0>>(&Cpu::de, false);
+  twoBytesOpcodes[0x43] = std::make_shared<GetBit<0>>(&Cpu::de, true);
+  twoBytesOpcodes[0x44] = std::make_shared<GetBit<0>>(&Cpu::hl, false);
+  twoBytesOpcodes[0x45] = std::make_shared<GetBit<0>>(&Cpu::hl, true);
+  twoBytesOpcodes[0x46] = std::make_shared<RegisterInstructionOnDereferencedHl<GetBit<0>>>();
+  twoBytesOpcodes[0x47] = std::make_shared<GetBit<0>>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {
