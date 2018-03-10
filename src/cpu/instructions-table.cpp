@@ -53,6 +53,7 @@
 #include "instructions/negate.hpp"
 #include "instructions-table.hpp"
 #include "instructions/jump.hpp"
+#include "instructions/swap.hpp"
 #include "instructions/call.hpp"
 #include "instructions/halt.hpp"
 #include "instructions/stop.hpp"
@@ -392,6 +393,14 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x2e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftRight<true>>>();
   twoBytesOpcodes[0x2f] = std::make_shared<RegisterShiftRight<true>>(&Cpu::af, false);
 
+  twoBytesOpcodes[0x30] = std::make_shared<Swap>(&Cpu::bc, false);
+  twoBytesOpcodes[0x31] = std::make_shared<Swap>(&Cpu::bc, true);
+  twoBytesOpcodes[0x32] = std::make_shared<Swap>(&Cpu::de, false);
+  twoBytesOpcodes[0x33] = std::make_shared<Swap>(&Cpu::de, true);
+  twoBytesOpcodes[0x34] = std::make_shared<Swap>(&Cpu::hl, false);
+  twoBytesOpcodes[0x35] = std::make_shared<Swap>(&Cpu::hl, true);
+  twoBytesOpcodes[0x36] = std::make_shared<RegisterInstructionOnDereferencedHl<Swap>>();
+  twoBytesOpcodes[0x37] = std::make_shared<Swap>(&Cpu::af, false);
   twoBytesOpcodes[0x38] = std::make_shared<RegisterShiftRight<false>>(&Cpu::bc, false);
   twoBytesOpcodes[0x39] = std::make_shared<RegisterShiftRight<false>>(&Cpu::bc, true);
   twoBytesOpcodes[0x3a] = std::make_shared<RegisterShiftRight<false>>(&Cpu::de, false);
