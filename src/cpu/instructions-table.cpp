@@ -383,14 +383,14 @@ void InstructionsTable::mapExtendedTable() {
   twoBytesOpcodes[0x25] = std::make_shared<RegisterShiftLeft>(&Cpu::hl, true);
   twoBytesOpcodes[0x26] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftLeft>>();
   twoBytesOpcodes[0x27] = std::make_shared<RegisterShiftLeft>(&Cpu::af, false);
-  twoBytesOpcodes[0x28] = std::make_shared<RegisterShiftRight>(&Cpu::bc, false);
-  twoBytesOpcodes[0x29] = std::make_shared<RegisterShiftRight>(&Cpu::bc, true);
-  twoBytesOpcodes[0x2a] = std::make_shared<RegisterShiftRight>(&Cpu::de, false);
-  twoBytesOpcodes[0x2b] = std::make_shared<RegisterShiftRight>(&Cpu::de, true);
-  twoBytesOpcodes[0x2c] = std::make_shared<RegisterShiftRight>(&Cpu::hl, false);
-  twoBytesOpcodes[0x2d] = std::make_shared<RegisterShiftRight>(&Cpu::hl, true);
-  twoBytesOpcodes[0x2e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftRight>>();
-  twoBytesOpcodes[0x2f] = std::make_shared<RegisterShiftRight>(&Cpu::af, false);
+  twoBytesOpcodes[0x28] = std::make_shared<RegisterShiftRight<true>>(&Cpu::bc, false);
+  twoBytesOpcodes[0x29] = std::make_shared<RegisterShiftRight<true>>(&Cpu::bc, true);
+  twoBytesOpcodes[0x2a] = std::make_shared<RegisterShiftRight<true>>(&Cpu::de, false);
+  twoBytesOpcodes[0x2b] = std::make_shared<RegisterShiftRight<true>>(&Cpu::de, true);
+  twoBytesOpcodes[0x2c] = std::make_shared<RegisterShiftRight<true>>(&Cpu::hl, false);
+  twoBytesOpcodes[0x2d] = std::make_shared<RegisterShiftRight<true>>(&Cpu::hl, true);
+  twoBytesOpcodes[0x2e] = std::make_shared<RegisterInstructionOnDereferencedHl<RegisterShiftRight<true>>>();
+  twoBytesOpcodes[0x2f] = std::make_shared<RegisterShiftRight<true>>(&Cpu::af, false);
 }
 
 std::shared_ptr<Instruction> InstructionsTable::get(const bool fromExtendedSet, const uint8_t opcode) {

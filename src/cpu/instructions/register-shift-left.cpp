@@ -28,7 +28,7 @@ void RegisterShiftLeft::execute(Gameboy &gameboy, const uint8_t *) const {
 std::string RegisterShiftLeft::toString() const {
   std::ostringstream result;
 
-  result << "SRA " << registerString(cpuRegister, true, low);
+  result << "SLA " << registerString(cpuRegister, true, low);
 
   return result.str();
 }
