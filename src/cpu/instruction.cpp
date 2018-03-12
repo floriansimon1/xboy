@@ -1,7 +1,7 @@
 #include "instruction.hpp"
 
 bool Instruction::isExtendedInstruction(uint8_t firstOpcodeByte) {
-  return firstOpcodeByte == 0xCB;
+  return firstOpcodeByte == 0xcb;
 }
 
 Instruction::Instruction(unsigned short dataSize, unsigned short opcodeSize):
