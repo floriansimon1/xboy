@@ -3,7 +3,7 @@
 #include "../../src/gameboy.hpp"
 
 DereferenceCombinedIntoSingleTest::DereferenceCombinedIntoSingleTest():
-  Test("Derefence combined registers into single-byte register instruction")
+  Test("Dereference a word register into a byte register instruction")
 {
 }
 
@@ -16,9 +16,9 @@ bool DereferenceCombinedIntoSingleTest::run() {
   gameboy.cpu.bc = 10;
   gameboy.cpu.af = 0;
 
-  gameboy.mmu.memory[gameboy.cpu.bc] = value;
+  gameboy.mmu.write(gameboy.cpu.bc, value);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   return gameboy.cpu.af == value;
 }

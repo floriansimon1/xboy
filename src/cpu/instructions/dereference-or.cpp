@@ -12,9 +12,9 @@ DereferenceOr::DereferenceOr(CpuRegisterPointer pointerRegister, bool exclusive)
 }
 
 void DereferenceOr::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto dataPointer = gameboy.mmu.memory + gameboy.cpu.twoBytesRegister(pointerRegister);
+  const auto value = gameboy.mmu[gameboy.cpu.twoBytesRegister(pointerRegister)];
 
-  orInstruction.execute(gameboy, dataPointer);
+  orInstruction.execute(gameboy, &value);
 }
 
 std::string DereferenceOr::toString() const {

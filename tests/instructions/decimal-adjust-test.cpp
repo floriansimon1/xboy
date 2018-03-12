@@ -39,7 +39,7 @@ bool DecimalAdjustTest::testCombinedCarriesAddition() const {
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, 0);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 0x9A);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true) != (carryBit | zeroBit)
@@ -74,7 +74,7 @@ bool DecimalAdjustTest::testLowByteAddition() const {
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, 0);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 14);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true)
@@ -93,14 +93,14 @@ bool DecimalAdjustTest::testLowByteAddition() const {
   // 0b1001   + 0b1000
   // ------------------
   // 17
-  // 0b10001
+  // 0b100013
   // BCD: 0b00010111
   // BCD: 23
   // C = 0, H = 1, Z = 0, N = 0
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, halfCarryBit);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 17);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true)
@@ -135,7 +135,7 @@ bool DecimalAdjustTest::testHighByteAddition() const {
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, 0);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 224);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true) != carryBit
@@ -162,7 +162,7 @@ bool DecimalAdjustTest::testHighByteAddition() const {
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, carryBit);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 16);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true) != carryBit
@@ -198,7 +198,7 @@ bool DecimalAdjustTest::testLowByteSubtraction() const {
     gameboy.cpu.setSingleByteRegister(&Cpu::af, true, subtractBit | halfCarryBit | carryBit);
     gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 252);
 
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     if (
       gameboy.cpu.singleByteRegister(&Cpu::af, true) != (subtractBit | carryBit)
@@ -234,7 +234,7 @@ bool DecimalAdjustTest::testHighByteSubtraction() const {
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, subtractBit | carryBit);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 192);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true) != (subtractBit | carryBit)
@@ -271,7 +271,7 @@ bool DecimalAdjustTest::testCombinedCarriesSubtraction() const {
   gameboy.cpu.setSingleByteRegister(&Cpu::af, true, subtractBit | halfCarryBit | carryBit);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 255);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.singleByteRegister(&Cpu::af, true) != (subtractBit | carryBit)

@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "../../src/bit.hpp"
 #include "../../src/gameboy.hpp"
 #include "high-byte-dereference-test.hpp"
 #include "../../src/cpu/instructions/dereference-high-byte.hpp"
@@ -23,11 +24,12 @@ bool HighByteDereferenceTest::run() {
   const uint8_t other    = 12;
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, expected);
-  gameboy.mmu.memory[0xff00 + address] = other;
+
+  gameboy.mmu.write(address + 0xff00, other);
 
   into.execute(gameboy, &address);
 
-  memoryValue   = gameboy.mmu.memory[0xff00 + address];
+  memoryValue   = gameboy.mmu[address + 0xff00];
   registerValue = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
   if (memoryValue != registerValue || registerValue != expected) {
@@ -37,14 +39,15 @@ bool HighByteDereferenceTest::run() {
   }
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, other);
-  gameboy.mmu.memory[0xff00 + address] = expected;
+  gameboy.mmu.write(address + 0xff00, expected);
 
   to.execute(gameboy, &address);
 
-  memoryValue   = gameboy.mmu.memory[0xff00 + address];
+  memoryValue   = gameboy.mmu[address + 0xff00];
   registerValue = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
   if (memoryValue != registerValue || registerValue != expected) {
+    std::cout << (unsigned int) registerValue << std::endl;
     std::cout << "The second half of the test failed" << std::endl;
 
     return false;

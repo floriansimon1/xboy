@@ -9,7 +9,9 @@ DereferenceJump::DereferenceJump():
 }
 
 void DereferenceJump::execute(Gameboy &gameboy, const uint8_t *) const {
-  jumpInstruction.execute(gameboy, gameboy.mmu.memory + gameboy.cpu.hl);
+  const auto value = gameboy.mmu[gameboy.cpu.hl];
+
+  jumpInstruction.execute(gameboy, &value);
 }
 
 std::string DereferenceJump::toString() const {

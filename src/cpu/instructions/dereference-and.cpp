@@ -11,9 +11,9 @@ DereferenceAnd::DereferenceAnd(CpuRegisterPointer pointerRegister):
 }
 
 void DereferenceAnd::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto dataPointer = gameboy.mmu.memory + gameboy.cpu.twoBytesRegister(pointerRegister);
+  const auto value = gameboy.mmu[gameboy.cpu.twoBytesRegister(pointerRegister)];
 
-  andInstruction.execute(gameboy, dataPointer);
+  andInstruction.execute(gameboy, &value);
 }
 
 std::string DereferenceAnd::toString() const {

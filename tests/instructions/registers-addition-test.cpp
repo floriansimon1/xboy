@@ -12,10 +12,10 @@ bool RegistersAdditionTest::run() {
   Gameboy                 gameboy;
 
   gameboy.cpu.hl = 0;
-  gameboy.mmu.memory[gameboy.cpu.hl] = 1;
+  gameboy.mmu.write(gameboy.cpu.hl, 1);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, maxUint8);
 
-  normal.execute(gameboy, gameboy.mmu.memory);
+  normal.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.hl
@@ -28,7 +28,7 @@ bool RegistersAdditionTest::run() {
     return false;
   }
 
-  withCarry.execute(gameboy, gameboy.mmu.memory);
+  withCarry.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.hl

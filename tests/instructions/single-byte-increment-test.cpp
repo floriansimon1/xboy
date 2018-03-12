@@ -17,7 +17,7 @@ bool SingleByteIncrementTest::run() {
     gameboy.cpu.bc = i * 16 - 2;
     gameboy.cpu.af = 0;
 
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     if (
       gameboy.cpu.getZeroFlag()
@@ -34,7 +34,7 @@ bool SingleByteIncrementTest::run() {
 
     gameboy.cpu.af = 0;
 
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     if (
       gameboy.cpu.getZeroFlag()

@@ -17,7 +17,7 @@ bool SingleByteDecrementTest::run() {
     gameboy.cpu.bc = i * 16 + 1;
     gameboy.cpu.af = 0;
 
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     const bool expectZeroFlag = !i;
 
@@ -36,7 +36,7 @@ bool SingleByteDecrementTest::run() {
 
     gameboy.cpu.af = 0;
 
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     if (
       gameboy.cpu.getZeroFlag()

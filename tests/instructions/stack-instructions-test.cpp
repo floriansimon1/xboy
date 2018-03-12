@@ -15,7 +15,7 @@ bool StackInstructionsTest::run() {
 
   gameboy.cpu.hl = value;
 
-  push.execute(gameboy, gameboy.mmu.memory);
+  push.execute(gameboy, NULL);
 
   if (gameboy.cpu.hl != value) {
     return false;
@@ -23,7 +23,7 @@ bool StackInstructionsTest::run() {
 
   gameboy.cpu.hl = value + 1;
 
-  pop.execute(gameboy, gameboy.mmu.memory);
+  pop.execute(gameboy, NULL);
 
   return gameboy.cpu.hl == value;
 }

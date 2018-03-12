@@ -14,7 +14,7 @@ bool TwoBytesIncrementTest::run() {
 
   gameboy.cpu.bc = maxUint16;
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (gameboy.cpu.bc) {
     return false;
@@ -22,7 +22,7 @@ bool TwoBytesIncrementTest::run() {
 
   gameboy.cpu.bc = 0;
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   return gameboy.cpu.bc == 1;
 }

@@ -18,7 +18,7 @@ bool RegisterRotateRightTest::run() {
   gameboy.cpu.setCarryFlag(true);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 0b10);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (gameboy.cpu.singleByteRegister(&Cpu::af, false) != (1 | highBitInByte) || gameboy.cpu.anyFlagSet()) {
     return false;
@@ -29,7 +29,7 @@ bool RegisterRotateRightTest::run() {
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1 << 7);
 
   for (auto i = 0; i < 7; i++) {
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     const auto value = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
@@ -42,7 +42,7 @@ bool RegisterRotateRightTest::run() {
     }
   }
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   const auto value = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 

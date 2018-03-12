@@ -12,9 +12,9 @@ SubtractMemoryByteToRegister::SubtractMemoryByteToRegister(CpuRegisterPointer po
 }
 
 void SubtractMemoryByteToRegister::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto valuePointer = gameboy.mmu.memory + gameboy.cpu.twoBytesRegister(pointerRegister);
+  const auto value = gameboy.mmu[gameboy.cpu.twoBytesRegister(pointerRegister)];
 
-  subtractionInstruction.execute(gameboy, valuePointer);
+  subtractionInstruction.execute(gameboy, &value);
 }
 
 std::string SubtractMemoryByteToRegister::toString() const {

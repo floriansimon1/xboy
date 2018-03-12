@@ -14,12 +14,11 @@ bool RegisterRotateRightCarryTest::run() {
   RegisterRotateRightCarry instruction(&Cpu::af, false);
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1 << 7);
-
   for (auto i = 0; i < 7; i++) {
     // This should have no influence.
     gameboy.cpu.setCarryFlag(true);
 
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     const auto value = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
@@ -35,7 +34,7 @@ bool RegisterRotateRightCarryTest::run() {
   // This should have no influence.
   gameboy.cpu.setCarryFlag(true);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   const auto value = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 

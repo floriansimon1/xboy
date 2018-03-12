@@ -11,10 +11,10 @@ WriteTwoBytesRegisterToAddress::WriteTwoBytesRegisterToAddress(CpuRegisterPointe
 }
 
 void WriteTwoBytesRegisterToAddress::execute(Gameboy &gameboy, const uint8_t *data) const {
-  const auto address = *reinterpret_cast<const uint16_t*>(data);
-
-  gameboy.mmu.memory[address + 1] = gameboy.cpu.singleByteRegister(cpuRegister, false);
-  gameboy.mmu.memory[address]     = gameboy.cpu.singleByteRegister(cpuRegister, true);
+  gameboy.mmu.writeWord(
+    *reinterpret_cast<const uint16_t*>(data),
+    gameboy.cpu.twoBytesRegister(cpuRegister)
+  );
 }
 
 std::string WriteTwoBytesRegisterToAddress::toString() const {
@@ -24,4 +24,3 @@ std::string WriteTwoBytesRegisterToAddress::toString() const {
 
   return result.str();
 }
-

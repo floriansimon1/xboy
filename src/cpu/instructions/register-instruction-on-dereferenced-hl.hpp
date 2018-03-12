@@ -25,15 +25,15 @@ struct RegisterInstructionOnDereferencedHl: ConstantTimeInstruction {
     gameboy.cpu.setSingleByteRegister(
       instruction.cpuRegister,
       instruction.low,
-      gameboy.mmu.memory[gameboy.cpu.hl]
+      gameboy.mmu[gameboy.cpu.hl]
     );
 
     instruction.execute(gameboy, data);
 
-    gameboy.mmu.memory[gameboy.cpu.hl] = gameboy.cpu.singleByteRegister(
+    gameboy.mmu.write(gameboy.cpu.hl, gameboy.cpu.singleByteRegister(
       instruction.cpuRegister,
       instruction.low
-    );
+    ));
 
     gameboy.cpu.setSingleByteRegister(instruction.cpuRegister, instruction.low, registerBackup);
   }

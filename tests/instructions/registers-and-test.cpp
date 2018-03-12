@@ -11,10 +11,10 @@ bool RegistersAndTest::run() {
   Gameboy        gameboy;
 
   gameboy.cpu.hl = 0;
-  gameboy.mmu.memory[gameboy.cpu.hl] = 1;
+  gameboy.mmu.write(gameboy.cpu.hl, 1);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, maxUint8);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (
     !gameboy.cpu.onlyFlagSet(Cpu::halfCarryFlag)
@@ -23,9 +23,9 @@ bool RegistersAndTest::run() {
     return false;
   }
 
-  gameboy.mmu.memory[gameboy.cpu.hl] = 0;
+  gameboy.mmu.write(gameboy.cpu.hl, 0);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   if (gameboy.cpu.af != (
     getBit(gameboy.cpu.af, Cpu::zeroFlag)

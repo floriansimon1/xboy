@@ -11,7 +11,7 @@ struct DereferenceHighByte: ConstantTimeInstruction {
   std::string toString() const override;
 
   private:
-    LoadImmediate8 loadInstruction;
+    LoadImmediate8 loadImmediated8Instruction;
 };
 
 #endif

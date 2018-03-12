@@ -19,9 +19,9 @@ DereferenceIntoSingleRegister::DereferenceIntoSingleRegister(
 }
 
 void DereferenceIntoSingleRegister::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto dataPointer = gameboy.mmu.memory + 0xff00 + gameboy.cpu.singleByteRegister(source, sourceLow);
+  const auto value = gameboy.mmu[gameboy.cpu.singleByteRegister(source, sourceLow) + 0xff00];
 
-  *dataPointer = gameboy.cpu.singleByteRegister(destination, destinationLow);
+  gameboy.cpu.setSingleByteRegister(destination, destinationLow, value);
 }
 
 std::string DereferenceIntoSingleRegister::toString() const {

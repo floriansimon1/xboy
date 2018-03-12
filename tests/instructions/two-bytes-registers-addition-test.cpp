@@ -20,7 +20,7 @@ bool TwoBytesRegistersAdditionTest::executeAndCheck(
 ) const {
   Cpu &cpu = gameboy.cpu;
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   bool success = (
     cpu.de == value

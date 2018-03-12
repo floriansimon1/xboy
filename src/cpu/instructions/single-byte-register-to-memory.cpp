@@ -16,7 +16,7 @@ void SingleByteRegisterToMemory::execute(Gameboy &gameboy, const uint8_t *) cons
   const auto written = gameboy.cpu.singleByteRegister(cpuRegister, low);
   const auto address = gameboy.cpu.twoBytesRegister(memoryPointer);
 
-  gameboy.mmu.memory[address] = written;
+  gameboy.mmu.write(address, written);
 }
 
 std::string SingleByteRegisterToMemory::toString() const {

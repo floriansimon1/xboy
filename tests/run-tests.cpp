@@ -61,7 +61,7 @@ bool runTests() {
     if (!test->run()) {
       success = false;
 
-      cout << "Failure: " << test->name << endl;
+      cout << "\x1b[33;4mFailure\x1b[0m: " << test->name << endl;
     }
   }
 

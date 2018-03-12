@@ -5,7 +5,7 @@
 #include "../../src/cpu/instructions/write-two-bytes-register-to-address.hpp"
 
 WriteTwoBytesRegisterToAddressTest::WriteTwoBytesRegisterToAddressTest():
-  Test("Write 2-bytes register to address instruction")
+  Test("Write word register to address instruction")
 {
 }
 
@@ -13,24 +13,20 @@ bool WriteTwoBytesRegisterToAddressTest::run() {
   Gameboy                        gameboy;
   WriteTwoBytesRegisterToAddress instruction(&Cpu::sp);
 
-  const auto value = 143;
+  const uint16_t value   = 143;
+  const uint16_t address = 1234;
 
   gameboy.cpu.sp = value;
 
-  const uint8_t lowByte  = 100;
-  const uint8_t highByte = 0;
+  instruction.execute(gameboy, reinterpret_cast<const uint8_t*>(&address));
 
-  uint16_t data = (highByte << 8) | lowByte;
+  const auto result = gameboy.mmu.readWord(address);
 
-  instruction.execute(gameboy, reinterpret_cast<uint8_t*>(&data));
-
-  const auto result = *reinterpret_cast<uint16_t*>(gameboy.mmu.memory + 100);
-
-  const bool success = result == value;
-
-  if (!success) {
+  if (result != value) {
     std::cout << "Value: " << (unsigned int) result << std::endl;
+
+    return false;
   }
 
-  return success;
+  return true;
 }

@@ -13,11 +13,13 @@ IncrementDereference::IncrementDereference(CpuRegisterPointer pointerRegister, c
 }
 
 void IncrementDereference::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto address = *reinterpret_cast<const uint16_t*>(gameboy.cpu.twoBytesRegister(pointerRegister));
+  const auto registerValue = gameboy.cpu.twoBytesRegister(pointerRegister);
 
-  gameboy.mmu.memory[address] += sign;
+  const auto value = gameboy.mmu[registerValue];
 
-  const auto result = gameboy.mmu.memory[address];
+  const auto result = value + 1;
+
+  gameboy.mmu.write(registerValue, value + 1);
 
   gameboy.cpu.setHalfCarryFlag(!(result & lowHalfByteMask));
   gameboy.cpu.setZeroFlag(!result);

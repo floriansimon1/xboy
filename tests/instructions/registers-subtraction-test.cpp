@@ -14,10 +14,10 @@ bool RegistersSubtractionTest::run() {
   Gameboy                      gameboy;
 
   gameboy.cpu.hl = 0;
-  gameboy.mmu.memory[gameboy.cpu.hl] = 1;
+  gameboy.mmu.write(gameboy.cpu.hl, 1);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 0);
 
-  normal.execute(gameboy, gameboy.mmu.memory);
+  normal.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.getZeroFlag()
@@ -33,7 +33,7 @@ bool RegistersSubtractionTest::run() {
     return false;
   }
 
-  withCarry.execute(gameboy, gameboy.mmu.memory);
+  withCarry.execute(gameboy, NULL);
 
   if (
     gameboy.cpu.getZeroFlag()

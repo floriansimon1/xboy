@@ -19,7 +19,7 @@ bool RegisterRotateLeftCarryTest::run() {
     // This should have no influence.
     gameboy.cpu.setCarryFlag(true);
 
-    instruction.execute(gameboy, gameboy.mmu.memory);
+    instruction.execute(gameboy, NULL);
 
     const auto value = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
@@ -35,7 +35,7 @@ bool RegisterRotateLeftCarryTest::run() {
   // This should have no influence.
   gameboy.cpu.setCarryFlag(true);
 
-  instruction.execute(gameboy, gameboy.mmu.memory);
+  instruction.execute(gameboy, NULL);
 
   const auto value = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 

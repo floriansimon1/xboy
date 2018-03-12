@@ -3,14 +3,16 @@
 
 DereferenceHighByte::DereferenceHighByte():
   ConstantTimeInstruction(12, 1, 1),
-  loadInstruction(&Cpu::af, false)
+  loadImmediated8Instruction(&Cpu::af, false)
 {
 }
 
 void DereferenceHighByte::execute(Gameboy &gameboy, const uint8_t *data) const {
   const uint16_t address = 0xff00 + *data;
 
-  loadInstruction.execute(gameboy, gameboy.mmu.memory + address);
+  const uint8_t value = gameboy.mmu[address];
+
+  loadImmediated8Instruction.execute(gameboy, &value);
 }
 
 std::string DereferenceHighByte::toString() const {
