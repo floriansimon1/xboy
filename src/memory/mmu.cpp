@@ -11,7 +11,7 @@ bool Mmu::inShadowRam(uint16_t address) {
 }
 
 uint16_t Mmu::convertShadowRamAddressToRamAddress(uint16_t address) {
-  return address - 0x1000;
+  return address - 0x2000;
 }
 
 void Mmu::reset() {
