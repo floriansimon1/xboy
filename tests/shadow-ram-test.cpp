@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "../src/memory/mmu.hpp"
 #include "shadow-ram-test.hpp"
 
@@ -19,6 +21,12 @@ bool ShadowRamTest::run() {
     || memory.readWord(0xc002) != memory.readWord(0xe002)
     || memory.readWord(0xc004) != memory.readWord(0xe004)
   ) {
+    std::cout << (unsigned int) memory[0xc000] << " ≠ " << (unsigned int) memory[0xe000] << "\n"
+              << (unsigned int) memory[0xc001] << " ≠ " << (unsigned int) memory[0xe001] << "\n"
+              << (unsigned int) memory.readWord(0xc002) << " ≠ " << (unsigned int) memory.readWord(0xe002) << "\n"
+              << (unsigned int) memory.readWord(0xc004) << " ≠ " << (unsigned int) memory.readWord(0xe004)
+              << std::endl;
+
     return false;
   }
 

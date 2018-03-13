@@ -36,6 +36,7 @@ bool runTests() {
 
   list<std::shared_ptr<Test>> tests;
 
+  tests.push_back(make_shared<ShadowRamTest>());
   tests.push_back(make_shared<ShortCallTest>());
   tests.push_back(make_shared<DecimalAdjustTest>());
   tests.push_back(make_shared<LoadImmediate8Test>());
