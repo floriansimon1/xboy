@@ -16,6 +16,9 @@ struct Mmu {
   void write(uint16_t address, uint8_t byte);
   uint16_t readWord(uint16_t address) const;
 
+  static uint16_t convertShadowRamAddressToRamAddress(uint16_t address);
+  static bool inShadowRam(uint16_t address);
+
   void reset();
 
   private:

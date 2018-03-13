@@ -6,6 +6,14 @@
 #include "../bios.hpp"
 #include "../cpu/cpu.hpp"
 
+bool Mmu::inShadowRam(uint16_t address) {
+  return address >= 0xe000 && address < 0xfe00;
+}
+
+uint16_t Mmu::convertShadowRamAddressToRamAddress(uint16_t address) {
+  return address - 0x1000;
+}
+
 void Mmu::reset() {
   memset(memory, 0, sizeof(memory));
   memcpy(memory, bios, sizeof(bios));
@@ -28,6 +36,11 @@ uint8_t Mmu::popByteFromStack(Cpu &cpu) {
 }
 
 void Mmu::write(uint16_t address, uint8_t byte) {
+  // Shadow RAM.
+  if (Mmu::inShadowRam(address)) {
+    memory[Mmu::convertShadowRamAddressToRamAddress(address)] = byte;
+  }
+
   memory[address] = byte;
 }
 
@@ -56,5 +69,9 @@ void Mmu::pushByteToStack(Cpu &cpu, uint8_t value) {
 }
 
 const uint8_t& Mmu::operator[](const uint16_t address) const {
+  if (inShadowRam(address)) {
+    return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
+  }
+
   return memory[address];
 }

@@ -4,6 +4,7 @@
 
 #include "test.hpp"
 #include "run-tests.hpp"
+#include "shadow-ram-test.hpp"
 #include "instructions/short-call-test.hpp"
 #include "instructions/registers-or-test.hpp"
 #include "instructions/registers-and-test.hpp"
