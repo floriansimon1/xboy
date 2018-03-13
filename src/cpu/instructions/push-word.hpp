@@ -1,16 +1,16 @@
-#ifndef PUSH_TWO_BYTES_HPP
-#define PUSH_TWO_BYTES_HPP
+#ifndef PUSH_WORD_HPP
+#define PUSH_WORD_HPP
 
 #include "../cpu.hpp"
 #include "../constant-time-instruction.hpp"
 
-struct PushTwoBytes: ConstantTimeInstruction {
+struct PushWord: ConstantTimeInstruction {
   CpuRegisterPointer cpuRegister;
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;
 
-  PushTwoBytes(CpuRegisterPointer cpuRegister);
+  PushWord(CpuRegisterPointer cpuRegister);
 };
 
 #endif

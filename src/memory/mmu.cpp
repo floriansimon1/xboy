@@ -11,8 +11,8 @@ void Mmu::reset() {
   memcpy(memory, bios, sizeof(bios));
 }
 
-uint16_t Mmu::popTwoBytesFromStack(Cpu &cpu) {
-  const auto value = *reinterpret_cast<uint16_t*>(memory + cpu.sp);
+uint16_t Mmu::popWordFromStack(Cpu &cpu) {
+  const auto value = readWord(cpu.sp);
 
   cpu.sp += 2;
 
@@ -20,7 +20,7 @@ uint16_t Mmu::popTwoBytesFromStack(Cpu &cpu) {
 }
 
 uint8_t Mmu::popByteFromStack(Cpu &cpu) {
-  const auto value = memory[cpu.sp];
+  const auto value = (*this)[cpu.sp];
 
   cpu.sp++;
 
@@ -43,14 +43,14 @@ void Mmu::writeWord(uint16_t address, const uint16_t word) {
   write(address + 1, (word & highByteMask) >> 8);
 }
 
-void Mmu::pushTwoBytesToStack(Cpu &cpu, uint16_t value) {
+void Mmu::pushWordToStack(Cpu &cpu, uint16_t value) {
   cpu.sp -= 2;
 
-  *reinterpret_cast<uint16_t*>(memory + cpu.sp) = value;
+  writeWord(cpu.sp, value);
 }
 
 void Mmu::pushByteToStack(Cpu &cpu, uint8_t value) {
-  memory[cpu.sp] = value;
+  write(cpu.sp, value);
 
   cpu.sp--;
 }

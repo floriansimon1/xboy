@@ -6,9 +6,9 @@
 struct Cpu;
 
 struct Mmu {
-  void pushTwoBytesToStack(Cpu &cpu, uint16_t value);
+  void pushWordToStack(Cpu &cpu, uint16_t value);
   void pushByteToStack(Cpu &cpu, uint8_t value);
-  uint16_t popTwoBytesFromStack(Cpu &cpu);
+  uint16_t popWordFromStack(Cpu &cpu);
   uint8_t popByteFromStack(Cpu &cpu);
 
   const uint8_t& operator[](const uint16_t address) const;

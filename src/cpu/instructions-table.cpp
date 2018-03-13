@@ -36,19 +36,19 @@
 #include "instructions/dereference-jump.hpp"
 #include "instructions/load-immediate-8.hpp"
 #include "instructions/dereference-and.hpp"
-#include "instructions/push-two-bytes.hpp"
 #include "instructions/dereference-or.hpp"
 #include "instructions/set-carry-flag.hpp"
 #include "instructions/decimal-adjust.hpp"
 #include "instructions/a-rotate-right.hpp"
 #include "instructions/a-rotate-left.hpp"
 #include "instructions/copy-register.hpp"
-#include "instructions/pop-two-bytes.hpp"
 #include "instructions/registers-and.hpp"
 #include "instructions/registers-or.hpp"
 #include "instructions/dereference.hpp"
 #include "instructions/return-flag.hpp"
 #include "instructions/short-call.hpp"
+#include "instructions/push-word.hpp"
+#include "instructions/pop-word.hpp"
 #include "instructions/unmapped.hpp"
 #include "instructions/get-bit.hpp"
 #include "instructions/negate.hpp"
@@ -276,11 +276,11 @@ void InstructionsTable::mapFirstTable() {
   oneByteOpcodes[0xbf] = std::make_shared<RegistersCompare>(&Cpu::af, false);
 
   oneByteOpcodes[0xc0] = std::make_shared<ReturnFlag>(true, Cpu::zeroFlag, true);
-  oneByteOpcodes[0xc1] = std::make_shared<PopTwoBytes>(&Cpu::bc);
+  oneByteOpcodes[0xc1] = std::make_shared<PopWord>(&Cpu::bc);
   oneByteOpcodes[0xc2] = std::make_shared<Jump>(true, Cpu::zeroFlag, true);
   oneByteOpcodes[0xc3] = std::make_shared<Jump>(false);
   oneByteOpcodes[0xc4] = std::make_shared<Call>(true, Cpu::zeroFlag, true);
-  oneByteOpcodes[0xc5] = std::make_shared<PushTwoBytes>(&Cpu::bc);
+  oneByteOpcodes[0xc5] = std::make_shared<PushWord>(&Cpu::bc);
   oneByteOpcodes[0xc6] = std::make_shared<UnsignedImmediateAddition>(false);
   oneByteOpcodes[0xc7] = std::make_shared<ShortCall>(0);
   oneByteOpcodes[0xc8] = std::make_shared<ReturnFlag>(true, Cpu::zeroFlag, false);
@@ -293,11 +293,11 @@ void InstructionsTable::mapFirstTable() {
   oneByteOpcodes[0xcf] = std::make_shared<ShortCall>(8);
 
   oneByteOpcodes[0xd0] = std::make_shared<ReturnFlag>(true, Cpu::carryFlag, true);
-  oneByteOpcodes[0xd1] = std::make_shared<PopTwoBytes>(&Cpu::de);
+  oneByteOpcodes[0xd1] = std::make_shared<PopWord>(&Cpu::de);
   oneByteOpcodes[0xd2] = std::make_shared<Jump>(true, Cpu::carryFlag, true);
   oneByteOpcodes[0xd3] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xd4] = std::make_shared<Call>(true, Cpu::carryFlag, true);
-  oneByteOpcodes[0xd5] = std::make_shared<PushTwoBytes>(&Cpu::de);
+  oneByteOpcodes[0xd5] = std::make_shared<PushWord>(&Cpu::de);
   oneByteOpcodes[0xd6] = std::make_shared<UnsignedImmediateSubtraction>(false);
   oneByteOpcodes[0xd7] = std::make_shared<ShortCall>(0x10);
   oneByteOpcodes[0xd8] = std::make_shared<ReturnFlag>(true, Cpu::carryFlag, false);
@@ -310,11 +310,11 @@ void InstructionsTable::mapFirstTable() {
   oneByteOpcodes[0xdf] = std::make_shared<ShortCall>(0x18);
 
   oneByteOpcodes[0xe0] = std::make_shared<DereferenceIntoHighByte>();
-  oneByteOpcodes[0xe1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
+  oneByteOpcodes[0xe1] = std::make_shared<PopWord>(&Cpu::hl);
   oneByteOpcodes[0xe2] = std::make_shared<DereferenceIntoSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
   oneByteOpcodes[0xe3] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xe4] = std::make_shared<Unmapped>();
-  oneByteOpcodes[0xe5] = std::make_shared<PushTwoBytes>(&Cpu::hl);
+  oneByteOpcodes[0xe5] = std::make_shared<PushWord>(&Cpu::hl);
   oneByteOpcodes[0xe6] = std::make_shared<ImmediateAnd>();
   oneByteOpcodes[0xe7] = std::make_shared<ShortCall>(0x20);
   oneByteOpcodes[0xe8] = std::make_shared<SignedImmediateAddition>();
@@ -327,11 +327,11 @@ void InstructionsTable::mapFirstTable() {
   oneByteOpcodes[0xef] = std::make_shared<ShortCall>(0x28);
 
   oneByteOpcodes[0xf0] = std::make_shared<DereferenceHighByte>();
-  oneByteOpcodes[0xf1] = std::make_shared<PopTwoBytes>(&Cpu::hl);
+  oneByteOpcodes[0xf1] = std::make_shared<PopWord>(&Cpu::hl);
   oneByteOpcodes[0xf2] = std::make_shared<DereferenceSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
   oneByteOpcodes[0xf3] = std::make_shared<EnableInterrupts>(false);
   oneByteOpcodes[0xf4] = std::make_shared<Unmapped>();
-  oneByteOpcodes[0xf5] = std::make_shared<PushTwoBytes>(&Cpu::af);
+  oneByteOpcodes[0xf5] = std::make_shared<PushWord>(&Cpu::af);
   oneByteOpcodes[0xf6] = std::make_shared<ImmediateOr>(false);
   oneByteOpcodes[0xf7] = std::make_shared<ShortCall>(0x30);
   oneByteOpcodes[0xf8] = std::make_shared<CopyShiftedSpToHl>();
