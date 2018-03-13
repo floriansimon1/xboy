@@ -14,7 +14,7 @@ bool WriteTwoBytesRegisterToAddressTest::run() {
   WriteTwoBytesRegisterToAddress instruction(&Cpu::sp);
 
   const uint16_t value   = 143;
-  const uint16_t address = 1234;
+  const uint16_t address = Mmu::ramStart;
 
   gameboy.cpu.sp = value;
 

@@ -10,6 +10,10 @@ bool Mmu::inShadowRam(uint16_t address) {
   return address >= 0xe000 && address < 0xfe00;
 }
 
+bool Mmu::inRom(uint16_t address) {
+  return address < 0x8000;
+}
+
 uint16_t Mmu::convertShadowRamAddressToRamAddress(uint16_t address) {
   return address - 0x2000;
 }
@@ -36,7 +40,10 @@ uint8_t Mmu::popByteFromStack(Cpu &cpu) {
 }
 
 void Mmu::write(uint16_t address, uint8_t byte) {
-  // Shadow RAM.
+  if (Mmu::inRom(address)) {
+    return;
+  }
+
   if (Mmu::inShadowRam(address)) {
     memory[Mmu::convertShadowRamAddressToRamAddress(address)] = byte;
   }

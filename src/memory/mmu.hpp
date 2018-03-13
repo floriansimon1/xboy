@@ -2,10 +2,13 @@
 #define MMU_HPP
 
 #include <cstdint>
+#include "../bit.hpp"
 
 struct Cpu;
 
 struct Mmu {
+  static const uint16_t ramStart = 0x8000;
+
   void pushWordToStack(Cpu &cpu, uint16_t value);
   void pushByteToStack(Cpu &cpu, uint8_t value);
   uint16_t popWordFromStack(Cpu &cpu);
@@ -18,11 +21,12 @@ struct Mmu {
 
   static uint16_t convertShadowRamAddressToRamAddress(uint16_t address);
   static bool inShadowRam(uint16_t address);
+  static bool inRom(uint16_t address);
 
   void reset();
 
   private:
-    uint8_t memory[65536];
+    uint8_t memory[maxUint16];
 };
 
 #endif

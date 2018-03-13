@@ -11,18 +11,20 @@ bool RegistersAdditionTest::run() {
   AddMemoryByteToRegister normal(&Cpu::hl, false);
   Gameboy                 gameboy;
 
-  gameboy.cpu.hl = 0;
+  gameboy.cpu.hl = Mmu::ramStart;
+
   gameboy.mmu.write(gameboy.cpu.hl, 1);
+
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, maxUint8);
 
   normal.execute(gameboy, NULL);
 
   if (
-    gameboy.cpu.hl
-    || !gameboy.cpu.getZeroFlag()
+    !gameboy.cpu.getZeroFlag()
     || !gameboy.cpu.getCarryFlag()
     || gameboy.cpu.getSubtractFlag()
     || !gameboy.cpu.getHalfCarryFlag()
+    || gameboy.cpu.hl != Mmu::ramStart
     || gameboy.cpu.singleByteRegister(&Cpu::af, false)
   ) {
     return false;
@@ -31,11 +33,11 @@ bool RegistersAdditionTest::run() {
   withCarry.execute(gameboy, NULL);
 
   if (
-    gameboy.cpu.hl
-    || gameboy.cpu.getZeroFlag()
+    gameboy.cpu.getZeroFlag()
     || gameboy.cpu.getCarryFlag()
     || gameboy.cpu.getSubtractFlag()
     || gameboy.cpu.getHalfCarryFlag()
+    || gameboy.cpu.hl != Mmu::ramStart
     || gameboy.cpu.singleByteRegister(&Cpu::af, false) != 2
   ) {
     return false;

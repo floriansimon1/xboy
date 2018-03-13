@@ -22,8 +22,8 @@ bool RegisterInstructionOnDereferencedHlTest::run() {
   }
 
   const uint8_t  dummy   = 0;
-  const uint16_t address = 0;
   const uint16_t input   = 123;
+  const uint16_t address = Mmu::ramStart;
 
   gameboy.cpu.af = 0;
   gameboy.cpu.de = input;

@@ -13,7 +13,7 @@ bool DereferenceCombinedIntoSingleTest::run() {
 
   const auto value = 150;
 
-  gameboy.cpu.bc = 10;
+  gameboy.cpu.bc = Mmu::ramStart;
   gameboy.cpu.af = 0;
 
   gameboy.mmu.write(gameboy.cpu.bc, value);

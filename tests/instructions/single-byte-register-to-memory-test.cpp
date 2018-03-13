@@ -11,13 +11,13 @@ bool SingleByteRegisterToMemoryTest::run() {
   Gameboy                    gameboy;
   SingleByteRegisterToMemory instruction(&Cpu::bc, &Cpu::af, false);
 
-  gameboy.mmu.write(0, 0);
+  gameboy.mmu.write(Mmu::ramStart, 0);
 
-  gameboy.cpu.bc = 0;
+  gameboy.cpu.bc = Mmu::ramStart;
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 1);
 
   instruction.execute(gameboy, NULL);
 
-  return gameboy.mmu[0] == 1;
+  return gameboy.mmu[Mmu::ramStart] == 1;
 }
