@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "register-instruction-on-dereferenced-hl-test.hpp"
-#include "../../src/cpu/instructions/register-rotate-left-carry.hpp"
-#include "../../src/cpu/instructions/register-instruction-on-dereferenced-hl.hpp"
+#include "../../src/gameboy/cpu/instructions/register-rotate-left-carry.hpp"
+#include "../../src/gameboy/cpu/instructions/register-instruction-on-dereferenced-hl.hpp"
 
 RegisterInstructionOnDereferencedHlTest::RegisterInstructionOnDereferencedHlTest():
   Test("Executing a register instruction on dereferenced-HL")

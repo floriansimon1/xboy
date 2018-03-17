@@ -1,6 +1,6 @@
-#include "../../src/cpu/instructions/dereference-combined-into-single.hpp"
+#include "../../src/gameboy/cpu/instructions/dereference-combined-into-single.hpp"
 #include "dereference-combined-into-single-test.hpp"
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 
 DereferenceCombinedIntoSingleTest::DereferenceCombinedIntoSingleTest():
   Test("Dereference a word register into a byte register instruction")

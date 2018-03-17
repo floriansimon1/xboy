@@ -1,6 +1,6 @@
-#include "../../src/cpu/instructions/single-byte-register-to-memory.hpp"
+#include "../../src/gameboy/cpu/instructions/single-byte-register-to-memory.hpp"
 #include "single-byte-register-to-memory-test.hpp"
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 
 SingleByteRegisterToMemoryTest::SingleByteRegisterToMemoryTest():
   Test("Single-byte register to memory instruction")

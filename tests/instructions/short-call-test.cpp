@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "short-call-test.hpp"
-#include "../../src/cpu/instructions/short-call.hpp"
+#include "../../src/gameboy/cpu/instructions/short-call.hpp"
 
 ShortCallTest::ShortCallTest():
   Test("Short call instruction name")

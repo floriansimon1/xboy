@@ -1,6 +1,6 @@
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "load-immediate-16-test.hpp"
-#include "../../src/cpu/instructions/load-immediate-16.hpp"
+#include "../../src/gameboy/cpu/instructions/load-immediate-16.hpp"
 
 LoadImmediate16Test::LoadImmediate16Test():
   Test("Load immediate 16 instruction")

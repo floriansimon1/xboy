@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "write-two-bytes-register-to-address-test.hpp"
-#include "../../src/cpu/instructions/write-two-bytes-register-to-address.hpp"
+#include "../../src/gameboy/cpu/instructions/write-two-bytes-register-to-address.hpp"
 
 WriteTwoBytesRegisterToAddressTest::WriteTwoBytesRegisterToAddressTest():
   Test("Write word register to address instruction")

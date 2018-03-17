@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../src/cpu/instructions/single-byte-increment.hpp"
+#include "../../src/gameboy/cpu/instructions/single-byte-increment.hpp"
 #include "single-byte-decrement-test.hpp"
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 
 SingleByteDecrementTest::SingleByteDecrementTest():
   Test("Single-byte decrement instruction")

@@ -1,6 +1,6 @@
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "load-immediate-8-test.hpp"
-#include "../../src/cpu/instructions/load-immediate-8.hpp"
+#include "../../src/gameboy/cpu/instructions/load-immediate-8.hpp"
 
 LoadImmediate8Test::LoadImmediate8Test():
   Test("Load immediate 8 instruction")

@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "../../src/bit.hpp"
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "high-byte-dereference-test.hpp"
-#include "../../src/cpu/instructions/dereference-high-byte.hpp"
-#include "../../src/cpu/instructions/dereference-into-high-byte.hpp"
+#include "../../src/gameboy/cpu/instructions/dereference-high-byte.hpp"
+#include "../../src/gameboy/cpu/instructions/dereference-into-high-byte.hpp"
 
 HighByteDereferenceTest::HighByteDereferenceTest():
   Test("High byte dereference instructions")

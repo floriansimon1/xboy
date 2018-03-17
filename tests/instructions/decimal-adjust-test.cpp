@@ -1,9 +1,9 @@
 #include <iostream>
 
 #include "../../src/bit.hpp"
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "decimal-adjust-test.hpp"
-#include "../../src/cpu/instructions/decimal-adjust.hpp"
+#include "../../src/gameboy/cpu/instructions/decimal-adjust.hpp"
 
 DecimalAdjustTest::DecimalAdjustTest():
   Test("Decimal adjust instruction")

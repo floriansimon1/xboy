@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../src/memory/mmu.hpp"
+#include "../src/gameboy/memory/mmu.hpp"
 #include "shadow-ram-test.hpp"
 
 ShadowRamTest::ShadowRamTest(): Test("Shadow RAM test") {

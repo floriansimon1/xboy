@@ -2,8 +2,7 @@
 #define TWO_BYTES_REGISTERS_ADDITION_TEST_HPP
 
 #include "../test.hpp"
-#include "../../src/gameboy.hpp"
-#include "../../src/cpu/instruction.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 
 struct TwoBytesRegistersAdditionTest: Test {
   TwoBytesRegistersAdditionTest();

@@ -1,7 +1,7 @@
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "stack-instructions-test.hpp"
-#include "../../src/cpu/instructions/pop-word.hpp"
-#include "../../src/cpu/instructions/push-word.hpp"
+#include "../../src/gameboy/cpu/instructions/pop-word.hpp"
+#include "../../src/gameboy/cpu/instructions/push-word.hpp"
 
 StackInstructionsTest::StackInstructionsTest(): Test("Stack instructions test") {
 }

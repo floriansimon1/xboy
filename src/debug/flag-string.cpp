@@ -1,5 +1,5 @@
 #include "flag-string.hpp"
-#include "../cpu/cpu.hpp"
+#include "../gameboy/cpu/cpu.hpp"
 
 char flagString(unsigned short flag) {
   switch (flag) {

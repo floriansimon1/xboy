@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../src/gameboy.hpp"
+#include "../../src/gameboy/gameboy.hpp"
 #include "relative-jump-flag-test.hpp"
-#include "../../src/cpu/instructions/relative-jump-flag.hpp"
+#include "../../src/gameboy/cpu/instructions/relative-jump-flag.hpp"
 
 RelativeJumpFlagTest::RelativeJumpFlagTest():
   Test("Conditional relative jump instruction")
