@@ -19,8 +19,8 @@ uint16_t Mmu::convertShadowRamAddressToRamAddress(uint16_t address) {
 }
 
 void Mmu::reset() {
-  memset(memory, 0, sizeof(memory));
-  memcpy(memory, bios, sizeof(bios));
+  memset(memory, 0, maxUint16);
+  memcpy(memory, bios, biosLength);
 }
 
 uint16_t Mmu::popWordFromStack(Cpu &cpu) {
