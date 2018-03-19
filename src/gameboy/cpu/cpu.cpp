@@ -23,7 +23,6 @@ void Cpu::reset() {
 }
 
 void Cpu::process(Gameboy &gameboy) {
-
   const auto firstOpcodeByte = gameboy.mmu[pc];
 
   const auto readSecondByte = Instruction::isExtendedInstruction(firstOpcodeByte);
