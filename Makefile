@@ -5,7 +5,7 @@ tests            := $(shell find tests/ -iname "*.cpp")
 compiledTests   := $(patsubst %.cpp, obj/%.o, $(tests))
 compiledSources := $(patsubst %.cpp, obj/%.o, $(sources))
 
-.PHONY: clean test run
+.PHONY: all clean test run
 
 all: bin/xboy bin/test-xboy
 
