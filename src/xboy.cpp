@@ -1,14 +1,18 @@
 #include <cstdlib>
 #include <unistd.h>
 
+#include "gameboy/gameboy.hpp"
 #include "gui.hpp"
 
 int main(int, char **) {
   Gui       gui;
   sf::Event event;
+  Gameboy   gameboy;
 
   while (gui.window.isOpen()) {
     Frame frame;
+
+    gameboy.tick();
 
     while (gui.window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
@@ -31,7 +35,7 @@ int main(int, char **) {
 
     gui.display(frame);
 
-    sleep(1);
+    usleep(100000);
   }
 
   return EXIT_SUCCESS;
