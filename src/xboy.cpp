@@ -9,6 +9,8 @@ int main(int, char **) {
   sf::Event event;
   Gameboy   gameboy;
 
+  gameboy.setScreen(&gui);
+
   while (gui.window.isOpen()) {
     Frame frame;
 
