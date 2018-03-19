@@ -9,6 +9,13 @@ struct Gui: Screen {
   Gui();
 
   sf::RenderWindow window;
+
+  virtual void display(const Frame &frame) override;
+
+  private:
+    sf::Texture texture;
+    sf::Sprite  sprite;
+    sf::Image   image;
 };
 
 #endif
