@@ -12,7 +12,7 @@ constexpr size_t frameSize = screenWidth * screenHeight * 4;
 using Frame = uint8_t[frameSize];
 
 struct Screen {
-  virtual void display(Frame &frame) = 0;
+  virtual void display(const Frame &frame) = 0;
 };
 
 #endif
