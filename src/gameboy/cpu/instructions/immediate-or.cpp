@@ -32,5 +32,5 @@ std::string ImmediateOr::toString() const {
 }
 
 const char* ImmediateOr::mnemonic() const {
-  return exclusive ? "XOR " : "OR ";
+  return exclusive ? "XOR" : "OR";
 }
