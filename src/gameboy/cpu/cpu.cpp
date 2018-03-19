@@ -44,7 +44,7 @@ void Cpu::process(Gameboy &gameboy) {
 
   instruction->execute(gameboy, data);
 
-  pc += instruction->totalSize();;
+  pc += instruction->totalSize();
 }
 
 void Cpu::setTwoBytesRegister(CpuRegisterPointer cpuRegister, uint16_t value) {
