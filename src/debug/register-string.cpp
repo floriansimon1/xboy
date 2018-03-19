@@ -23,22 +23,22 @@ const char* registerString(CpuRegisterPointer cpuRegister, bool singleByte, bool
   static bool prepared = false;
 
   if (!prepared) {
-    twoBytesRegisters[&Cpu::af] = "af";
-    twoBytesRegisters[&Cpu::bc] = "bc";
-    twoBytesRegisters[&Cpu::de] = "de";
-    twoBytesRegisters[&Cpu::hl] = "hl";
-    twoBytesRegisters[&Cpu::pc] = "pc";
-    twoBytesRegisters[&Cpu::sp] = "sp";
+    twoBytesRegisters[&Cpu::af] = "AF";
+    twoBytesRegisters[&Cpu::bc] = "BC";
+    twoBytesRegisters[&Cpu::de] = "DE";
+    twoBytesRegisters[&Cpu::hl] = "HL";
+    twoBytesRegisters[&Cpu::pc] = "PC";
+    twoBytesRegisters[&Cpu::sp] = "SP";
 
-    lowBytesRegisters[&Cpu::af] = "f";
-    lowBytesRegisters[&Cpu::bc] = "c";
-    lowBytesRegisters[&Cpu::de] = "e";
-    lowBytesRegisters[&Cpu::hl] = "l";
+    lowBytesRegisters[&Cpu::af] = "F";
+    lowBytesRegisters[&Cpu::bc] = "C";
+    lowBytesRegisters[&Cpu::de] = "E";
+    lowBytesRegisters[&Cpu::hl] = "L";
 
-    highBytesRegisters[&Cpu::af] = "a";
-    highBytesRegisters[&Cpu::bc] = "b";
-    highBytesRegisters[&Cpu::de] = "d";
-    highBytesRegisters[&Cpu::hl] = "h";
+    highBytesRegisters[&Cpu::af] = "A";
+    highBytesRegisters[&Cpu::bc] = "B";
+    highBytesRegisters[&Cpu::de] = "D";
+    highBytesRegisters[&Cpu::hl] = "H";
   }
 
   prepared = true;
@@ -51,4 +51,3 @@ const char* registerString(CpuRegisterPointer cpuRegister, bool singleByte, bool
 
   return nameHash[cpuRegister];
 }
-
