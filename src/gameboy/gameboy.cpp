@@ -6,6 +6,7 @@ Gameboy::Gameboy() {
 
 void Gameboy::reset() {
   cpu.reset();
+  mmu.reset();
 
   lowPowerMode = false;
 }
