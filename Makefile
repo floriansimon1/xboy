@@ -7,25 +7,25 @@ compiledSources := $(patsubst %.cpp, obj/%.o, $(sources))
 
 .PHONY: clean test run
 
-run: bin/xboy
-	bin/xboy
-
-test: bin/test-xboy
-	bin/test-xboy
+all: bin/xboy bin/test-xboy
 
 obj/%.o: %.cpp
 	@mkdir -p `dirname $@`
 	g++ $< -o $@ -c -Wall -Wextra -std=c++1z
 
-bin/xboy: $(compiledSources)
+bin/xboy: $(compiledSources) src/xboy.cpp
 	@mkdir -p bin
 	$(createExecutable) -o bin/xboy ${compiledSources} src/xboy.cpp
 
-bin/test-xboy: $(compiledTests)
+bin/test-xboy: $(compiledTests) src/test-xboy.cpp
 	@mkdir -p bin
 	$(createExecutable) -o bin/test-xboy ${compiledSources} $(compiledTests) src/test-xboy.cpp
 
-all: run
+run: bin/xboy
+	bin/xboy
+
+test: bin/test-xboy
+	bin/test-xboy
 
 clean:
 	rm -rf bin obj
