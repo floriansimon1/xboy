@@ -11,31 +11,17 @@ int main(int, char **) {
 
   gameboy.gpu.screen = &gui;
 
-  while (gui.window.isOpen()) {
-    Frame frame;
-
+  for (uint16_t i = 0; gui.window.isOpen(); i++) {
     gameboy.tick();
 
-    while (gui.window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        gui.window.close();
+    // Polling event at each iteration is way too slow.
+    if (!i) {
+      while (gui.window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+          gui.window.close();
+        }
       }
     }
-
-    for (auto i = 0; i < screenWidth; i++) {
-      for (auto j = 0; j < screenHeight; j++) {
-        const auto pixel = (i + screenWidth * j);
-
-        const uint8_t color = pixel % 256;
-
-        frame[pixel * 4]     = color;
-        frame[pixel * 4 + 1] = color;
-        frame[pixel * 4 + 2] = color;
-        frame[pixel * 4 + 3] = 255;
-      }
-    }
-
-    gui.display(frame);
 
     usleep(100000);
   }
