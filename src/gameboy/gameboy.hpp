@@ -16,8 +16,6 @@ struct Gameboy {
 
   void tick();
   void reset();
-
-  void setScreen(Screen *screen);
 };
 
 #endif

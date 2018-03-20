@@ -16,6 +16,3 @@ void Gameboy::tick() {
   cpu.process(*this);
 }
 
-void Gameboy::setScreen(Screen *screen) {
-  gpu.screen = screen;
-}
