@@ -7,16 +7,17 @@ constexpr unsigned int cyclesPerSecond = 4194304;
 
 Gameboy::Gameboy() {
   reset();
-
-  clock.restart();
 }
 
 void Gameboy::reset() {
+  lowPowerMode        = false;
+  synchronizedSeconds = 0;
+
   cpu.reset();
   mmu.reset();
   gpu.reset();
 
-  lowPowerMode = false;
+  clock.restart();
 }
 
 void Gameboy::tick() {
@@ -24,12 +25,12 @@ void Gameboy::tick() {
 }
 
 void Gameboy::sleep() {
+  const auto synchronizedTicks = synchronizedSeconds * cyclesPerSecond;
+
   // If the CPU second has not yet elapsed, we just do nothing.
-  if (cpu.ticks < cyclesPerSecond) {
+  if (cpu.ticks < synchronizedTicks + cyclesPerSecond) {
     return;
   }
-
-  const auto ticks = cpu.ticks % cyclesPerSecond;
 
   const auto elapsedTime = clock.getElapsedTime().asMilliseconds();
 
@@ -37,7 +38,7 @@ void Gameboy::sleep() {
 
   std::this_thread::sleep_for(std::chrono::milliseconds(timeCorrection));
 
-  cpu.ticks = ticks;
+  synchronizedSeconds++;
 
   clock.restart();
 }

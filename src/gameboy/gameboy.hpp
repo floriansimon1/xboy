@@ -8,7 +8,8 @@
 #include "memory/mmu.hpp"
 
 struct Gameboy {
-  sf::Clock clock;
+  sf::Clock          clock;
+  unsigned long long synchronizedSeconds;
 
   Mmu mmu;
   Gpu gpu;
