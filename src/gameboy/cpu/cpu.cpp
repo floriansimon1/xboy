@@ -38,7 +38,7 @@ void Cpu::process(Gameboy &gameboy) {
     gameboy.mmu[pc + instruction->opcodeSize + 1]
   };
 
-  std::cout << instruction->toString() << std::endl;
+  // std::cout << instruction->toString() << std::endl;
 
   ticks += instruction->ticks(gameboy);
 
