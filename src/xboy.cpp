@@ -1,5 +1,4 @@
 #include <cstdlib>
-#include <unistd.h>
 
 #include "gameboy/gameboy.hpp"
 #include "gui.hpp"
@@ -23,7 +22,7 @@ int main(int, char **) {
       }
     }
 
-    usleep(100000);
+    gameboy.sleep();
   }
 
   return EXIT_SUCCESS;
