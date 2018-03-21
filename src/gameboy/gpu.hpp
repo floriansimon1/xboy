@@ -12,6 +12,13 @@ struct Gameboy;
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
 
 struct Gpu {
+  enum Mode {
+    Hblank = 0,
+    Vblank = 1,
+    Oam    = 2,
+    Vram   = 3
+  };
+
   Gpu();
 
   Screen *screen;
