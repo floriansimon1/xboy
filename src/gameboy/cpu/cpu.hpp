@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include "instructions-table.hpp"
+#include "../types.hpp"
 
 struct Gameboy;
 struct Cpu;
@@ -12,8 +13,7 @@ typedef uint16_t Cpu::* const CpuRegisterPointer;
 
 struct Cpu {
   InstructionsTable table;
-
-  unsigned long long ticks;
+  Tick              ticks;
 
   bool interruptsEnabled = true;
   bool inInterrupt       = false;
