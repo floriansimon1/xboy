@@ -7,6 +7,7 @@ struct Test {
   virtual bool run() = 0;
 
   Test(const char *name);
+  virtual ~Test() = default;
 };
 
 #endif

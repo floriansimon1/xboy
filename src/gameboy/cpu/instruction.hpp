@@ -7,6 +7,8 @@
 struct Gameboy;
 
 struct Instruction {
+  virtual ~Instruction() = default;
+
   const unsigned short opcodeSize;
   const unsigned short dataSize;
 
