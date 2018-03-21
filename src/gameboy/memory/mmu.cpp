@@ -6,6 +6,9 @@
 #include "../../bit.hpp"
 #include "../cpu/cpu.hpp"
 
+constexpr uint16_t displayControlRegister = 0xff40;
+constexpr uint8_t  displayEnabledBit      = 7;
+
 bool Mmu::inShadowRam(uint16_t address) {
   return address >= 0xe000 && address < 0xfe00;
 }
@@ -73,6 +76,10 @@ void Mmu::pushByteToStack(Cpu &cpu, uint8_t value) {
   write(cpu.sp, value);
 
   cpu.sp--;
+}
+
+bool Mmu::displayEnabled() const {
+  return getBit((*this)[displayControlRegister], displayEnabledBit);
 }
 
 const uint8_t& Mmu::operator[](const uint16_t address) const {

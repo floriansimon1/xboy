@@ -25,6 +25,8 @@ struct Mmu {
 
   void reset();
 
+  bool displayEnabled() const;
+
   private:
     uint8_t memory[maxUint16];
 };
