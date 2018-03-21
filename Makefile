@@ -1,6 +1,9 @@
-sources          := $(shell find src/ -iname "*.cpp" -not -iname "*xboy.cpp")
-createExecutable := g++ -lsfml-graphics -lsfml-window -lsfml-system
-tests            := $(shell find tests/ -iname "*.cpp")
+libraries := -lsfml-graphics -lsfml-window -lsfml-system
+flags     := -Wall -Wextra -std=c++17
+compiler  := clang++-7
+
+sources := $(shell find src/ -iname "*.cpp" -not -iname "*xboy.cpp")
+tests   := $(shell find tests/ -iname "*.cpp")
 
 compiledTests   := $(patsubst %.cpp, obj/%.o, $(tests))
 compiledSources := $(patsubst %.cpp, obj/%.o, $(sources))
@@ -11,15 +14,15 @@ all: bin/xboy bin/test-xboy
 
 obj/%.o: %.cpp
 	@mkdir -p `dirname $@`
-	g++ $< -o $@ -c -Wall -Wextra -std=c++1z
+	$(compiler) $< -o $@ -c ${flags}
 
 bin/xboy: $(compiledSources) src/xboy.cpp
 	@mkdir -p bin
-	$(createExecutable) -o bin/xboy ${compiledSources} src/xboy.cpp
+	$(compiler) -o bin/xboy ${compiledSources} src/xboy.cpp ${libraries} ${flags}
 
 bin/test-xboy: $(compiledTests) src/test-xboy.cpp
 	@mkdir -p bin
-	$(createExecutable) -o bin/test-xboy ${compiledSources} $(compiledTests) src/test-xboy.cpp
+	$(compiler) -o bin/test-xboy ${compiledSources} ${compiledTests} src/test-xboy.cpp ${libraries} ${flags}
 
 run: bin/xboy
 	bin/xboy
