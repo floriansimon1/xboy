@@ -3,9 +3,13 @@
 
 #include <memory>
 
+#include "types.hpp"
 #include "screen.hpp"
 
 struct Gameboy;
+
+// Exposed only for tests.
+OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
 
 struct Gpu {
   Gpu();
@@ -14,6 +18,11 @@ struct Gpu {
 
   void reset();
   void process(Gameboy &gameboy);
+
+  OptionalScanline scanlineOfTick(Tick tick) const;
+
+  private:
+    std::experimental::optional<Tick>  displayStartTick;
 };
 
 #endif
