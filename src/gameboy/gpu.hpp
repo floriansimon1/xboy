@@ -5,12 +5,15 @@
 
 #include "screen.hpp"
 
+struct Gameboy;
+
 struct Gpu {
   Gpu();
 
   Screen *screen;
 
   void reset();
+  void process(Gameboy &gameboy);
 };
 
 #endif
