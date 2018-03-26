@@ -21,8 +21,6 @@ int main(int, char **) {
         }
       }
     }
-
-    gameboy.sleep();
   }
 
   return EXIT_SUCCESS;

@@ -3,15 +3,18 @@
 
 #include "gameboy.hpp"
 
-constexpr unsigned int cyclesPerSecond = 4194304;
+constexpr Tick ticksPerFrame   = 70224;
+constexpr Tick cyclesPerSecond = 4194304;
+
+constexpr auto frameDurationMilliseconds = ticksPerFrame * 1000 / cyclesPerSecond;
 
 Gameboy::Gameboy() {
   reset();
 }
 
 void Gameboy::reset() {
-  lowPowerMode        = false;
-  synchronizedSeconds = 0;
+  lowPowerMode = false;
+  lastPause    = 0;
 
   cpu.reset();
   mmu.reset();
@@ -23,23 +26,24 @@ void Gameboy::reset() {
 void Gameboy::tick() {
   cpu.process(*this);
   gpu.process(*this);
+
+  sleep();
 }
 
 void Gameboy::sleep() {
-  const auto synchronizedTicks = synchronizedSeconds * cyclesPerSecond;
+  const auto Δt = cpu.ticks - lastPause;
 
-  // If the CPU second has not yet elapsed, we just do nothing.
-  if (cpu.ticks < synchronizedTicks + cyclesPerSecond) {
+  if (Δt < ticksPerFrame) {
     return;
   }
 
   const auto elapsedTime = clock.getElapsedTime().asMilliseconds();
 
-  const auto timeCorrection = 1000 - elapsedTime;
+  const auto timeCorrection = frameDurationMilliseconds - elapsedTime;
 
   std::this_thread::sleep_for(std::chrono::milliseconds(timeCorrection));
 
-  synchronizedSeconds++;
+  lastPause = cpu.ticks;
 
   clock.restart();
 }

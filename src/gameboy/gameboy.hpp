@@ -9,7 +9,7 @@
 
 struct Gameboy {
   sf::Clock          clock;
-  unsigned long long synchronizedSeconds;
+  unsigned long long lastPause;
 
   Mmu mmu;
   Gpu gpu;
