@@ -5,6 +5,7 @@
 #include "test.hpp"
 #include "run-tests.hpp"
 #include "shadow-ram-test.hpp"
+#include "gpu-timing-test.hpp"
 #include "instructions/short-call-test.hpp"
 #include "instructions/registers-or-test.hpp"
 #include "instructions/registers-and-test.hpp"
@@ -38,6 +39,7 @@ bool runTests() {
 
   tests.push_back(make_shared<ShadowRamTest>());
   tests.push_back(make_shared<ShortCallTest>());
+  tests.push_back(make_shared<GpuTimingTest>());
   tests.push_back(make_shared<DecimalAdjustTest>());
   tests.push_back(make_shared<LoadImmediate8Test>());
   tests.push_back(make_shared<RelativeJumpFlagTest>());

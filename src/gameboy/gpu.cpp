@@ -1,17 +1,13 @@
 #include "gpu.hpp"
-
-constexpr unsigned short scanlineDuration = 456;
-constexpr unsigned short scanlinesInFrame = 154;
+#include "types.hpp"
+#include "gameboy.hpp"
 
 Gpu::Gpu() {
   reset();
 }
 
-void Gpu::process(Gameboy &) {
-}
-
-OptionalScanline Gpu::scanlineOfTick(Tick tick) const {
-  return getScanlineOfTick(displayStartTick, tick);
+void Gpu::process(Gameboy &gameboy) {
+  const auto scanline = getScanlineOfTick(displayStartTick, gameboy.cpu.ticks);
 }
 
 void Gpu::reset() {
@@ -23,9 +19,9 @@ OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
     return OptionalScanline();
   }
 
-  const auto Δt = tick - displayStartTick.value();
+  const auto Δticks = tick - displayStartTick.value();
 
-  const auto absoluteScanline = Δt / scanlineDuration;
+  const auto absoluteScanline = Δticks / ticksPerScanline;
 
   const auto scanline = absoluteScanline % scanlinesInFrame;
 

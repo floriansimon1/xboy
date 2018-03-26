@@ -8,6 +8,11 @@
 
 struct Gameboy;
 
+constexpr Tick ticksPerScanline = 456;
+constexpr Tick scanlinesInFrame = 154;
+
+constexpr Tick ticksPerFrame = ticksPerScanline * scanlinesInFrame;
+
 // Exposed only for tests.
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
 
@@ -25,8 +30,6 @@ struct Gpu {
 
   void reset();
   void process(Gameboy &gameboy);
-
-  OptionalScanline scanlineOfTick(Tick tick) const;
 
   private:
     std::experimental::optional<Tick>  displayStartTick;

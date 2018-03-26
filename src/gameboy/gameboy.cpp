@@ -3,10 +3,9 @@
 
 #include "gameboy.hpp"
 
-constexpr Tick ticksPerFrame   = 70224;
-constexpr Tick cyclesPerSecond = 4194304;
+constexpr Tick ticksPerSecond = 4194304;
 
-constexpr auto frameDurationMilliseconds = ticksPerFrame * 1000 / cyclesPerSecond;
+constexpr auto frameDurationMilliseconds = ticksPerFrame * 1000 / ticksPerSecond;
 
 Gameboy::Gameboy() {
   reset();
