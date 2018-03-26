@@ -26,9 +26,9 @@ struct Gpu {
   };
 
   struct Status {
-    const Mode           mode     = Mode::Vblank;
-    const bool           display  = false;
-    const unsigned short scanline = 0;
+    const Mode           mode;
+    const bool           display;
+    const unsigned short scanline;
   };
 
   Gpu();

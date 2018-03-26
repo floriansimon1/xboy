@@ -30,6 +30,8 @@ OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
 }
 
 Gpu::Status getStatusOfTick(OptionalTick displayStartTick, Tick tick) {
+  Gpu::Mode mode;
+
   const auto displayEnabled = false;
   const auto Δticks         = tick - displayStartTick.value();
 
@@ -38,8 +40,6 @@ Gpu::Status getStatusOfTick(OptionalTick displayStartTick, Tick tick) {
   }
 
   const auto scanline = getScanlineOfTick(displayStartTick, tick).value();
-
-  Gpu::Mode mode = Gpu::Mode::Hblank;
 
   const auto frameTicks = Δticks % ticksPerFrame;
 
@@ -51,6 +51,8 @@ Gpu::Status getStatusOfTick(OptionalTick displayStartTick, Tick tick) {
     mode = Gpu::Mode::VramAccess;
   } else if (scanlineTicks < ticksPerHblank) {
     mode = Gpu::Mode::Hblank;
+  } else {
+    mode = Gpu::Mode::Vblank;
   }
 
   return Gpu::Status { mode, true, scanline };
