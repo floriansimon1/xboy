@@ -8,20 +8,27 @@
 
 struct Gameboy;
 
-constexpr Tick ticksPerScanline = 456;
-constexpr Tick scanlinesInFrame = 154;
+constexpr Tick ticksPerVramAccess = 172;
+constexpr Tick ticksPerScanline   = 456;
+constexpr Tick scanlinesInFrame   = 154;
+constexpr Tick ticksPerHblank     = 204;
+constexpr Tick realScanlines      = 144;
+constexpr Tick ticksPerOamAccess  = 80;
 
 constexpr Tick ticksPerFrame = ticksPerScanline * scanlinesInFrame;
 
-// Exposed only for tests.
-OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
-
 struct Gpu {
   enum Mode {
-    Hblank = 0,
-    Vblank = 1,
-    Oam    = 2,
-    Vram   = 3
+    Hblank     = 0,
+    Vblank     = 1,
+    OamAccess  = 2,
+    VramAccess = 3
+  };
+
+  struct Status {
+    const Mode           mode     = Mode::Vblank;
+    const bool           display  = false;
+    const unsigned short scanline = 0;
   };
 
   Gpu();
@@ -34,5 +41,10 @@ struct Gpu {
   private:
     std::experimental::optional<Tick>  displayStartTick;
 };
+
+// Exposed only for tests.
+OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
+Gpu::Status getStatusOfTick(OptionalTick displayStartTick, Tick tick);
+Gpu::Status displayDisabledStatus();
 
 #endif
