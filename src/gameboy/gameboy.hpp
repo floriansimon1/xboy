@@ -11,9 +11,9 @@ struct Gameboy {
   sf::Clock          clock;
   unsigned long long lastPause;
 
-  Mmu mmu;
-  Gpu gpu;
-  Cpu cpu;
+  Gpu::Gpu gpu;
+  Mmu      mmu;
+  Cpu      cpu;
 
   bool lowPowerMode;
 

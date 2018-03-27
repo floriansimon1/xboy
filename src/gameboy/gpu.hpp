@@ -17,7 +17,7 @@ constexpr Tick ticksPerOamAccess  = 80;
 
 constexpr Tick ticksPerFrame = ticksPerScanline * scanlinesInFrame;
 
-struct Gpu {
+namespace Gpu {
   enum Mode {
     Hblank     = 0,
     Vblank     = 1,
@@ -25,26 +25,32 @@ struct Gpu {
     VramAccess = 3
   };
 
-  struct Status {
+  struct State {
     const Mode           mode;
-    const bool           display;
     const unsigned short scanline;
+    const bool           displayEnabled;
   };
 
-  Gpu();
+  typedef std::experimental::optional<Gpu::State> OptionalState;
 
-  Screen *screen;
+  struct Gpu {
+    Gpu();
 
-  void reset();
-  void process(Gameboy &gameboy);
+    FrameBuffer frameBuffer;
+    Screen      *screen;
 
-  private:
-    std::experimental::optional<Tick>  displayStartTick;
-};
+    void reset();
+    void process(Gameboy &gameboy);
+
+    private:
+      OptionalState previousState;
+      OptionalTick  displayStartTick;
+  };
+}
 
 // Exposed only for tests.
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
-Gpu::Status getStatusOfTick(OptionalTick displayStartTick, Tick tick);
-Gpu::Status displayDisabledStatus();
+Gpu::State getStateOfTick(OptionalTick displayStartTick, Tick tick);
+Gpu::State displayDisabledStatus();
 
 #endif

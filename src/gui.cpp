@@ -7,8 +7,8 @@ Gui::Gui(): window(sf::VideoMode(screenWidth * scale, screenHeight * scale), "XB
   sprite.setScale(scale, scale);
 }
 
-void Gui::display(const Frame &frame) {
-  image.create(screenWidth, screenHeight, frame);
+void Gui::display(const FrameBuffer &frameBuffer) {
+  image.create(screenWidth, screenHeight, frameBuffer);
 
   texture.loadFromImage(image);
 

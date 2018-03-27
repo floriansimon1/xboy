@@ -4,15 +4,43 @@
 
 #warning "Display power status is not yet implemented!"
 
-Gpu::Gpu() {
+Gpu::Gpu::Gpu() {
   reset();
 }
 
-void Gpu::process(Gameboy &) {
+void Gpu::Gpu::process(Gameboy &gameboy) {
+  const auto oldState = previousState;
+  const auto newState = getStateOfTick(displayStartTick, gameboy.cpu.ticks);
+
+  previousState.emplace(newState);
+
+  if (!newState.displayEnabled) {
+    return;
+  }
+
+  const auto startedNewScanline = oldState && oldState.value().scanline != newState.scanline;
+
+  const auto isStartOfVblank = (
+    oldState
+    && newState.mode == Mode::Vblank
+    && oldState.value().mode != newState.mode
+  );
+
+  if (!startedNewScanline && !isStartOfVblank) {
+    return;
+  }
+
+  if (isStartOfVblank) {
+    screen->display(frameBuffer);
+  }
 }
 
-void Gpu::reset() {
+void Gpu::Gpu::reset() {
   displayStartTick = OptionalTick();
+
+  for (size_t i = 0; i < frameSize; i++) {
+    frameBuffer[i] = i % 4 == 3 ? maxUint8 : 0;
+  }
 }
 
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
@@ -29,7 +57,7 @@ OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
   return OptionalScanline(scanline);
 }
 
-Gpu::Status getStatusOfTick(OptionalTick displayStartTick, Tick tick) {
+Gpu::State getStateOfTick(OptionalTick displayStartTick, Tick tick) {
   Gpu::Mode mode;
 
   const auto displayEnabled = false;
@@ -55,10 +83,10 @@ Gpu::Status getStatusOfTick(OptionalTick displayStartTick, Tick tick) {
     mode = Gpu::Mode::Vblank;
   }
 
-  return Gpu::Status { mode, true, scanline };
+  return Gpu::State { mode, scanline, true };
 }
 
-Gpu::Status displayDisabledStatus() {
+Gpu::State displayDisabledStatus() {
   /*
   * "One important part to emulate with the lcd modes is when the lcd is disabled the mode must be set
   * to mode 1. If you dont do this then you will spend hours like I did wondering why Mario2 wont play
@@ -66,5 +94,5 @@ Gpu::Status displayDisabledStatus() {
   *
   * Source: http://www.codeslinger.co.uk/pages/projects/gameboy/lcd.html
   */
-  return Gpu::Status { Gpu::Mode::Vblank, false, 0 };
+  return Gpu::State { Gpu::Mode::Vblank, 0, false };
 }

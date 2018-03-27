@@ -10,7 +10,7 @@ struct Gui: Screen {
 
   sf::RenderWindow window;
 
-  virtual void display(const Frame &frame) override;
+  virtual void display(const FrameBuffer &frameBuffer) override;
 
   private:
     sf::Texture texture;
