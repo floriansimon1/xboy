@@ -47,7 +47,10 @@ void Gpu::Gpu::reset() {
 }
 
 void Gpu::Gpu::drawScanline(uint8_t displayControlRegister, Scanline scanline) {
-  if (DisplayControlRegister::showBackground(displayControlRegister)) {
+  if (
+    DisplayControlRegister::showWindow(displayControlRegister)
+    || DisplayControlRegister::showBackground(displayControlRegister)
+  ) {
     drawBackground(displayControlRegister, scanline);
   }
 
