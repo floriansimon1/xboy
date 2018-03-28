@@ -26,8 +26,6 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
     && oldState.value().mode != Mode::Vblank
   );
 
-  const auto oldScanline = oldState ? oldState.value().scanline : 0;
-
   if (isStartOfVblank) {
     screen->display(frameBuffer);
   } else if (isStartOfNewScanline) {
