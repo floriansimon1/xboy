@@ -1,6 +1,7 @@
 #include "gpu.hpp"
 #include "types.hpp"
 #include "gameboy.hpp"
+#include "memory/display-control-register.hpp"
 
 Gpu::Gpu::Gpu() {
   reset();
@@ -8,7 +9,7 @@ Gpu::Gpu::Gpu() {
 
 void Gpu::Gpu::process(Gameboy &gameboy) {
   const auto oldState = previousState;
-  const auto newState = getStateOfTick(displayStartTick, gameboy.cpu.ticks);
+  const auto newState = getStateOfTick(displayStartTick, gameboy.mmu.readDisplayControlRegister(), gameboy.cpu.ticks);
 
   previousState.emplace(newState);
 
@@ -60,10 +61,10 @@ OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
   return std::experimental::make_optional(scanline);
 }
 
-Gpu::State getStateOfTick(OptionalTick displayStartTick, Tick tick) {
+Gpu::State getStateOfTick(OptionalTick displayStartTick, uint8_t displayControlRegisterValue, Tick tick) {
   Gpu::Mode mode;
 
-  const auto displayEnabled = true;
+  const auto displayEnabled = DisplayControlRegister::enabled(displayControlRegisterValue);
   const auto Δticks         = tick - displayStartTick.value_or(0);
 
   if (!displayEnabled) {

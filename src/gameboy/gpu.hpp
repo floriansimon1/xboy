@@ -54,8 +54,8 @@ namespace Gpu {
 }
 
 // Exposed only for tests.
+Gpu::State getStateOfTick(OptionalTick displayStartTick, uint8_t displayControlRegisterValue, Tick tick);
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
-Gpu::State getStateOfTick(OptionalTick displayStartTick, Tick tick);
 Gpu::State displayDisabledStatus();
 
 #endif
