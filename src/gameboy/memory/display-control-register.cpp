@@ -3,7 +3,12 @@
 const unsigned short enabledBit        = 7;
 const unsigned short showWindowBit     = 5;
 const unsigned short showSpritesBit    = 1;
+const unsigned short tilesetSelectBit  = 4;
 const unsigned short showBackgroundBit = 0;
+
+bool DisplayControlRegister::useTileSet0(uint8_t value) {
+  return getBit(value, tilesetSelectBit);
+}
 
 bool DisplayControlRegister::enabled(uint8_t value) {
   return getBit(value, enabledBit);
