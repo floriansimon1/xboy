@@ -8,8 +8,10 @@ Gpu::Gpu::Gpu() {
 }
 
 void Gpu::Gpu::process(Gameboy &gameboy) {
-  const auto oldState = previousState;
-  const auto newState = getStateOfTick(displayStartTick, gameboy.mmu.readDisplayControlRegister(), gameboy.cpu.ticks);
+  const auto oldState               = previousState;
+  const auto displayControlRegister = gameboy.mmu.readDisplayControlRegister();
+
+  const auto newState = getStateOfTick(displayStartTick, displayControlRegister, gameboy.cpu.ticks);
 
   previousState.emplace(newState);
 
@@ -28,7 +30,7 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
   if (isStartOfVblank) {
     screen->display(frameBuffer);
   } else if (isStartOfNewScanline) {
-    drawScanline(newState.scanline);
+    drawScanline(displayControlRegister, newState.scanline);
   }
 }
 
@@ -40,15 +42,20 @@ void Gpu::Gpu::reset() {
   }
 }
 
-void Gpu::Gpu::drawScanline(Scanline scanline) {
-  drawSprites(scanline);
-  drawBackground(scanline);
+void Gpu::Gpu::drawScanline(uint8_t displayControlRegister, Scanline scanline) {
+  if (DisplayControlRegister::showBackground(displayControlRegister)) {
+    drawBackground(displayControlRegister, scanline);
+  }
+
+  if (DisplayControlRegister::showSprites(displayControlRegister)) {
+    drawSprites(displayControlRegister, scanline);
+  }
 }
 
-void Gpu::Gpu::drawSprites(Scanline scanline) {
+void Gpu::Gpu::drawSprites(uint8_t displayControlRegister, Scanline scanline) {
 }
 
-void Gpu::Gpu::drawBackground(Scanline scanline) {
+void Gpu::Gpu::drawBackground(uint8_t displayControlRegister, Scanline scanline) {
 }
 
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {

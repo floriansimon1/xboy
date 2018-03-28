@@ -42,14 +42,14 @@ namespace Gpu {
 
     void reset();
     void process(Gameboy &gameboy);
-    void drawScanline(Scanline scanline);
+    void drawScanline(uint8_t displayControlRegister, Scanline scanline);
 
     private:
       OptionalState previousState;
       OptionalTick  displayStartTick;
 
-      void drawSprites(Scanline scanline);
-      void drawBackground(Scanline scanline);
+      void drawSprites(uint8_t displayControlRegister, Scanline scanline);
+      void drawBackground(uint8_t displayControlRegister, Scanline scanline);
   };
 }
 
