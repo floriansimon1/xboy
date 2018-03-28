@@ -48,8 +48,8 @@ namespace Gpu {
       OptionalState previousState;
       OptionalTick  displayStartTick;
 
+      void drawTiles(uint8_t displayControlRegister, Scanline scanline);
       void drawSprites(uint8_t displayControlRegister, Scanline scanline);
-      void drawBackground(uint8_t displayControlRegister, Scanline scanline);
   };
 }
 

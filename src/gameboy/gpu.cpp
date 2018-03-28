@@ -51,7 +51,7 @@ void Gpu::Gpu::drawScanline(uint8_t displayControlRegister, Scanline scanline) {
     DisplayControlRegister::showWindow(displayControlRegister)
     || DisplayControlRegister::showBackground(displayControlRegister)
   ) {
-    drawBackground(displayControlRegister, scanline);
+    drawTiles(displayControlRegister, scanline);
   }
 
   if (DisplayControlRegister::showSprites(displayControlRegister)) {
@@ -62,7 +62,7 @@ void Gpu::Gpu::drawScanline(uint8_t displayControlRegister, Scanline scanline) {
 void Gpu::Gpu::drawSprites(uint8_t displayControlRegister, Scanline scanline) {
 }
 
-void Gpu::Gpu::drawBackground(uint8_t displayControlRegister, Scanline scanline) {
+void Gpu::Gpu::drawTiles(uint8_t displayControlRegister, Scanline scanline) {
   const auto tileset = DisplayControlRegister::useTileSet0(displayControlRegister) ? tileset0 : tileset1;
 }
 
