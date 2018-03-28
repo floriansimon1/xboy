@@ -25,7 +25,7 @@ struct Mmu {
 
   void reset();
 
-  bool displayEnabled() const;
+  uint8_t readDisplayControlRegister() const;
 
   private:
     uint8_t memory[maxUint16];

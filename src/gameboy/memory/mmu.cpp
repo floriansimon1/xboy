@@ -5,11 +5,10 @@
 #include "../bios.hpp"
 #include "../../bit.hpp"
 #include "../cpu/cpu.hpp"
+#include "display-control-register.hpp"
 
-constexpr uint16_t dmaControlRegisterAddress = 0xff46;
-constexpr uint16_t displayControlRegister    = 0xff40;
-constexpr uint16_t oamStart                  = 0xfe00;
-constexpr uint8_t  displayEnabledBit         = 7;
+constexpr uint16_t dmaControlRegister = 0xff46;
+constexpr uint16_t oamStart           = 0xfe00;
 
 bool Mmu::inShadowRam(uint16_t address) {
   return address >= 0xe000 && address < 0xfe00;
@@ -49,7 +48,7 @@ void Mmu::write(uint16_t address, uint8_t byte) {
     return;
   }
 
-  if (address == dmaControlRegisterAddress) {
+  if (address == dmaControlRegister) {
     oamDmaTransfer(byte);
   } else if (Mmu::inShadowRam(address)) {
     memory[Mmu::convertShadowRamAddressToRamAddress(address)] = byte;
@@ -82,8 +81,8 @@ void Mmu::pushByteToStack(Cpu &cpu, uint8_t value) {
   cpu.sp--;
 }
 
-bool Mmu::displayEnabled() const {
-  return getBit((*this)[displayControlRegister], displayEnabledBit);
+uint8_t Mmu::readDisplayControlRegister() const {
+  return (*this)[DisplayControlRegister::address];
 }
 
 const uint8_t& Mmu::operator[](const uint16_t address) const {
