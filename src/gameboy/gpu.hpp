@@ -47,6 +47,9 @@ namespace Gpu {
     private:
       OptionalState previousState;
       OptionalTick  displayStartTick;
+
+      void drawSprites(Scanline scanline);
+      void drawBackground(Scanline scanline);
   };
 }
 

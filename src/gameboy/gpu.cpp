@@ -40,7 +40,14 @@ void Gpu::Gpu::reset() {
 }
 
 void Gpu::Gpu::drawScanline(Scanline scanline) {
-  frameBuffer[scanline * 160 + 64] = 255;
+  drawSprites(scanline);
+  drawBackground(scanline);
+}
+
+void Gpu::Gpu::drawSprites(Scanline scanline) {
+}
+
+void Gpu::Gpu::drawBackground(Scanline scanline) {
 }
 
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
