@@ -2,8 +2,6 @@
 #include "types.hpp"
 #include "gameboy.hpp"
 
-#warning "Display power status is not yet implemented!"
-
 Gpu::Gpu::Gpu() {
   reset();
 }
