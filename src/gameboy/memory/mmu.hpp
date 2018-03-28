@@ -29,6 +29,8 @@ struct Mmu {
 
   private:
     uint8_t memory[maxUint16];
+
+    void oamDmaTransfer(uint8_t codedAddress);
 };
 
 #endif

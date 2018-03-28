@@ -6,8 +6,10 @@
 #include "../../bit.hpp"
 #include "../cpu/cpu.hpp"
 
-constexpr uint16_t displayControlRegister = 0xff40;
-constexpr uint8_t  displayEnabledBit      = 7;
+constexpr uint16_t dmaControlRegisterAddress = 0xff46;
+constexpr uint16_t displayControlRegister    = 0xff40;
+constexpr uint16_t oamStart                  = 0xfe00;
+constexpr uint8_t  displayEnabledBit         = 7;
 
 bool Mmu::inShadowRam(uint16_t address) {
   return address >= 0xe000 && address < 0xfe00;
@@ -47,11 +49,13 @@ void Mmu::write(uint16_t address, uint8_t byte) {
     return;
   }
 
-  if (Mmu::inShadowRam(address)) {
+  if (address == dmaControlRegisterAddress) {
+    oamDmaTransfer(byte);
+  } else if (Mmu::inShadowRam(address)) {
     memory[Mmu::convertShadowRamAddressToRamAddress(address)] = byte;
+  } else {
+    memory[address] = byte;
   }
-
-  memory[address] = byte;
 }
 
 uint16_t Mmu::readWord(uint16_t address) const {
@@ -88,4 +92,19 @@ const uint8_t& Mmu::operator[](const uint16_t address) const {
   }
 
   return memory[address];
+}
+
+/*
+* See http://bgb.bircd.org/pandocs.htm#lcdoamdmatransfers
+* and http://www.codeslinger.co.uk/pages/projects/gameboy/dma.html
+*/
+void Mmu::oamDmaTransfer(uint8_t codedAddress) {
+  constexpr uint8_t divisor     = 160;
+  constexpr uint8_t bytesToCopy = 160;
+
+  const uint16_t decodedAddress = codedAddress * divisor;
+
+  for (auto i = 0; i < bytesToCopy; i++) {
+    write(oamStart + i, (*this)[decodedAddress + i]);
+  }
 }
