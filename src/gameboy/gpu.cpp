@@ -18,50 +18,50 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
     return;
   }
 
-  const auto startedNewScanline = oldState && oldState.value().scanline != newState.scanline;
+  const auto isStartOfNewScanline = !oldState || oldState.value().scanline != newState.scanline;
 
   const auto isStartOfVblank = (
     oldState
     && newState.mode == Mode::Vblank
-    && oldState.value().mode != newState.mode
+    && oldState.value().mode != Mode::Vblank
   );
 
-  if (!startedNewScanline && !isStartOfVblank) {
-    return;
-  }
+  const auto oldScanline = oldState ? oldState.value().scanline : 0;
 
   if (isStartOfVblank) {
     screen->display(frameBuffer);
+  } else if (isStartOfNewScanline) {
+    drawScanline(newState.scanline);
   }
 }
 
 void Gpu::Gpu::reset() {
-  displayStartTick = OptionalTick();
+  displayStartTick = {};
 
   for (size_t i = 0; i < frameSize; i++) {
     frameBuffer[i] = i % 4 == 3 ? maxUint8 : 0;
   }
 }
 
-OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
-  if (!displayStartTick) {
-    return OptionalScanline();
-  }
+void Gpu::Gpu::drawScanline(Scanline scanline) {
+  frameBuffer[scanline * 160 + 64] = 255;
+}
 
-  const auto Δticks = tick - displayStartTick.value();
+OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
+  const auto Δticks = tick - displayStartTick.value_or(0);
 
   const auto absoluteScanline = Δticks / ticksPerScanline;
 
   const auto scanline = absoluteScanline % scanlinesInFrame;
 
-  return OptionalScanline(scanline);
+  return std::experimental::make_optional(scanline);
 }
 
 Gpu::State getStateOfTick(OptionalTick displayStartTick, Tick tick) {
   Gpu::Mode mode;
 
-  const auto displayEnabled = false;
-  const auto Δticks         = tick - displayStartTick.value();
+  const auto displayEnabled = true;
+  const auto Δticks         = tick - displayStartTick.value_or(0);
 
   if (!displayEnabled) {
     return displayDisabledStatus();
@@ -73,14 +73,14 @@ Gpu::State getStateOfTick(OptionalTick displayStartTick, Tick tick) {
 
   const auto scanlineTicks = frameTicks - scanline * ticksPerScanline;
 
-  if (scanlineTicks < ticksPerOamAccess) {
+  if (scanline >= realScanlines) {
+    mode = Gpu::Mode::Vblank;
+  } else if (scanlineTicks < ticksPerOamAccess) {
     mode = Gpu::Mode::OamAccess;
   } else if (scanlineTicks < ticksPerVramAccess) {
     mode = Gpu::Mode::VramAccess;
-  } else if (scanlineTicks < ticksPerHblank) {
-    mode = Gpu::Mode::Hblank;
   } else {
-    mode = Gpu::Mode::Vblank;
+    mode = Gpu::Mode::Hblank;
   }
 
   return Gpu::State { mode, scanline, true };

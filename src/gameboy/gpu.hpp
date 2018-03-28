@@ -9,11 +9,12 @@
 struct Gameboy;
 
 constexpr Tick ticksPerVramAccess = 172;
-constexpr Tick ticksPerScanline   = 456;
 constexpr Tick scanlinesInFrame   = 154;
 constexpr Tick ticksPerHblank     = 204;
 constexpr Tick realScanlines      = 144;
 constexpr Tick ticksPerOamAccess  = 80;
+
+constexpr Tick ticksPerScanline = ticksPerHblank + ticksPerVramAccess + ticksPerOamAccess;
 
 constexpr Tick ticksPerFrame = ticksPerScanline * scanlinesInFrame;
 
@@ -41,6 +42,7 @@ namespace Gpu {
 
     void reset();
     void process(Gameboy &gameboy);
+    void drawScanline(Scanline scanline);
 
     private:
       OptionalState previousState;
