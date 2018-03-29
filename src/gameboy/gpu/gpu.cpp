@@ -1,7 +1,7 @@
 #include "gpu.hpp"
-#include "types.hpp"
-#include "gameboy.hpp"
-#include "memory/display-control-register.hpp"
+#include "../types.hpp"
+#include "../gameboy.hpp"
+#include "../memory/display-control-register.hpp"
 
 // See http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-Graphics
 constexpr uint16_t tileset1 = 0x8800;

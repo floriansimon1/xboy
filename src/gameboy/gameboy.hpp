@@ -3,7 +3,7 @@
 
 #include <SFML/System.hpp>
 
-#include "gpu.hpp"
+#include "gpu/gpu.hpp"
 #include "cpu/cpu.hpp"
 #include "memory/mmu.hpp"
 

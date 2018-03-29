@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "types.hpp"
+#include "../types.hpp"
 #include "screen.hpp"
 
 struct Gameboy;

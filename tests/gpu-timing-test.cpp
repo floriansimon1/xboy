@@ -1,4 +1,4 @@
-#include "../src/gameboy/gpu.hpp"
+#include "../src/gameboy/gpu/gpu.hpp"
 #include "gpu-timing-test.hpp"
 
 #include <iostream>

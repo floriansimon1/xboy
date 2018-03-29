@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "gameboy/screen.hpp"
+#include "gameboy/gpu/screen.hpp"
 
 struct Gui: Screen {
   Gui();
