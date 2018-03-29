@@ -3,10 +3,6 @@
 #include "../gameboy.hpp"
 #include "../memory/display-control-register.hpp"
 
-// See http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-Graphics
-constexpr uint16_t tileset1 = 0x8800;
-constexpr uint16_t tileset0 = 0x9000;
-
 Gpu::Gpu::Gpu() {
   reset();
 }
@@ -63,7 +59,6 @@ void Gpu::Gpu::drawSprites(uint8_t displayControlRegister, Scanline scanline) {
 }
 
 void Gpu::Gpu::drawTiles(uint8_t displayControlRegister, Scanline scanline) {
-  const auto tileset = DisplayControlRegister::useTileSet0(displayControlRegister) ? tileset0 : tileset1;
 }
 
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {

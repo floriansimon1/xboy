@@ -6,6 +6,8 @@
 namespace DisplayControlRegister {
   constexpr uint16_t address = 0xff40;
 
+  bool useBackgroundTileMap0(uint8_t value);
+  bool useWindowTileMap0(uint8_t value);
   bool showBackground(uint8_t value);
   bool useTileSet0(uint8_t value);
   bool showSprites(uint8_t value);
