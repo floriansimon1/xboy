@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "../memory/mmu.hpp"
+#include "tile-data.hpp"
 #include "../types.hpp"
 #include "screen.hpp"
 
@@ -17,6 +19,8 @@ constexpr Tick ticksPerOamAccess  = 80;
 constexpr Tick ticksPerScanline = ticksPerHblank + ticksPerVramAccess + ticksPerOamAccess;
 
 constexpr Tick ticksPerFrame = ticksPerScanline * scanlinesInFrame;
+
+typedef uint8_t Palette;
 
 namespace Gpu {
   enum Mode {
@@ -42,13 +46,13 @@ namespace Gpu {
 
     void reset();
     void process(Gameboy &gameboy);
-    void drawScanline(uint8_t displayControlRegister, Scanline scanline);
+    void drawScanline(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
 
     private:
       OptionalState previousState;
       OptionalTick  displayStartTick;
 
-      void drawTiles(uint8_t displayControlRegister, Scanline scanline);
+      void drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
       void drawSprites(uint8_t displayControlRegister, Scanline scanline);
   };
 }
@@ -56,6 +60,20 @@ namespace Gpu {
 // Exposed only for tests.
 Gpu::State getStateOfTick(OptionalTick displayStartTick, uint8_t displayControlRegisterValue, Tick tick);
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
+Pixel translatePixel(Palette palette, Pixel pixel);
+sf::Color pixelToColor(Pixel pixel);
 Gpu::State displayDisabledStatus();
+
+void drawTile(
+  bool background,
+  const Mmu &mmu,
+  FrameBuffer &frameBuffer,
+  const TileData &tileData,
+  Palette palette,
+  Coordinate x,
+  Coordinate y,
+  Coordinate screenX,
+  Coordinate screenY
+);
 
 #endif

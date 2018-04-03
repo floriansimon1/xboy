@@ -1,7 +1,15 @@
+#include <SFML/Graphics.hpp>
+
 #include "gpu.hpp"
 #include "../types.hpp"
 #include "../gameboy.hpp"
 #include "../memory/display-control-register.hpp"
+
+constexpr uint16_t backgroundXAddress       = 0xff43;
+constexpr uint16_t backgroundYAddress       = 0xff42;
+constexpr uint16_t windowXAddress           = 0xff4b;
+constexpr uint16_t windowYAddress           = 0xff4a;
+constexpr uint16_t backgroundPaletteAddress = 0xff47;
 
 Gpu::Gpu::Gpu() {
   reset();
@@ -30,7 +38,7 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
   if (isStartOfVblank) {
     screen->display(frameBuffer);
   } else if (isStartOfNewScanline) {
-    drawScanline(displayControlRegister, newState.scanline);
+    drawScanline(gameboy.mmu, displayControlRegister, newState.scanline);
   }
 }
 
@@ -42,12 +50,12 @@ void Gpu::Gpu::reset() {
   }
 }
 
-void Gpu::Gpu::drawScanline(uint8_t displayControlRegister, Scanline scanline) {
+void Gpu::Gpu::drawScanline(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
   if (
     DisplayControlRegister::showWindow(displayControlRegister)
     || DisplayControlRegister::showBackground(displayControlRegister)
   ) {
-    drawTiles(displayControlRegister, scanline);
+    drawTiles(mmu, displayControlRegister, scanline);
   }
 
   if (DisplayControlRegister::showSprites(displayControlRegister)) {
@@ -55,10 +63,67 @@ void Gpu::Gpu::drawScanline(uint8_t displayControlRegister, Scanline scanline) {
   }
 }
 
-void Gpu::Gpu::drawSprites(uint8_t displayControlRegister, Scanline scanline) {
+void Gpu::Gpu::drawSprites(uint8_t, Scanline) {
 }
 
-void Gpu::Gpu::drawTiles(uint8_t displayControlRegister, Scanline scanline) {
+void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
+  const auto palette          = mmu[backgroundPaletteAddress];
+  const auto backgroundStartX = mmu[backgroundXAddress];
+  const auto backgroundStartY = mmu[backgroundYAddress];
+  const auto windowStartY     = mmu[windowYAddress];
+
+  // Don't ask me why, but windowXAddress points to the window's X minus 7.
+  const auto windowStartX = mmu[windowXAddress - 7];
+
+  const TileData tileData(mmu);
+
+  const Coordinate backgroundY = backgroundStartY + scanline;
+  const Coordinate windowY     = scanline - windowStartY;
+
+  for (Coordinate x = 0; x < screenWidth; x++) {
+    if (DisplayControlRegister::showBackground(displayControlRegister)) {
+      const Coordinate backgroundX = x + backgroundStartX;
+
+      drawTile(true, mmu, frameBuffer, tileData, palette, backgroundX, backgroundY, x, scanline);
+    }
+
+    if (DisplayControlRegister::showWindow(displayControlRegister)) {
+        const Coordinate windowX = x - windowStartX;
+
+        drawTile(false, mmu, frameBuffer, tileData, palette, windowX, windowY, x, scanline);
+    }
+  }
+}
+
+void drawTile(
+  bool background,
+  const Mmu &mmu,
+  FrameBuffer &frameBuffer,
+  const TileData &tileData,
+  Palette palette,
+  Coordinate x,
+  Coordinate y,
+  Coordinate screenX,
+  Coordinate screenY
+) {
+  const Coordinate tilemapX = x / tileWidth;
+  const Coordinate tilemapY = y / tileHeight;
+
+  // No need to perform negative checks because Coordinate is an unsigned type.
+  if (tilemapX >= tilemapWidth || tilemapY >= tilemapHeight) {
+    return;
+  }
+
+  const Coordinate tileX = x % tileWidth;
+  const Coordinate tileY = y % tileHeight;
+
+  const Tile tile = tileData.read(mmu, background, tilemapX, tilemapY);
+
+  const auto pixel = readPixel(tile, tileX, tileY);
+
+  const auto translatedPixel = translatePixel(palette, pixel);
+
+  writeColor(frameBuffer, screenX, screenY, pixelToColor(translatedPixel));
 }
 
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
@@ -109,4 +174,21 @@ Gpu::State displayDisabledStatus() {
   * Source: http://www.codeslinger.co.uk/pages/projects/gameboy/lcd.html
   */
   return Gpu::State { Gpu::Mode::Vblank, 0, false };
+}
+
+sf::Color pixelToColor(Pixel pixel) {
+  switch (pixel) {
+    default:
+
+    case 0: return sf::Color(0,   0,   0);
+    case 1: return sf::Color(96,  96,  96);
+    case 2: return sf::Color(192, 192, 192);
+    case 3: return sf::Color(255, 255, 255);
+  }
+}
+
+Pixel translatePixel(Palette palette, Pixel pixel) {
+  const auto shifts = pixel * 2;
+
+  return (palette >> shifts) & 0b11;
 }
