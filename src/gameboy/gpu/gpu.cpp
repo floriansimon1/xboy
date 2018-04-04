@@ -180,10 +180,10 @@ sf::Color pixelToColor(Pixel pixel) {
   switch (pixel) {
     default:
 
-    case 0: return sf::Color(0,   0,   0);
-    case 1: return sf::Color(96,  96,  96);
-    case 2: return sf::Color(192, 192, 192);
-    case 3: return sf::Color(255, 255, 255);
+    case 3: return sf::Color(0,   0,   0);
+    case 2: return sf::Color(96,  96,  96);
+    case 1: return sf::Color(192, 192, 192);
+    case 0: return sf::Color(255, 255, 255);
   }
 }
 
