@@ -4,8 +4,9 @@
 
 #include "test.hpp"
 #include "run-tests.hpp"
+#include "gpu/pixel-test.hpp"
 #include "shadow-ram-test.hpp"
-#include "gpu-timing-test.hpp"
+#include "gpu/gpu-timing-test.hpp"
 #include "instructions/short-call-test.hpp"
 #include "instructions/registers-or-test.hpp"
 #include "instructions/registers-and-test.hpp"
@@ -37,6 +38,7 @@ bool runTests() {
 
   list<std::shared_ptr<Test>> tests;
 
+  tests.push_back(make_shared<PixelTest>());
   tests.push_back(make_shared<ShadowRamTest>());
   tests.push_back(make_shared<ShortCallTest>());
   tests.push_back(make_shared<GpuTimingTest>());

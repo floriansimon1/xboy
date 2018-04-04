@@ -1,7 +1,7 @@
-#include "../src/gameboy/gpu/gpu.hpp"
-#include "gpu-timing-test.hpp"
-
 #include <iostream>
+
+#include "../../src/gameboy/gpu/gpu.hpp"
+#include "gpu-timing-test.hpp"
 
 GpuTimingTest::GpuTimingTest(): Test("GPU timing test") {
 }
