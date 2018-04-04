@@ -19,7 +19,11 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
   const auto oldState               = previousState;
   const auto displayControlRegister = gameboy.mmu.readDisplayControlRegister();
 
-  const auto newState = getStateOfTick(displayStartTick, displayControlRegister, gameboy.cpu.ticks);
+  const auto newState = getStateOfTick(
+    displayStartTick,
+    DisplayControlRegister::enabled(displayControlRegister),
+    gameboy.cpu.ticks
+  );
 
   previousState.emplace(newState);
 
@@ -136,11 +140,10 @@ OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
   return std::experimental::make_optional(scanline);
 }
 
-Gpu::State getStateOfTick(OptionalTick displayStartTick, uint8_t displayControlRegisterValue, Tick tick) {
+Gpu::State getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Tick tick) {
   Gpu::Mode mode;
 
-  const auto displayEnabled = DisplayControlRegister::enabled(displayControlRegisterValue);
-  const auto Δticks         = tick - displayStartTick.value_or(0);
+  const auto Δticks = tick - displayStartTick.value_or(0);
 
   if (!displayEnabled) {
     return displayDisabledStatus();

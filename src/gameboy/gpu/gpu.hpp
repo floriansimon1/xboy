@@ -58,7 +58,7 @@ namespace Gpu {
 }
 
 // Exposed only for tests.
-Gpu::State getStateOfTick(OptionalTick displayStartTick, uint8_t displayControlRegisterValue, Tick tick);
+Gpu::State getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Tick tick);
 OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
 Pixel translatePixel(Palette palette, Pixel pixel);
 sf::Color pixelToColor(Pixel pixel);
