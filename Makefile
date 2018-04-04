@@ -20,7 +20,7 @@ bin/xboy: $(compiledSources) src/xboy.cpp
 	@mkdir -p bin
 	$(compiler) -o bin/xboy ${compiledSources} src/xboy.cpp ${libraries} ${flags}
 
-bin/test-xboy: $(compiledTests) src/test-xboy.cpp
+bin/test-xboy: $(compiledSources) $(compiledTests) src/test-xboy.cpp
 	@mkdir -p bin
 	$(compiler) -o bin/test-xboy ${compiledSources} ${compiledTests} src/test-xboy.cpp ${libraries} ${flags}
 
