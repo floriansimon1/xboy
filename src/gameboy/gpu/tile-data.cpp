@@ -2,12 +2,6 @@
 #include "tile-data.hpp"
 #include "../memory/display-control-register.hpp"
 
-// See http://imrannazar.com/GameBoy-Emulation-in-JavaScript:-Graphics
-constexpr uint16_t tileset1 = 0x8800;
-constexpr uint16_t tileset0 = 0x9000;
-constexpr uint16_t tilemap1 = 0x9800;
-constexpr uint16_t tilemap0 = 0x9c00;
-
 TileData::TileData(const Mmu &mmu) {
   const auto displayControlRegister = mmu.readDisplayControlRegister();
 
@@ -44,10 +38,13 @@ Tile TileData::read(const Mmu &mmu, bool background, Coordinate x, Coordinate y)
 Pixel readPixel(const Tile &tile, Coordinate x, Coordinate y) {
   const uint8_t position = x + y * tileWidth;
 
-  const uint8_t highByte = tile[position / 8];
-  const uint8_t lowByte  = tile[position / 8 + 1];
+  const uint8_t lowByte  = tile[position / 8];
+  const uint8_t highByte = tile[position / 8 + 1];
 
-  const uint8_t bit = position % 8;
+  const uint8_t bit = 7 - (position % 8);
 
-  return (getBit(highByte, bit) << 1) | getBit(lowByte, bit);
+  return (
+    (static_cast<bool>(getBit(highByte, bit)) << 1)
+    | static_cast<bool>(getBit(lowByte, bit))
+  );
 }
