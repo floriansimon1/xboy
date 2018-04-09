@@ -3,6 +3,8 @@
 #include "../../src/gameboy/gpu/gpu.hpp"
 #include "gpu-timing-test.hpp"
 
+using namespace Gpu;
+
 GpuTimingTest::GpuTimingTest(): Test("GPU timing test") {
 }
 
@@ -29,31 +31,31 @@ bool GpuTimingTest::run() {
 
   const auto displayDisabledStateOk = (
     !displayDisabledState.displayEnabled
-    && displayDisabledState.mode == Gpu::Mode::Vblank
+    && displayDisabledState.mode == Mode::Vblank
     && !displayDisabledState.scanline
   );
 
   const auto firstScanlineStateOk = (
     firstScanlineState.displayEnabled
-    && firstScanlineState.mode == Gpu::Mode::OamAccess
+    && firstScanlineState.mode == Mode::OamAccess
     && !firstScanlineState.scanline
   );
 
   const auto secondVramAccessStateOk = (
     secondVramAccessState.displayEnabled
-    && secondVramAccessState.mode == Gpu::Mode::VramAccess
+    && secondVramAccessState.mode == Mode::VramAccess
     && secondVramAccessState.scanline == 1
   );
 
   const auto secondLineOfVblankStateOk = (
     secondLineOfVblankState.displayEnabled
-    && secondLineOfVblankState.mode == Gpu::Mode::Vblank
+    && secondLineOfVblankState.mode == Mode::Vblank
     && secondLineOfVblankState.scanline == realScanlines + 1
   );
 
   const auto hblankOfSecondFrameStateOk = (
     hblankOfSecondFrameState.displayEnabled
-    && hblankOfSecondFrameState.mode == Gpu::Mode::Hblank
+    && hblankOfSecondFrameState.mode == Mode::Hblank
     && !hblankOfSecondFrameState.scanline
   );
 

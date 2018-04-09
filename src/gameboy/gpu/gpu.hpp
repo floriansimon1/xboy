@@ -3,8 +3,8 @@
 
 #include <memory>
 
+#include "graphical-objects.hpp"
 #include "../memory/mmu.hpp"
-#include "tile-data.hpp"
 #include "../types.hpp"
 #include "screen.hpp"
 
@@ -55,25 +55,37 @@ namespace Gpu {
       void drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
       void drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
   };
+
+  // Exposed only for tests.
+  State getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Tick tick);
+  OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
+  Pixel translatePixel(Palette palette, Pixel pixel);
+  sf::Color pixelToColor(Pixel pixel);
+  State displayDisabledStatus();
+
+  // Returns true if the pixel is transparent.
+  bool drawObjectPixel(
+    FrameBuffer &frameBuffer,
+    const Mmu &mmu,
+    Palette palette,
+    const GraphicalObject &object,
+    Coordinate x,
+    Coordinate y,
+    Coordinate screenX,
+    Coordinate screenY
+  );
+
+  void drawTile(
+    bool background,
+    const Mmu &mmu,
+    FrameBuffer &frameBuffer,
+    const TileData &tileData,
+    Palette palette,
+    Coordinate x,
+    Coordinate y,
+    Coordinate screenX,
+    Coordinate screenY
+  );
 }
-
-// Exposed only for tests.
-Gpu::State getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Tick tick);
-OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
-Pixel translatePixel(Palette palette, Pixel pixel);
-sf::Color pixelToColor(Pixel pixel);
-Gpu::State displayDisabledStatus();
-
-void drawTile(
-  bool background,
-  const Mmu &mmu,
-  FrameBuffer &frameBuffer,
-  const TileData &tileData,
-  Palette palette,
-  Coordinate x,
-  Coordinate y,
-  Coordinate screenX,
-  Coordinate screenY
-);
 
 #endif

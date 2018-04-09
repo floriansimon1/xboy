@@ -1,6 +1,8 @@
 #include "../../src/gameboy/gpu/gpu.hpp"
 #include "pixel-test.hpp"
 
+using namespace Gpu;
+
 PixelTest::PixelTest(): Test("Pixel test") {
 }
 

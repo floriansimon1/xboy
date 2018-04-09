@@ -20,7 +20,17 @@ constexpr uint16_t tilemap0 = 0x9c00;
 
 constexpr auto tileSize = (tileWidth * tileHeight * bitsPerPixel) / 8;
 
-typedef std::array<uint8_t, tileSize> Tile;
+constexpr unsigned short numberOfSprites = 40;
+
+struct GraphicalObject {
+  uint16_t pixelsAddress;
+};
+
+struct SpriteData {
+  bool bigSprites;
+
+  SpriteData(uint8_t displayControlRegister);
+};
 
 struct TileData {
   bool     useTileset0;
@@ -30,10 +40,23 @@ struct TileData {
 
   TileData() = default;
   TileData(const Mmu &mmu);
-
-  Tile read(const Mmu &mmu, bool background, Coordinate x, Coordinate y) const;
 };
 
-Pixel readPixel(const Tile &tile, Coordinate x, Coordinate y);
+struct Sprite: GraphicalObject {
+  bool     backgroundPrioritary;
+  uint16_t paletteAddress;
+  bool     yFlip;
+  bool     xFlip;
+  uint8_t  x;
+  uint8_t  y;
+
+  Sprite(const Mmu &mmu, uint8_t spriteNumber);
+};
+
+struct Tile: GraphicalObject {
+  Tile(const Mmu &mmu, const TileData &tileData, bool background, Coordinate x, Coordinate y);
+};
+
+Pixel readObjectPixel(const Mmu &mmu, const GraphicalObject &object, Coordinate x, Coordinate y);
 
 #endif

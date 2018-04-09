@@ -3,7 +3,6 @@
 #include "gpu.hpp"
 #include "../types.hpp"
 #include "../gameboy.hpp"
-#include "sprite-data.hpp"
 #include "../memory/display-control-register.hpp"
 
 constexpr uint16_t backgroundXAddress       = 0xff43;
@@ -106,7 +105,7 @@ void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanlin
   }
 }
 
-void drawTile(
+void Gpu::drawTile(
   bool background,
   const Mmu &mmu,
   FrameBuffer &frameBuffer,
@@ -128,16 +127,40 @@ void drawTile(
   const Coordinate tileX = x % tileWidth;
   const Coordinate tileY = y % tileHeight;
 
-  const Tile tile = tileData.read(mmu, background, tilemapX, tilemapY);
+  const Tile tile(mmu, tileData, background, tilemapX, tilemapY);
 
-  const auto pixel = readPixel(tile, tileX, tileY);
+  drawObjectPixel(
+    frameBuffer,
+    mmu,
+    palette,
+    tile,
+    tileX,
+    tileY,
+    screenX,
+    screenY
+  );
+}
+
+bool Gpu::drawObjectPixel(
+  FrameBuffer &frameBuffer,
+  const Mmu &mmu,
+  Palette palette,
+  const GraphicalObject &object,
+  Coordinate x,
+  Coordinate y,
+  Coordinate screenX,
+  Coordinate screenY
+) {
+  const auto pixel = readObjectPixel(mmu, object, x, y);
 
   const auto translatedPixel = translatePixel(palette, pixel);
 
   writeColor(frameBuffer, screenX, screenY, pixelToColor(translatedPixel));
+
+  return !translatedPixel;
 }
 
-OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
+OptionalScanline Gpu::getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
   const auto Δticks = tick - displayStartTick.value_or(0);
 
   const auto absoluteScanline = Δticks / ticksPerScanline;
@@ -147,8 +170,8 @@ OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick) {
   return std::experimental::make_optional(scanline);
 }
 
-Gpu::State getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Tick tick) {
-  Gpu::Mode mode;
+Gpu::State Gpu::getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Tick tick) {
+  Mode mode;
 
   const auto Δticks = tick - displayStartTick.value_or(0);
 
@@ -163,19 +186,19 @@ Gpu::State getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Ti
   const auto scanlineTicks = frameTicks - scanline * ticksPerScanline;
 
   if (scanline >= realScanlines) {
-    mode = Gpu::Mode::Vblank;
+    mode = Mode::Vblank;
   } else if (scanlineTicks < ticksPerOamAccess) {
-    mode = Gpu::Mode::OamAccess;
+    mode = Mode::OamAccess;
   } else if (scanlineTicks < ticksPerVramAccess) {
-    mode = Gpu::Mode::VramAccess;
+    mode = Mode::VramAccess;
   } else {
-    mode = Gpu::Mode::Hblank;
+    mode = Mode::Hblank;
   }
 
-  return Gpu::State { mode, scanline, true };
+  return State { mode, scanline, true };
 }
 
-Gpu::State displayDisabledStatus() {
+Gpu::State Gpu::displayDisabledStatus() {
   /*
   * "One important part to emulate with the lcd modes is when the lcd is disabled the mode must be set
   * to mode 1. If you dont do this then you will spend hours like I did wondering why Mario2 wont play
@@ -183,10 +206,10 @@ Gpu::State displayDisabledStatus() {
   *
   * Source: http://www.codeslinger.co.uk/pages/projects/gameboy/lcd.html
   */
-  return Gpu::State { Gpu::Mode::Vblank, 0, false };
+  return State { Mode::Vblank, 0, false };
 }
 
-sf::Color pixelToColor(Pixel pixel) {
+sf::Color Gpu::pixelToColor(Pixel pixel) {
   switch (pixel) {
     default:
 
@@ -197,7 +220,7 @@ sf::Color pixelToColor(Pixel pixel) {
   }
 }
 
-Pixel translatePixel(Palette palette, Pixel pixel) {
+Pixel Gpu::translatePixel(Palette palette, Pixel pixel) {
   const auto shifts = pixel * 2;
 
   return (palette >> shifts) & 0b11;
