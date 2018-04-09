@@ -51,8 +51,11 @@ SpriteData::SpriteData(uint8_t displayControlRegister):
 Sprite::Sprite(const Mmu &mmu, uint8_t spriteNumber) {
   const uint16_t spriteDataStart = spriteSetAddress + spriteNumber * spriteSize;
 
-  x             = mmu[spriteDataStart + xByte];
-  y             = mmu[spriteDataStart + yByte];
+  // For some reason, we read x - 8 and y -16...
+  // http://www.codeslinger.co.uk/pages/projects/gameboy/graphics.html
+  x = mmu[spriteDataStart + xByte] + 8;
+  y = mmu[spriteDataStart + yByte] + 16;
+
   pixelsAddress = spriteMapAddress + mmu[spriteDataStart + spriteNumberByte];
 
   const auto attributes = mmu[spriteDataStart + attributesByte];
