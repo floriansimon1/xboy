@@ -75,6 +75,7 @@ void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanl
     for (auto i = numberOfSprites - 1; i >= 0; i--) {
       const Sprite sprite(mmu, i);
 
+      // Non-prioritary sprites cannot be drawn over non-white backgrounds.
       if (sprite.backgroundPrioritary && !pixelIsWhite(frameBuffer, x, scanline)) {
         continue;
       }
