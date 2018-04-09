@@ -53,7 +53,7 @@ namespace Gpu {
       OptionalTick  displayStartTick;
 
       void drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
-      void drawSprites(uint8_t displayControlRegister, Scanline scanline);
+      void drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
   };
 }
 

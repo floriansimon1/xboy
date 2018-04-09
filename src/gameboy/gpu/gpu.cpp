@@ -3,6 +3,7 @@
 #include "gpu.hpp"
 #include "../types.hpp"
 #include "../gameboy.hpp"
+#include "sprite-data.hpp"
 #include "../memory/display-control-register.hpp"
 
 constexpr uint16_t backgroundXAddress       = 0xff43;
@@ -63,11 +64,17 @@ void Gpu::Gpu::drawScanline(const Mmu &mmu, uint8_t displayControlRegister, Scan
   }
 
   if (DisplayControlRegister::showSprites(displayControlRegister)) {
-    drawSprites(displayControlRegister, scanline);
+    drawSprites(mmu, displayControlRegister, scanline);
   }
 }
 
-void Gpu::Gpu::drawSprites(uint8_t, Scanline) {
+void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline) {
+  const SpriteData spriteData(displayControlRegister);
+
+  // Iterate in reverse to stop once prioritary sprites have been displayed.
+  for (auto i = numberOfSprites - 1; i >= 0; i--) {
+    const Sprite sprite(mmu, i);
+  }
 }
 
 void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
