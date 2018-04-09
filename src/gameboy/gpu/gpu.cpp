@@ -213,10 +213,10 @@ sf::Color Gpu::pixelToColor(Pixel pixel) {
   switch (pixel) {
     default:
 
-    case 3: return sf::Color(0,   0,   0);
-    case 2: return sf::Color(96,  96,  96);
-    case 1: return sf::Color(192, 192, 192);
-    case 0: return sf::Color(255, 255, 255);
+    case 3: return black;
+    case 2: return darkGrey;
+    case 1: return lightGrey;
+    case 0: return white;
   }
 }
 

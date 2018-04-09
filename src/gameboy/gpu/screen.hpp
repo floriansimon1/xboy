@@ -11,6 +11,11 @@ constexpr unsigned int screenHeight  = 144;
 constexpr unsigned int bitsPerPixel  = 2;
 constexpr unsigned int bytesPerColor = 4;
 
+const sf::Color black     = { 0,   0,   0   };
+const sf::Color darkGrey  = { 96,  96,  96  };
+const sf::Color lightGrey = { 192, 192, 192 };
+const sf::Color white     = { 255, 255, 255 };
+
 constexpr size_t frameSize = screenWidth * screenHeight * bytesPerColor;
 
 // List of frame lines, pixel-by-pixel. A pixels is 32 bits (r, g, b, a).
@@ -21,5 +26,6 @@ struct Screen {
 };
 
 void writeColor(FrameBuffer &frameBuffer, Coordinate x, Coordinate y, const sf::Color &color);
+bool pixelIsWhite(const FrameBuffer &frameBuffer, Coordinate x, Coordinate y);
 
 #endif
