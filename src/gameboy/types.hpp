@@ -5,6 +5,7 @@
 
 typedef unsigned long long Tick;
 typedef uint8_t            Pixel;
+typedef uint8_t            Palette;
 typedef unsigned short     Scanline;
 typedef unsigned short     Coordinate;
 

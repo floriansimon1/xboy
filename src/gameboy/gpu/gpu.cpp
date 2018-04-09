@@ -5,11 +5,10 @@
 #include "../gameboy.hpp"
 #include "../memory/display-control-register.hpp"
 
-constexpr uint16_t backgroundXAddress       = 0xff43;
-constexpr uint16_t backgroundYAddress       = 0xff42;
-constexpr uint16_t windowXAddress           = 0xff4b;
-constexpr uint16_t windowYAddress           = 0xff4a;
-constexpr uint16_t backgroundPaletteAddress = 0xff47;
+constexpr uint16_t backgroundXAddress = 0xff43;
+constexpr uint16_t backgroundYAddress = 0xff42;
+constexpr uint16_t windowXAddress     = 0xff4b;
+constexpr uint16_t windowYAddress     = 0xff4a;
 
 Gpu::Gpu::Gpu() {
   reset();
@@ -73,7 +72,7 @@ void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanl
   // Iterate in reverse to stop once prioritary sprites have been displayed.
   for (Coordinate x = 0; x < screenWidth; x++) {
     for (auto i = numberOfSprites - 1; i >= 0; i--) {
-      const Sprite sprite(mmu, i);
+      const Sprite sprite(mmu, spriteData, i);
 
       // Non-prioritary sprites cannot be drawn over non-white backgrounds.
       if (sprite.backgroundPrioritary && !pixelIsWhite(frameBuffer, x, scanline)) {
@@ -84,7 +83,6 @@ void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanl
 }
 
 void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
-  const auto palette          = mmu[backgroundPaletteAddress];
   const auto backgroundStartX = mmu[backgroundXAddress];
   const auto backgroundStartY = mmu[backgroundYAddress];
   const auto windowStartY     = mmu[windowYAddress];
@@ -101,13 +99,13 @@ void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanlin
     if (DisplayControlRegister::showBackground(displayControlRegister)) {
       const Coordinate backgroundX = x + backgroundStartX;
 
-      drawTile(true, mmu, frameBuffer, tileData, palette, backgroundX, backgroundY, x, scanline);
+      drawTile(true, mmu, frameBuffer, tileData, backgroundX, backgroundY, x, scanline);
     }
 
     if (DisplayControlRegister::showWindow(displayControlRegister)) {
         const Coordinate windowX = x - windowStartX;
 
-        drawTile(false, mmu, frameBuffer, tileData, palette, windowX, windowY, x, scanline);
+        drawTile(false, mmu, frameBuffer, tileData, windowX, windowY, x, scanline);
     }
   }
 }
@@ -117,7 +115,6 @@ void Gpu::drawTile(
   const Mmu &mmu,
   FrameBuffer &frameBuffer,
   const TileData &tileData,
-  Palette palette,
   Coordinate x,
   Coordinate y,
   Coordinate screenX,
@@ -139,7 +136,6 @@ void Gpu::drawTile(
   drawObjectPixel(
     frameBuffer,
     mmu,
-    palette,
     tile,
     tileX,
     tileY,
@@ -151,7 +147,6 @@ void Gpu::drawTile(
 bool Gpu::drawObjectPixel(
   FrameBuffer &frameBuffer,
   const Mmu &mmu,
-  Palette palette,
   const GraphicalObject &object,
   Coordinate x,
   Coordinate y,
@@ -160,7 +155,7 @@ bool Gpu::drawObjectPixel(
 ) {
   const auto pixel = readObjectPixel(mmu, object, x, y);
 
-  const auto translatedPixel = translatePixel(palette, pixel);
+  const auto translatedPixel = translatePixel(object.palette, pixel);
 
   writeColor(frameBuffer, screenX, screenY, pixelToColor(translatedPixel));
 

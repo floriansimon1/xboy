@@ -20,10 +20,17 @@ constexpr uint16_t tilemap0 = 0x9c00;
 
 constexpr auto tileSize = (tileWidth * tileHeight * bitsPerPixel) / 8;
 
-constexpr unsigned short numberOfSprites = 40;
+constexpr uint8_t numberOfSprites    = 40;
+constexpr uint8_t bigSpriteHeight    = 16;
+constexpr uint8_t normalSpriteHeight = 8;
+constexpr uint8_t spriteWidth        = 8;
 
 struct GraphicalObject {
   uint16_t pixelsAddress;
+  Palette  palette;
+
+  virtual Coordinate transformX(Coordinate x) const { return x; }
+  virtual Coordinate transformY(Coordinate y) const { return y; }
 };
 
 struct SpriteData {
@@ -44,13 +51,16 @@ struct TileData {
 
 struct Sprite: GraphicalObject {
   bool    backgroundPrioritary;
-  uint8_t palette;
   bool    yFlip;
   bool    xFlip;
+  bool    big;
   uint8_t x;
   uint8_t y;
 
-  Sprite(const Mmu &mmu, uint8_t spriteNumber);
+  Sprite(const Mmu &mmu, const SpriteData &spriteData, uint8_t spriteNumber);
+
+  virtual Coordinate transformX(Coordinate x) const override;
+  virtual Coordinate transformY(Coordinate y) const override;
 };
 
 struct Tile: GraphicalObject {

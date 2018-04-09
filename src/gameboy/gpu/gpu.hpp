@@ -20,8 +20,6 @@ constexpr Tick ticksPerScanline = ticksPerHblank + ticksPerVramAccess + ticksPer
 
 constexpr Tick ticksPerFrame = ticksPerScanline * scanlinesInFrame;
 
-typedef uint8_t Palette;
-
 namespace Gpu {
   enum Mode {
     Hblank     = 0,
@@ -67,7 +65,6 @@ namespace Gpu {
   bool drawObjectPixel(
     FrameBuffer &frameBuffer,
     const Mmu &mmu,
-    Palette palette,
     const GraphicalObject &object,
     Coordinate x,
     Coordinate y,
@@ -80,7 +77,6 @@ namespace Gpu {
     const Mmu &mmu,
     FrameBuffer &frameBuffer,
     const TileData &tileData,
-    Palette palette,
     Coordinate x,
     Coordinate y,
     Coordinate screenX,
