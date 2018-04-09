@@ -43,12 +43,12 @@ struct TileData {
 };
 
 struct Sprite: GraphicalObject {
-  bool     backgroundPrioritary;
-  uint16_t paletteAddress;
-  bool     yFlip;
-  bool     xFlip;
-  uint8_t  x;
-  uint8_t  y;
+  bool    backgroundPrioritary;
+  uint8_t palette;
+  bool    yFlip;
+  bool    xFlip;
+  uint8_t x;
+  uint8_t y;
 
   Sprite(const Mmu &mmu, uint8_t spriteNumber);
 };

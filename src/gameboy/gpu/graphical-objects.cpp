@@ -57,7 +57,7 @@ Sprite::Sprite(const Mmu &mmu, uint8_t spriteNumber) {
 
   const auto attributes = mmu[spriteDataStart + attributesByte];
 
-  paletteAddress       = getBit(attributes, paletteAddressBit) ? secondPalette : firstPalette;
+  palette              = mmu[getBit(attributes, paletteAddressBit) ? secondPalette : firstPalette];
   backgroundPrioritary = getBit(attributes, backgroundPriorityBit);
   xFlip                = getBit(attributes, xFlipBit);
   yFlip                = getBit(attributes, yFlipBit);
