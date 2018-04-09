@@ -67,12 +67,18 @@ void Gpu::Gpu::drawScanline(const Mmu &mmu, uint8_t displayControlRegister, Scan
   }
 }
 
-void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline) {
+void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
   const SpriteData spriteData(displayControlRegister);
 
   // Iterate in reverse to stop once prioritary sprites have been displayed.
-  for (auto i = numberOfSprites - 1; i >= 0; i--) {
-    const Sprite sprite(mmu, i);
+  for (Coordinate x = 0; x < screenWidth; x++) {
+    for (auto i = numberOfSprites - 1; i >= 0; i--) {
+      const Sprite sprite(mmu, i);
+
+      if (sprite.backgroundPrioritary && !pixelIsWhite(frameBuffer, x, scanline)) {
+        continue;
+      }
+    }
   }
 }
 
