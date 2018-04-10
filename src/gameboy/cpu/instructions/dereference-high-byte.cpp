@@ -10,7 +10,7 @@ DereferenceHighByte::DereferenceHighByte():
 void DereferenceHighByte::execute(Gameboy &gameboy, const uint8_t *data) const {
   const uint16_t address = 0xff00 + *data;
 
-  const uint8_t value = gameboy.mmu[address];
+  const uint8_t value = gameboy.mmu.read(gameboy, address);
 
   loadImmediated8Instruction.execute(gameboy, &value);
 }

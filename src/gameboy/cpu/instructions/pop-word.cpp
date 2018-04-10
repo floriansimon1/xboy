@@ -8,7 +8,7 @@ PopWord::PopWord(CpuRegisterPointer cpuRegister): ConstantTimeInstruction(12, 0,
 }
 
 void PopWord::execute(Gameboy &gameboy, const uint8_t *) const {
-  gameboy.cpu.setTwoBytesRegister(cpuRegister, gameboy.mmu.popWordFromStack(gameboy.cpu));
+  gameboy.cpu.setTwoBytesRegister(cpuRegister, gameboy.mmu.popWordFromStack(gameboy));
 }
 
 std::string PopWord::toString() const {

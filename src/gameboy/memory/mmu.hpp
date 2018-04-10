@@ -4,20 +4,21 @@
 #include <cstdint>
 #include "../../bit.hpp"
 
-struct Cpu;
+struct Gameboy;
 
 struct Mmu {
   static const uint16_t ramStart = 0x8000;
 
-  void pushWordToStack(Cpu &cpu, uint16_t value);
-  void pushByteToStack(Cpu &cpu, uint8_t value);
-  uint16_t popWordFromStack(Cpu &cpu);
-  uint8_t popByteFromStack(Cpu &cpu);
+  void pushWordToStack(Gameboy &gameboy, uint16_t value);
+  void pushByteToStack(Gameboy &gameboy, uint8_t value);
+  uint16_t popWordFromStack(Gameboy &gameboy);
+  uint8_t popByteFromStack(Gameboy &gameboy);
 
-  const uint8_t& operator[](const uint16_t address) const;
-  void writeWord(uint16_t address, uint16_t word);
-  void write(uint16_t address, uint8_t byte);
-  uint16_t readWord(uint16_t address) const;
+  uint16_t readWord(const Gameboy &gameboy, uint16_t address) const;
+  uint8_t read(const Gameboy &gameboy, uint16_t address) const;
+
+  void writeWord(Gameboy &gameboy, uint16_t address, uint16_t word);
+  void write(Gameboy &gameboy, uint16_t address, uint8_t byte);
 
   static uint16_t convertShadowRamAddressToRamAddress(uint16_t address);
   static bool inShadowRam(uint16_t address);
@@ -25,12 +26,12 @@ struct Mmu {
 
   void reset();
 
-  uint8_t readDisplayControlRegister() const;
+  uint8_t readDisplayControlRegister(const Gameboy &gameboy) const;
 
   private:
     uint8_t memory[maxUint16];
 
-    void oamDmaTransfer(uint8_t codedAddress);
+    void oamDmaTransfer(Gameboy &gameboy, uint8_t codedAddress);
 };
 
 #endif

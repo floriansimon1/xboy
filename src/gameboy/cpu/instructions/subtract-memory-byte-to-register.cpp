@@ -12,7 +12,7 @@ SubtractMemoryByteToRegister::SubtractMemoryByteToRegister(CpuRegisterPointer po
 }
 
 void SubtractMemoryByteToRegister::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto value = gameboy.mmu[gameboy.cpu.twoBytesRegister(pointerRegister)];
+  const auto value = gameboy.mmu.read(gameboy, gameboy.cpu.twoBytesRegister(pointerRegister));
 
   subtractionInstruction.execute(gameboy, &value);
 }

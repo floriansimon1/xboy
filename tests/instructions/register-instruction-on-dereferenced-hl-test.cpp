@@ -29,7 +29,7 @@ bool RegisterInstructionOnDereferencedHlTest::run() {
   gameboy.cpu.de = input;
   gameboy.cpu.hl = address;
 
-  gameboy.mmu.write(gameboy.cpu.hl, input);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, input);
 
   rlc.execute(gameboy, &dummy);
 
@@ -43,14 +43,14 @@ bool RegisterInstructionOnDereferencedHlTest::run() {
   if (
     gameboy.cpu.hl == address
     && gameboy.cpu.af == expectedAf
-    && gameboy.mmu[gameboy.cpu.hl] == expectedOutput
+    && gameboy.mmu.read(gameboy, gameboy.cpu.hl) == expectedOutput
   ) {
     return true;
   }
 
   std::cout << "HL: " << (unsigned int) gameboy.cpu.hl << " (" << (unsigned int) address << "), "
             << "AF: " << (unsigned int) gameboy.cpu.af << " (" << (unsigned int) expectedAf << "), "
-            << "Out: " << (unsigned int) gameboy.mmu[gameboy.cpu.hl] << " (" << (unsigned int) expectedOutput << ')'
+            << "Out: " << (unsigned int) gameboy.mmu.read(gameboy, gameboy.cpu.hl) << " (" << (unsigned int) expectedOutput << ')'
             << std::endl;
 
   return false;

@@ -4,7 +4,7 @@
 #include "mmu.hpp"
 #include "../bios.hpp"
 #include "../../bit.hpp"
-#include "../cpu/cpu.hpp"
+#include "../gameboy.hpp"
 #include "display-control-register.hpp"
 
 constexpr uint16_t dmaControlRegister = 0xff46;
@@ -27,29 +27,29 @@ void Mmu::reset() {
   memcpy(memory, bios, biosLength);
 }
 
-uint16_t Mmu::popWordFromStack(Cpu &cpu) {
-  const auto value = readWord(cpu.sp);
+uint16_t Mmu::popWordFromStack(Gameboy &gameboy) {
+  const auto value = readWord(gameboy, gameboy.cpu.sp);
 
-  cpu.sp += 2;
-
-  return value;
-}
-
-uint8_t Mmu::popByteFromStack(Cpu &cpu) {
-  const auto value = (*this)[cpu.sp];
-
-  cpu.sp++;
+  gameboy.cpu.sp += 2;
 
   return value;
 }
 
-void Mmu::write(uint16_t address, uint8_t byte) {
+uint8_t Mmu::popByteFromStack(Gameboy &gameboy) {
+  const auto value = read(gameboy, gameboy.cpu.sp);
+
+  gameboy.cpu.sp++;
+
+  return value;
+}
+
+void Mmu::write(Gameboy &gameboy, uint16_t address, uint8_t byte) {
   if (Mmu::inRom(address)) {
     return;
   }
 
   if (address == dmaControlRegister) {
-    oamDmaTransfer(byte);
+    oamDmaTransfer(gameboy, byte);
   } else if (Mmu::inShadowRam(address)) {
     memory[Mmu::convertShadowRamAddressToRamAddress(address)] = byte;
   } else {
@@ -57,35 +57,35 @@ void Mmu::write(uint16_t address, uint8_t byte) {
   }
 }
 
-uint16_t Mmu::readWord(uint16_t address) const {
-  const auto firstByte  = (*this)[address];
-  const auto secondByte = (*this)[address + 1];
+uint16_t Mmu::readWord(const Gameboy &gameboy, uint16_t address) const {
+  const auto firstByte  = read(gameboy, address);
+  const auto secondByte = read(gameboy, address + 1);
 
   return firstByte | (secondByte << 8);
 }
 
-void Mmu::writeWord(uint16_t address, const uint16_t word) {
-  write(address, word & lowByteMask);
-  write(address + 1, (word & highByteMask) >> 8);
+void Mmu::writeWord(Gameboy &gameboy, uint16_t address, const uint16_t word) {
+  write(gameboy, address, word & lowByteMask);
+  write(gameboy, address + 1, (word & highByteMask) >> 8);
 }
 
-void Mmu::pushWordToStack(Cpu &cpu, uint16_t value) {
-  cpu.sp -= 2;
+void Mmu::pushWordToStack(Gameboy &gameboy, uint16_t value) {
+  gameboy.cpu.sp -= 2;
 
-  writeWord(cpu.sp, value);
+  writeWord(gameboy, gameboy.cpu.sp, value);
 }
 
-void Mmu::pushByteToStack(Cpu &cpu, uint8_t value) {
-  write(cpu.sp, value);
+void Mmu::pushByteToStack(Gameboy &gameboy, uint8_t value) {
+  write(gameboy, gameboy.cpu.sp, value);
 
-  cpu.sp--;
+  gameboy.cpu.sp--;
 }
 
-uint8_t Mmu::readDisplayControlRegister() const {
-  return (*this)[DisplayControlRegister::address];
+uint8_t Mmu::readDisplayControlRegister(const Gameboy &gameboy) const {
+  return read(gameboy, DisplayControlRegister::address);
 }
 
-const uint8_t& Mmu::operator[](const uint16_t address) const {
+uint8_t Mmu::read(const Gameboy &, uint16_t address) const {
   if (inShadowRam(address)) {
     return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
   }
@@ -97,13 +97,13 @@ const uint8_t& Mmu::operator[](const uint16_t address) const {
 * See http://bgb.bircd.org/pandocs.htm#lcdoamdmatransfers
 * and http://www.codeslinger.co.uk/pages/projects/gameboy/dma.html
 */
-void Mmu::oamDmaTransfer(uint8_t codedAddress) {
+void Mmu::oamDmaTransfer(Gameboy &gameboy, uint8_t codedAddress) {
   constexpr uint8_t divisor     = 160;
   constexpr uint8_t bytesToCopy = 160;
 
   const uint16_t decodedAddress = codedAddress * divisor;
 
   for (auto i = 0; i < bytesToCopy; i++) {
-    write(oamStart + i, (*this)[decodedAddress + i]);
+    write(gameboy, oamStart + i, read(gameboy, decodedAddress + i));
   }
 }

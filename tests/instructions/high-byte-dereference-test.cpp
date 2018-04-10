@@ -25,11 +25,11 @@ bool HighByteDereferenceTest::run() {
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, expected);
 
-  gameboy.mmu.write(address + 0xff00, other);
+  gameboy.mmu.write(gameboy, address + 0xff00, other);
 
   into.execute(gameboy, &address);
 
-  memoryValue   = gameboy.mmu[address + 0xff00];
+  memoryValue   = gameboy.mmu.read(gameboy, address + 0xff00);
   registerValue = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
   if (memoryValue != registerValue || registerValue != expected) {
@@ -39,11 +39,11 @@ bool HighByteDereferenceTest::run() {
   }
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, other);
-  gameboy.mmu.write(address + 0xff00, expected);
+  gameboy.mmu.write(gameboy, address + 0xff00, expected);
 
   to.execute(gameboy, &address);
 
-  memoryValue   = gameboy.mmu[address + 0xff00];
+  memoryValue   = gameboy.mmu.read(gameboy, address + 0xff00);
   registerValue = gameboy.cpu.singleByteRegister(&Cpu::af, false);
 
   if (memoryValue != registerValue || registerValue != expected) {

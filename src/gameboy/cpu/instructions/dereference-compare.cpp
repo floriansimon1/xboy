@@ -12,7 +12,7 @@ DereferenceCompare::DereferenceCompare(CpuRegisterPointer pointerRegister):
 }
 
 void DereferenceCompare::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto value = gameboy.mmu[gameboy.cpu.twoBytesRegister(pointerRegister)];
+  const auto value = gameboy.mmu.read(gameboy, gameboy.cpu.twoBytesRegister(pointerRegister));
 
   compareInstruction.execute(gameboy, &value);
 }

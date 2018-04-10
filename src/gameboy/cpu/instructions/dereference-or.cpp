@@ -12,7 +12,7 @@ DereferenceOr::DereferenceOr(CpuRegisterPointer pointerRegister, bool exclusive)
 }
 
 void DereferenceOr::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto value = gameboy.mmu[gameboy.cpu.twoBytesRegister(pointerRegister)];
+  const auto value = gameboy.mmu.read(gameboy, gameboy.cpu.twoBytesRegister(pointerRegister));
 
   orInstruction.execute(gameboy, &value);
 }

@@ -16,7 +16,7 @@ Gpu::Gpu::Gpu() {
 
 void Gpu::Gpu::process(Gameboy &gameboy) {
   const auto oldState               = previousState;
-  const auto displayControlRegister = gameboy.mmu.readDisplayControlRegister();
+  const auto displayControlRegister = gameboy.mmu.readDisplayControlRegister(gameboy);
 
   const auto newState = getStateOfTick(
     displayStartTick,
@@ -41,7 +41,7 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
   if (isStartOfVblank) {
     screen->display(frameBuffer);
   } else if (isStartOfNewScanline) {
-    drawScanline(gameboy.mmu, displayControlRegister, newState.scanline);
+    drawScanline(gameboy, displayControlRegister, newState.scanline);
   }
 }
 
@@ -53,20 +53,20 @@ void Gpu::Gpu::reset() {
   }
 }
 
-void Gpu::Gpu::drawScanline(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
+void Gpu::Gpu::drawScanline(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline) {
   if (
     DisplayControlRegister::showWindow(displayControlRegister)
     || DisplayControlRegister::showBackground(displayControlRegister)
   ) {
-    drawTiles(mmu, displayControlRegister, scanline);
+    drawTiles(gameboy, displayControlRegister, scanline);
   }
 
   if (DisplayControlRegister::showSprites(displayControlRegister)) {
-    drawSprites(mmu, displayControlRegister, scanline);
+    drawSprites(gameboy, displayControlRegister, scanline);
   }
 }
 
-void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
+void Gpu::Gpu::drawSprites(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline) {
   const SpriteConfiguration spriteConfiguration(displayControlRegister);
 
   // Iterate in reverse to stop once prioritary sprites have been displayed.
@@ -75,7 +75,7 @@ void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanl
     const sf::Vector2i point(x, scanline);
 
     for (auto i = numberOfSprites - 1; i >= 0; i--) {
-      const Sprite sprite(mmu, spriteConfiguration, i);
+      const Sprite sprite(gameboy, spriteConfiguration, i);
 
       // Non-prioritary sprites cannot be drawn over non-white backgrounds.
       if (sprite.backgroundPrioritary && !pixelIsWhite(frameBuffer, x, scanline)) {
@@ -88,7 +88,7 @@ void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanl
       if (spriteRectangle.contains(point)) {
         const sf::Vector2i spritePixel = point - spriteStartPoint;
 
-        const auto transparent = drawObjectPixel(frameBuffer, mmu, sprite, spritePixel.x, spritePixel.y, x, scanline);
+        const auto transparent = drawObjectPixel(frameBuffer, gameboy, sprite, spritePixel.x, spritePixel.y, x, scanline);
 
         // The last sprite's pixel has been written. It can be overwritten.
         if (transparent) {
@@ -99,15 +99,15 @@ void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanl
   }
 }
 
-void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
-  const auto backgroundStartX = mmu[backgroundXAddress];
-  const auto backgroundStartY = mmu[backgroundYAddress];
-  const auto windowStartY     = mmu[windowYAddress];
+void Gpu::Gpu::drawTiles(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline) {
+  const auto backgroundStartX = gameboy.mmu.read(gameboy, backgroundXAddress);
+  const auto backgroundStartY = gameboy.mmu.read(gameboy, backgroundYAddress);
+  const auto windowStartY     = gameboy.mmu.read(gameboy, windowYAddress);
 
   // Don't ask me why, but windowXAddress points to the window's X minus 7.
-  const auto windowStartX = mmu[windowXAddress - 7];
+  const auto windowStartX = gameboy.mmu.read(gameboy, windowXAddress - 7);
 
-  const TileConfiguration tileConfiguration(mmu);
+  const TileConfiguration tileConfiguration(gameboy);
 
   const Coordinate backgroundY = backgroundStartY + scanline;
   const Coordinate windowY     = scanline - windowStartY;
@@ -116,20 +116,20 @@ void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanlin
     if (DisplayControlRegister::showBackground(displayControlRegister)) {
       const Coordinate backgroundX = x + backgroundStartX;
 
-      drawTile(true, mmu, frameBuffer, tileConfiguration, backgroundX, backgroundY, x, scanline);
+      drawTile(true, gameboy, frameBuffer, tileConfiguration, backgroundX, backgroundY, x, scanline);
     }
 
     if (DisplayControlRegister::showWindow(displayControlRegister)) {
         const Coordinate windowX = x - windowStartX;
 
-        drawTile(false, mmu, frameBuffer, tileConfiguration, windowX, windowY, x, scanline);
+        drawTile(false, gameboy, frameBuffer, tileConfiguration, windowX, windowY, x, scanline);
     }
   }
 }
 
 void Gpu::drawTile(
   bool background,
-  const Mmu &mmu,
+  const Gameboy &gameboy,
   FrameBuffer &frameBuffer,
   const TileConfiguration &tileConfiguration,
   Coordinate x,
@@ -148,21 +148,21 @@ void Gpu::drawTile(
   const Coordinate tileX = x % tileWidth;
   const Coordinate tileY = y % tileHeight;
 
-  const Tile tile(mmu, tileConfiguration, background, tilemapX, tilemapY);
+  const Tile tile(gameboy, tileConfiguration, background, tilemapX, tilemapY);
 
-  drawObjectPixel(frameBuffer, mmu, tile, tileX, tileY, screenX, screenY);
+  drawObjectPixel(frameBuffer, gameboy, tile, tileX, tileY, screenX, screenY);
 }
 
 bool Gpu::drawObjectPixel(
   FrameBuffer &frameBuffer,
-  const Mmu &mmu,
+  const Gameboy &gameboy,
   const GraphicalObject &object,
   Coordinate x,
   Coordinate y,
   Coordinate screenX,
   Coordinate screenY
 ) {
-  const auto pixel = readObjectPixel(mmu, object, x, y);
+  const auto pixel = readObjectPixel(gameboy, object, x, y);
 
   const auto translatedPixel = translatePixel(object.palette, pixel);
 

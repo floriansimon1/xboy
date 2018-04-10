@@ -17,9 +17,9 @@ DereferenceCombinedIntoSingle::DereferenceCombinedIntoSingle(
 }
 
 void DereferenceCombinedIntoSingle::execute(Gameboy &gameboy, const uint8_t *) const {
-  gameboy.cpu.setSingleByteRegister(targetRegister, low, gameboy.mmu[
+  gameboy.cpu.setSingleByteRegister(targetRegister, low, gameboy.mmu.read(gameboy, (
     gameboy.cpu.twoBytesRegister(pointerRegister)
-  ]);
+  )));
 }
 
 std::string DereferenceCombinedIntoSingle::toString() const {

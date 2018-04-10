@@ -22,7 +22,7 @@ void DereferenceSingleRegister::execute(Gameboy &gameboy, const uint8_t *) const
   gameboy.cpu.setSingleByteRegister(
     destination,
     destinationLow,
-    gameboy.mmu[gameboy.cpu.singleByteRegister(source, sourceLow) + 0xff00]
+    gameboy.mmu.read(gameboy, gameboy.cpu.singleByteRegister(source, sourceLow) + 0xff00)
   );
 }
 

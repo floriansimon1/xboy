@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "graphical-objects.hpp"
-#include "../memory/mmu.hpp"
 #include "../types.hpp"
 #include "screen.hpp"
 
@@ -44,14 +43,14 @@ namespace Gpu {
 
     void reset();
     void process(Gameboy &gameboy);
-    void drawScanline(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
+    void drawScanline(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline);
 
     private:
       OptionalState previousState;
       OptionalTick  displayStartTick;
 
-      void drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
-      void drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline);
+      void drawTiles(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline);
+      void drawSprites(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline);
   };
 
   // Exposed only for tests.
@@ -64,7 +63,7 @@ namespace Gpu {
   // Returns true if the pixel is transparent.
   bool drawObjectPixel(
     FrameBuffer &frameBuffer,
-    const Mmu &mmu,
+    const Gameboy &gameboy,
     const GraphicalObject &object,
     Coordinate x,
     Coordinate y,
@@ -74,7 +73,7 @@ namespace Gpu {
 
   void drawTile(
     bool background,
-    const Mmu &mmu,
+    const Gameboy &gameboy,
     FrameBuffer &frameBuffer,
     const TileConfiguration &tileConfiguration,
     Coordinate x,

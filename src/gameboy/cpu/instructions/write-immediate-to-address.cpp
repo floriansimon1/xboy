@@ -12,7 +12,7 @@ WriteImmediateToAddress::WriteImmediateToAddress(CpuRegisterPointer pointerRegis
 }
 
 void WriteImmediateToAddress::execute(Gameboy &gameboy, const uint8_t *data) const {
-  gameboy.mmu.write(gameboy.cpu.twoBytesRegister(pointerRegister), *data);
+  gameboy.mmu.write(gameboy, gameboy.cpu.twoBytesRegister(pointerRegister), *data);
 }
 
 std::string WriteImmediateToAddress::toString() const {

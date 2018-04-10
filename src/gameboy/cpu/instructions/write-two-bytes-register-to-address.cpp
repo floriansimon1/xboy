@@ -12,6 +12,7 @@ WriteTwoBytesRegisterToAddress::WriteTwoBytesRegisterToAddress(CpuRegisterPointe
 
 void WriteTwoBytesRegisterToAddress::execute(Gameboy &gameboy, const uint8_t *data) const {
   gameboy.mmu.writeWord(
+    gameboy,
     *reinterpret_cast<const uint16_t*>(data),
     gameboy.cpu.twoBytesRegister(cpuRegister)
   );

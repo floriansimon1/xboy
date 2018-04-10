@@ -5,7 +5,8 @@
 
 #include "screen.hpp"
 #include "../types.hpp"
-#include "../memory/mmu.hpp"
+
+struct Gameboy;
 
 constexpr uint8_t tileWidth     = 8;
 constexpr uint8_t tileHeight    = 8;
@@ -46,7 +47,7 @@ struct TileConfiguration {
   uint16_t backgroundTilemapStart;
 
   TileConfiguration() = default;
-  TileConfiguration(const Mmu &mmu);
+  TileConfiguration(const Gameboy &gameboy);
 };
 
 struct Sprite: GraphicalObject {
@@ -57,16 +58,16 @@ struct Sprite: GraphicalObject {
   uint8_t x;
   uint8_t y;
 
-  Sprite(const Mmu &mmu, const SpriteConfiguration &SpriteConfiguration, uint8_t spriteNumber);
+  Sprite(const Gameboy &gameboy, const SpriteConfiguration &SpriteConfiguration, uint8_t spriteNumber);
 
   virtual Coordinate transformX(Coordinate x) const override;
   virtual Coordinate transformY(Coordinate y) const override;
 };
 
 struct Tile: GraphicalObject {
-  Tile(const Mmu &mmu, const TileConfiguration &tileConfiguration, bool background, Coordinate x, Coordinate y);
+  Tile(const Gameboy &gameboy, const TileConfiguration &tileConfiguration, bool background, Coordinate x, Coordinate y);
 };
 
-Pixel readObjectPixel(const Mmu &mmu, const GraphicalObject &object, Coordinate x, Coordinate y);
+Pixel readObjectPixel(const Gameboy &gameboy, const GraphicalObject &object, Coordinate x, Coordinate y);
 
 #endif

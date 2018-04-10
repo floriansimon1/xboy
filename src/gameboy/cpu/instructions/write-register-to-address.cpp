@@ -14,7 +14,7 @@ WriteRegisterToAddress::WriteRegisterToAddress(CpuRegisterPointer cpuRegister, b
 void WriteRegisterToAddress::execute(Gameboy &gameboy, const uint8_t *data) const {
   const auto address = *reinterpret_cast<const uint16_t*>(data);
 
-  gameboy.mmu.write(address, gameboy.cpu.singleByteRegister(cpuRegister, low));
+  gameboy.mmu.write(gameboy, address, gameboy.cpu.singleByteRegister(cpuRegister, low));
 }
 
 std::string WriteRegisterToAddress::toString() const {

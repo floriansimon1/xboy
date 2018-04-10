@@ -13,7 +13,7 @@ bool RegistersAdditionTest::run() {
 
   gameboy.cpu.hl = Mmu::ramStart;
 
-  gameboy.mmu.write(gameboy.cpu.hl, 1);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, 1);
 
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, maxUint8);
 

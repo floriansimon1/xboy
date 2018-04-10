@@ -23,19 +23,19 @@ void Cpu::reset() {
 }
 
 void Cpu::process(Gameboy &gameboy) {
-  const auto firstOpcodeByte = gameboy.mmu[pc];
+  const auto firstOpcodeByte = gameboy.mmu.read(gameboy, pc);
 
   const auto readSecondByte = Instruction::isExtendedInstruction(firstOpcodeByte);
 
   const auto instruction = table.get(
     readSecondByte,
-    readSecondByte ? gameboy.mmu[pc + 1] : firstOpcodeByte
+    readSecondByte ? gameboy.mmu.read(gameboy, pc + 1) : firstOpcodeByte
   );
 
   // We can have at most 2 bytes of data from what I've seen.
   const uint8_t data[2] = {
-    gameboy.mmu[pc + instruction->opcodeSize],
-    gameboy.mmu[pc + instruction->opcodeSize + 1]
+    gameboy.mmu.read(gameboy, pc + instruction->opcodeSize),
+    gameboy.mmu.read(gameboy, pc + instruction->opcodeSize + 1)
   };
 
   // std::cout << instruction->toString() << std::endl;

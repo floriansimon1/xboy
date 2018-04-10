@@ -11,7 +11,7 @@ bool RegistersAndTest::run() {
   Gameboy        gameboy;
 
   gameboy.cpu.hl = 0;
-  gameboy.mmu.write(gameboy.cpu.hl, 1);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, 1);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, maxUint8);
 
   instruction.execute(gameboy, NULL);
@@ -23,7 +23,7 @@ bool RegistersAndTest::run() {
     return false;
   }
 
-  gameboy.mmu.write(gameboy.cpu.hl, 0);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, 0);
 
   instruction.execute(gameboy, NULL);
 

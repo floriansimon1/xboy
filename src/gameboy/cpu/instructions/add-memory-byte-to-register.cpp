@@ -14,7 +14,7 @@ AddMemoryByteToRegister::AddMemoryByteToRegister(
 }
 
 void AddMemoryByteToRegister::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto value = gameboy.mmu[gameboy.cpu.twoBytesRegister(pointerRegister)];
+  const auto value = gameboy.mmu.read(gameboy, gameboy.cpu.twoBytesRegister(pointerRegister));
 
   additionInstruction.execute(gameboy, &value);
 }

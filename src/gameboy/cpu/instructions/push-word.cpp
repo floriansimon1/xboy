@@ -8,7 +8,7 @@ PushWord::PushWord(CpuRegisterPointer cpuRegister): ConstantTimeInstruction(16, 
 }
 
 void PushWord::execute(Gameboy &gameboy, const uint8_t *) const {
-  gameboy.mmu.pushWordToStack(gameboy.cpu, gameboy.cpu.twoBytesRegister(cpuRegister));
+  gameboy.mmu.pushWordToStack(gameboy, gameboy.cpu.twoBytesRegister(cpuRegister));
 }
 
 std::string PushWord::toString() const {

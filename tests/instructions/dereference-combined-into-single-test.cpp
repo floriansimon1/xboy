@@ -16,7 +16,7 @@ bool DereferenceCombinedIntoSingleTest::run() {
   gameboy.cpu.bc = Mmu::ramStart;
   gameboy.cpu.af = 0;
 
-  gameboy.mmu.write(gameboy.cpu.bc, value);
+  gameboy.mmu.write(gameboy, gameboy.cpu.bc, value);
 
   instruction.execute(gameboy, NULL);
 

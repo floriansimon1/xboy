@@ -25,12 +25,12 @@ struct RegisterInstructionOnDereferencedHl: ConstantTimeInstruction {
     gameboy.cpu.setSingleByteRegister(
       instruction.cpuRegister,
       instruction.low,
-      gameboy.mmu[gameboy.cpu.hl]
+      gameboy.mmu.read(gameboy, gameboy.cpu.hl)
     );
 
     instruction.execute(gameboy, data);
 
-    gameboy.mmu.write(gameboy.cpu.hl, gameboy.cpu.singleByteRegister(
+    gameboy.mmu.write(gameboy, gameboy.cpu.hl, gameboy.cpu.singleByteRegister(
       instruction.cpuRegister,
       instruction.low
     ));

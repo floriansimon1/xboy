@@ -14,7 +14,7 @@ Call::Call(bool conditional, unsigned short flag, bool negate):
 
 void Call::execute(Gameboy &gameboy, const uint8_t *data) const {
   if (shouldJump(gameboy)) {
-    gameboy.mmu.pushWordToStack(gameboy.cpu, gameboy.cpu.pc);
+    gameboy.mmu.pushWordToStack(gameboy, gameboy.cpu.pc);
 
     gameboy.cpu.pc = *reinterpret_cast<const uint16_t*>(data);
   }

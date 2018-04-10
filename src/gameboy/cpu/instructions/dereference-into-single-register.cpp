@@ -19,7 +19,7 @@ DereferenceIntoSingleRegister::DereferenceIntoSingleRegister(
 }
 
 void DereferenceIntoSingleRegister::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto value = gameboy.mmu[gameboy.cpu.singleByteRegister(source, sourceLow) + 0xff00];
+  const auto value = gameboy.mmu.read(gameboy, gameboy.cpu.singleByteRegister(source, sourceLow) + 0xff00);
 
   gameboy.cpu.setSingleByteRegister(destination, destinationLow, value);
 }

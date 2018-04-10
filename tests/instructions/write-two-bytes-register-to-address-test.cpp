@@ -20,7 +20,7 @@ bool WriteTwoBytesRegisterToAddressTest::run() {
 
   instruction.execute(gameboy, reinterpret_cast<const uint8_t*>(&address));
 
-  const auto result = gameboy.mmu.readWord(address);
+  const auto result = gameboy.mmu.readWord(gameboy, address);
 
   if (result != value) {
     std::cout << "Value: " << (unsigned int) result << std::endl;

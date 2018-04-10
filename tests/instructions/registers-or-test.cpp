@@ -15,7 +15,7 @@ bool RegistersOrTest::runOrTests() const {
   Gameboy       gameboy;
 
   gameboy.cpu.hl = 0;
-  gameboy.mmu.write(gameboy.cpu.hl, 1);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, 1);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 0);
 
   instruction.execute(gameboy, NULL);
@@ -24,7 +24,7 @@ bool RegistersOrTest::runOrTests() const {
     return false;
   }
 
-  gameboy.mmu.write(gameboy.cpu.hl, maxUint8);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, maxUint8);
 
   instruction.execute(gameboy, NULL);
 
@@ -40,7 +40,7 @@ bool RegistersOrTest::runXorTests() const {
   Gameboy       gameboy;
 
   gameboy.cpu.hl = 0;
-  gameboy.mmu.write(gameboy.cpu.hl, 1);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, 1);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 0);
 
   instruction.execute(gameboy, NULL);
@@ -49,7 +49,7 @@ bool RegistersOrTest::runXorTests() const {
     return false;
   }
 
-  gameboy.mmu.write(gameboy.cpu.hl, 0b11);
+  gameboy.mmu.write(gameboy, gameboy.cpu.hl, 0b11);
   gameboy.cpu.setSingleByteRegister(&Cpu::af, false, 0b10);
 
   instruction.execute(gameboy, NULL);

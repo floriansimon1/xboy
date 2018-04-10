@@ -1,30 +1,30 @@
 #include <iostream>
 
-#include "../src/gameboy/memory/mmu.hpp"
+#include "../src/gameboy/gameboy.hpp"
 #include "shadow-ram-test.hpp"
 
 ShadowRamTest::ShadowRamTest(): Test("Shadow RAM test") {
 }
 
 bool ShadowRamTest::run() {
-  Mmu memory;
+  Gameboy gameboy;
 
-  memory.write(0xc000, 3);
-  memory.write(0xe001, 4);
+  gameboy.mmu.write(gameboy, 0xc000, 3);
+  gameboy.mmu.write(gameboy, 0xe001, 4);
 
-  memory.writeWord(0xc002, 5);
-  memory.writeWord(0xe004, 6);
+  gameboy.mmu.writeWord(gameboy, 0xc002, 5);
+  gameboy.mmu.writeWord(gameboy, 0xe004, 6);
 
   if (
-    memory[0xc000] != memory[0xe000]
-    || memory[0xc001] != memory[0xe001]
-    || memory.readWord(0xc002) != memory.readWord(0xe002)
-    || memory.readWord(0xc004) != memory.readWord(0xe004)
+    gameboy.mmu.read(gameboy, 0xc000) != gameboy.mmu.read(gameboy, 0xe000)
+    || gameboy.mmu.read(gameboy, 0xc001) != gameboy.mmu.read(gameboy, 0xe001)
+    || gameboy.mmu.readWord(gameboy, 0xc002) != gameboy.mmu.readWord(gameboy, 0xe002)
+    || gameboy.mmu.readWord(gameboy, 0xc004) != gameboy.mmu.readWord(gameboy, 0xe004)
   ) {
-    std::cout << (unsigned int) memory[0xc000] << " ≠ " << (unsigned int) memory[0xe000] << "\n"
-              << (unsigned int) memory[0xc001] << " ≠ " << (unsigned int) memory[0xe001] << "\n"
-              << (unsigned int) memory.readWord(0xc002) << " ≠ " << (unsigned int) memory.readWord(0xe002) << "\n"
-              << (unsigned int) memory.readWord(0xc004) << " ≠ " << (unsigned int) memory.readWord(0xe004)
+    std::cout << (unsigned int) gameboy.mmu.read(gameboy, 0xc000) << " ≠ " << (unsigned int) gameboy.mmu.read(gameboy, 0xe000) << "\n"
+              << (unsigned int) gameboy.mmu.read(gameboy, 0xc001) << " ≠ " << (unsigned int) gameboy.mmu.read(gameboy, 0xe001) << "\n"
+              << (unsigned int) gameboy.mmu.readWord(gameboy, 0xc002) << " ≠ " << (unsigned int) gameboy.mmu.readWord(gameboy, 0xe002) << "\n"
+              << (unsigned int) gameboy.mmu.readWord(gameboy, 0xc004) << " ≠ " << (unsigned int) gameboy.mmu.readWord(gameboy, 0xe004)
               << std::endl;
 
     return false;
