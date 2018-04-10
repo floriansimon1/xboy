@@ -34,7 +34,7 @@ struct GraphicalObject {
 };
 
 struct SpriteConfiguration {
-  bool bigSprites;
+  uint8_t height;
 
   SpriteConfiguration(uint8_t displayControlRegister);
 };
@@ -51,9 +51,9 @@ struct TileConfiguration {
 
 struct Sprite: GraphicalObject {
   bool    backgroundPrioritary;
+  uint8_t height;
   bool    yFlip;
   bool    xFlip;
-  bool    big;
   uint8_t x;
   uint8_t y;
 

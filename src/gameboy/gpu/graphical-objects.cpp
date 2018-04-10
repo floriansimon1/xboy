@@ -46,7 +46,7 @@ Tile::Tile(const Mmu &mmu, const TileConfiguration &tileConfiguration, bool back
 }
 
 SpriteConfiguration::SpriteConfiguration(uint8_t displayControlRegister):
-  bigSprites(DisplayControlRegister::useBigSprites(displayControlRegister))
+  height(DisplayControlRegister::useBigSprites(displayControlRegister) ? bigSpriteHeight : normalSpriteHeight)
 {
 }
 
@@ -66,7 +66,7 @@ Sprite::Sprite(const Mmu &mmu, const SpriteConfiguration &spriteConfiguration, u
   backgroundPrioritary = getBit(attributes, backgroundPriorityBit);
   xFlip                = getBit(attributes, xFlipBit);
   yFlip                = getBit(attributes, yFlipBit);
-  big                  = spriteConfiguration.bigSprites;
+  height               = spriteConfiguration.height;
 }
 
 Coordinate Sprite::transformX(Coordinate x) const {
@@ -74,8 +74,6 @@ Coordinate Sprite::transformX(Coordinate x) const {
 }
 
 Coordinate Sprite::transformY(Coordinate y) const {
-  const auto height = big ? bigSpriteHeight : normalSpriteHeight;
-
   return yFlip ? height - y : y;
 }
 

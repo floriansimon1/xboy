@@ -71,12 +71,29 @@ void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanl
 
   // Iterate in reverse to stop once prioritary sprites have been displayed.
   for (Coordinate x = 0; x < screenWidth; x++) {
+    const sf::IntRect  pixelRectangle(x, scanline, 1, 1);
+    const sf::Vector2i point(x, scanline);
+
     for (auto i = numberOfSprites - 1; i >= 0; i--) {
       const Sprite sprite(mmu, spriteConfiguration, i);
 
       // Non-prioritary sprites cannot be drawn over non-white backgrounds.
       if (sprite.backgroundPrioritary && !pixelIsWhite(frameBuffer, x, scanline)) {
         continue;
+      }
+
+      const sf::IntRect  spriteRectangle(sprite.x, sprite.y, spriteWidth, sprite.height);
+      const sf::Vector2i spriteStartPoint(sprite.x, sprite.y);
+
+      if (spriteRectangle.contains(point)) {
+        const sf::Vector2i spritePixel = point - spriteStartPoint;
+
+        const auto transparent = drawObjectPixel(frameBuffer, mmu, sprite, spritePixel.x, spritePixel.y, x, scanline);
+
+        // The last sprite's pixel has been written. It can be overwritten.
+        if (transparent) {
+          break;
+        }
       }
     }
   }
@@ -133,15 +150,7 @@ void Gpu::drawTile(
 
   const Tile tile(mmu, tileConfiguration, background, tilemapX, tilemapY);
 
-  drawObjectPixel(
-    frameBuffer,
-    mmu,
-    tile,
-    tileX,
-    tileY,
-    screenX,
-    screenY
-  );
+  drawObjectPixel(frameBuffer, mmu, tile, tileX, tileY, screenX, screenY);
 }
 
 bool Gpu::drawObjectPixel(
