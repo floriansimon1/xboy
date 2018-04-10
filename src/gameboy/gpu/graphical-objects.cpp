@@ -81,7 +81,7 @@ Coordinate Sprite::transformY(Coordinate y) const {
 
 Pixel readObjectPixel(const Mmu &mmu, const GraphicalObject &object, Coordinate baseX, Coordinate baseY) {
   const auto x = object.transformX(baseX);
-  const auto y = object.transformY(baseX);
+  const auto y = object.transformY(baseY);
 
   const uint8_t position = x + y * tileWidth;
 
