@@ -33,20 +33,20 @@ struct GraphicalObject {
   virtual Coordinate transformY(Coordinate y) const { return y; }
 };
 
-struct SpriteData {
+struct SpriteConfiguration {
   bool bigSprites;
 
-  SpriteData(uint8_t displayControlRegister);
+  SpriteConfiguration(uint8_t displayControlRegister);
 };
 
-struct TileData {
+struct TileConfiguration {
   bool     useTileset0;
   uint16_t tilesetStart;
   uint16_t windowTilemapStart;
   uint16_t backgroundTilemapStart;
 
-  TileData() = default;
-  TileData(const Mmu &mmu);
+  TileConfiguration() = default;
+  TileConfiguration(const Mmu &mmu);
 };
 
 struct Sprite: GraphicalObject {
@@ -57,14 +57,14 @@ struct Sprite: GraphicalObject {
   uint8_t x;
   uint8_t y;
 
-  Sprite(const Mmu &mmu, const SpriteData &spriteData, uint8_t spriteNumber);
+  Sprite(const Mmu &mmu, const SpriteConfiguration &SpriteConfiguration, uint8_t spriteNumber);
 
   virtual Coordinate transformX(Coordinate x) const override;
   virtual Coordinate transformY(Coordinate y) const override;
 };
 
 struct Tile: GraphicalObject {
-  Tile(const Mmu &mmu, const TileData &tileData, bool background, Coordinate x, Coordinate y);
+  Tile(const Mmu &mmu, const TileConfiguration &tileConfiguration, bool background, Coordinate x, Coordinate y);
 };
 
 Pixel readObjectPixel(const Mmu &mmu, const GraphicalObject &object, Coordinate x, Coordinate y);

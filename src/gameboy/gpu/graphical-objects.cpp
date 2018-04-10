@@ -17,7 +17,7 @@ constexpr uint16_t spriteMapAddress         = 0x8000;
 constexpr uint16_t spriteSetAddress         = 0xfe00;
 constexpr uint16_t backgroundPaletteAddress = 0xff47;
 
-TileData::TileData(const Mmu &mmu) {
+TileConfiguration::TileConfiguration(const Mmu &mmu) {
   const auto displayControlRegister = mmu.readDisplayControlRegister();
 
   const auto backgroundUsesTilemap0 = DisplayControlRegister::useBackgroundTileMap0(displayControlRegister);
@@ -30,43 +30,43 @@ TileData::TileData(const Mmu &mmu) {
   backgroundTilemapStart = backgroundUsesTilemap0 ? tilemap0 : tilemap1;
 }
 
-Tile::Tile(const Mmu &mmu, const TileData &tileData, bool background, Coordinate x, Coordinate y) {
+Tile::Tile(const Mmu &mmu, const TileConfiguration &tileConfiguration, bool background, Coordinate x, Coordinate y) {
   const uint16_t tileNumberPosition = (y * tilemapHeight + x) * tileSize;
-  const uint16_t tilemapAddress     = background ? tileData.backgroundTilemapStart : tileData.windowTilemapStart;
+  const uint16_t tilemapAddress     = background ? tileConfiguration.backgroundTilemapStart : tileConfiguration.windowTilemapStart;
 
   const uint8_t unsignedTileIdentifier = mmu[tilemapAddress + tileNumberPosition];
 
-  const int8_t tileIdentifier = tileData.useTileset0 ? unsignedTileIdentifier - 128 : unsignedTileIdentifier;
+  const int8_t tileIdentifier = tileConfiguration.useTileset0 ? unsignedTileIdentifier - 128 : unsignedTileIdentifier;
 
   // This works because for tileset 0, we store the center of the tileset instead of its beginning.
-  const uint16_t tilePosition = (tileData.useTileset0 ? tileset0 : tileset1) + tileIdentifier;
+  const uint16_t tilePosition = (tileConfiguration.useTileset0 ? tileset0 : tileset1) + tileIdentifier;
 
   palette       = mmu[backgroundPaletteAddress];
   pixelsAddress = tilePosition;
 }
 
-SpriteData::SpriteData(uint8_t displayControlRegister):
+SpriteConfiguration::SpriteConfiguration(uint8_t displayControlRegister):
   bigSprites(DisplayControlRegister::useBigSprites(displayControlRegister))
 {
 }
 
-Sprite::Sprite(const Mmu &mmu, const SpriteData &spriteData, uint8_t spriteNumber) {
-  const uint16_t spriteDataStart = spriteSetAddress + spriteNumber * spriteSize;
+Sprite::Sprite(const Mmu &mmu, const SpriteConfiguration &spriteConfiguration, uint8_t spriteNumber) {
+  const uint16_t spriteConfigurationStart = spriteSetAddress + spriteNumber * spriteSize;
 
   // For some reason, we read x - 8 and y -16...
   // http://www.codeslinger.co.uk/pages/projects/gameboy/graphics.html
-  x = mmu[spriteDataStart + xByte] + 8;
-  y = mmu[spriteDataStart + yByte] + 16;
+  x = mmu[spriteConfigurationStart + xByte] + 8;
+  y = mmu[spriteConfigurationStart + yByte] + 16;
 
-  pixelsAddress = spriteMapAddress + mmu[spriteDataStart + spriteNumberByte];
+  pixelsAddress = spriteMapAddress + mmu[spriteConfigurationStart + spriteNumberByte];
 
-  const auto attributes = mmu[spriteDataStart + attributesByte];
+  const auto attributes = mmu[spriteConfigurationStart + attributesByte];
 
   palette              = mmu[getBit(attributes, paletteAddressBit) ? secondPalette : firstPalette];
   backgroundPrioritary = getBit(attributes, backgroundPriorityBit);
   xFlip                = getBit(attributes, xFlipBit);
   yFlip                = getBit(attributes, yFlipBit);
-  big                  = spriteData.bigSprites;
+  big                  = spriteConfiguration.bigSprites;
 }
 
 Coordinate Sprite::transformX(Coordinate x) const {
@@ -76,7 +76,7 @@ Coordinate Sprite::transformX(Coordinate x) const {
 Coordinate Sprite::transformY(Coordinate y) const {
   const auto height = big ? bigSpriteHeight : normalSpriteHeight;
 
-  return yFlip ? height - x : x;
+  return yFlip ? height - y : y;
 }
 
 Pixel readObjectPixel(const Mmu &mmu, const GraphicalObject &object, Coordinate baseX, Coordinate baseY) {

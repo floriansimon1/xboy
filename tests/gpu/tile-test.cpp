@@ -7,8 +7,8 @@ TileTest::TileTest(): Test("Tile test") {
 }
 
 bool TileTest::run() {
-  TileData data;
-  Mmu      mmu;
+  TileConfiguration configuration;
+  Mmu               mmu;
 
   /*
   * No need to write tilemap data, because tilemaps only point to tile 0
@@ -19,11 +19,11 @@ bool TileTest::run() {
   mmu.write(tileset1 + 1, 0b10101110);
   mmu.write(tileset1,     0b00110101);
 
-  data.useTileset0            = false;
-  data.tilesetStart           = tileset1;
-  data.backgroundTilemapStart = tilemap1;
+  configuration.useTileset0            = false;
+  configuration.tilesetStart           = tileset1;
+  configuration.backgroundTilemapStart = tilemap1;
 
-  const Tile tile(mmu, data, true, 0, 0);
+  const Tile tile(mmu, configuration, true, 0, 0);
 
   if (
     readObjectPixel(mmu, tile, 0, 0) != 0b10

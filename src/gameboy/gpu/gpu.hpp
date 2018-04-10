@@ -76,7 +76,7 @@ namespace Gpu {
     bool background,
     const Mmu &mmu,
     FrameBuffer &frameBuffer,
-    const TileData &tileData,
+    const TileConfiguration &tileConfiguration,
     Coordinate x,
     Coordinate y,
     Coordinate screenX,

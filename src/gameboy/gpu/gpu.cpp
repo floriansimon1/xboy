@@ -67,12 +67,12 @@ void Gpu::Gpu::drawScanline(const Mmu &mmu, uint8_t displayControlRegister, Scan
 }
 
 void Gpu::Gpu::drawSprites(const Mmu &mmu, uint8_t displayControlRegister, Scanline scanline) {
-  const SpriteData spriteData(displayControlRegister);
+  const SpriteConfiguration spriteConfiguration(displayControlRegister);
 
   // Iterate in reverse to stop once prioritary sprites have been displayed.
   for (Coordinate x = 0; x < screenWidth; x++) {
     for (auto i = numberOfSprites - 1; i >= 0; i--) {
-      const Sprite sprite(mmu, spriteData, i);
+      const Sprite sprite(mmu, spriteConfiguration, i);
 
       // Non-prioritary sprites cannot be drawn over non-white backgrounds.
       if (sprite.backgroundPrioritary && !pixelIsWhite(frameBuffer, x, scanline)) {
@@ -90,7 +90,7 @@ void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanlin
   // Don't ask me why, but windowXAddress points to the window's X minus 7.
   const auto windowStartX = mmu[windowXAddress - 7];
 
-  const TileData tileData(mmu);
+  const TileConfiguration tileConfiguration(mmu);
 
   const Coordinate backgroundY = backgroundStartY + scanline;
   const Coordinate windowY     = scanline - windowStartY;
@@ -99,13 +99,13 @@ void Gpu::Gpu::drawTiles(const Mmu &mmu, uint8_t displayControlRegister, Scanlin
     if (DisplayControlRegister::showBackground(displayControlRegister)) {
       const Coordinate backgroundX = x + backgroundStartX;
 
-      drawTile(true, mmu, frameBuffer, tileData, backgroundX, backgroundY, x, scanline);
+      drawTile(true, mmu, frameBuffer, tileConfiguration, backgroundX, backgroundY, x, scanline);
     }
 
     if (DisplayControlRegister::showWindow(displayControlRegister)) {
         const Coordinate windowX = x - windowStartX;
 
-        drawTile(false, mmu, frameBuffer, tileData, windowX, windowY, x, scanline);
+        drawTile(false, mmu, frameBuffer, tileConfiguration, windowX, windowY, x, scanline);
     }
   }
 }
@@ -114,7 +114,7 @@ void Gpu::drawTile(
   bool background,
   const Mmu &mmu,
   FrameBuffer &frameBuffer,
-  const TileData &tileData,
+  const TileConfiguration &tileConfiguration,
   Coordinate x,
   Coordinate y,
   Coordinate screenX,
@@ -131,7 +131,7 @@ void Gpu::drawTile(
   const Coordinate tileX = x % tileWidth;
   const Coordinate tileY = y % tileHeight;
 
-  const Tile tile(mmu, tileData, background, tilemapX, tilemapY);
+  const Tile tile(mmu, tileConfiguration, background, tilemapX, tilemapY);
 
   drawObjectPixel(
     frameBuffer,
