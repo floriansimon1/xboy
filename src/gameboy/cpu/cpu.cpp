@@ -18,8 +18,8 @@ void Cpu::reset() {
   bc = 0;
   de = 0;
   hl = 0;
-  sp = 0;
   pc = 0;
+  sp = 0xfffe;
 }
 
 void Cpu::process(Gameboy &gameboy) {
