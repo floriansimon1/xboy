@@ -3,6 +3,7 @@
 #include "gpu.hpp"
 #include "../types.hpp"
 #include "../gameboy.hpp"
+#include "../memory/lcd-status-register.hpp"
 #include "../memory/display-control-register.hpp"
 
 constexpr uint16_t backgroundXAddress = 0xff43;
@@ -34,20 +35,24 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
     return;
   }
 
+  const LcdStatusRegister lcdStatus(gameboy);
+
   const auto isStartOfNewScanline = !oldState || oldState.value().scanline != newState.scanline;
+  const auto isStartOfMode        = !oldState || newState.mode != oldState.value().mode;
 
-  const auto isStartOfVblank = (
-    oldState
-    && newState.mode == Mode::Vblank
-    && oldState.value().mode != Mode::Vblank
-  );
-
-  if (isStartOfVblank) {
+  if (isStartOfMode && newState.mode == Mode::Vblank) {
     screen->display(frameBuffer);
 
     gameboy.interrupts.requestVblankInterrupt(gameboy);
   } else if (isStartOfNewScanline) {
     drawScanline(gameboy, displayControlRegister, newState.scanline);
+  }
+
+  if (
+    (isStartOfMode && lcdStatus.interruptOnModeChange(newState.mode))
+    || (isStartOfNewScanline && lcdStatus.shouldTriggerScanlineInterrupt(gameboy, newState.scanline))
+  ) {
+    gameboy.interrupts.requestLcdInterrupt(gameboy);
   }
 }
 

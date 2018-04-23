@@ -7,7 +7,7 @@
 constexpr uint16_t configurationRegister = 0xffff;
 constexpr uint16_t requestRegister       = 0xff0f;
 
-constexpr uint16_t joypadBit = 3;
+constexpr uint16_t joypadBit = 4;
 constexpr uint16_t vblankBit = 0;
 constexpr uint16_t timerBit  = 2;
 constexpr uint16_t lcdBit    = 1;

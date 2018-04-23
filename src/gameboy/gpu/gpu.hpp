@@ -5,6 +5,7 @@
 
 #include "graphical-objects.hpp"
 #include "../types.hpp"
+#include "gpu-mode.hpp"
 #include "screen.hpp"
 
 struct Gameboy;
@@ -20,13 +21,6 @@ constexpr Tick ticksPerScanline = ticksPerHblank + ticksPerVramAccess + ticksPer
 constexpr Tick ticksPerFrame = ticksPerScanline * scanlinesInFrame;
 
 namespace Gpu {
-  enum Mode {
-    Hblank     = 0,
-    Vblank     = 1,
-    OamAccess  = 2,
-    VramAccess = 3
-  };
-
   struct State {
     const Mode           mode;
     const unsigned short scanline;
@@ -37,7 +31,6 @@ namespace Gpu {
 
   struct Gpu {
     Gpu();
-
 
     OptionalTick displayStartTick;
     FrameBuffer  frameBuffer;
