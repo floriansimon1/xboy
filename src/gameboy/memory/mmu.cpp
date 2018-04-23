@@ -7,6 +7,7 @@
 #include "../gameboy.hpp"
 #include "display-control-register.hpp"
 
+constexpr uint16_t interruptsEnabledFlag = 0xffff;
 constexpr uint16_t dmaControlRegister    = 0xff46;
 constexpr uint16_t scanlineRegister      = 0xff44;
 constexpr uint16_t oamStart              = 0xfe00;
@@ -93,6 +94,8 @@ uint8_t Mmu::read(const Gameboy &gameboy, uint16_t address) const {
     return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
   } else if (address == scanlineRegister) {
     return gameboy.gpu.getScanlineOfTick(gameboy.cpu.ticks);
+  } else if (address == interruptsEnabledFlag) {
+    return gameboy.cpu.interruptsEnabled;
   }
 
   return memory[address];
