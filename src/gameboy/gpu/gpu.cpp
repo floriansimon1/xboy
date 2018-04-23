@@ -14,6 +14,10 @@ Gpu::Gpu::Gpu() {
   reset();
 }
 
+Scanline Gpu::Gpu::getScanlineOfTick(const Tick &tick) const {
+  return ::Gpu::getScanlineOfTick(displayStartTick, tick).value_or(0);
+}
+
 void Gpu::Gpu::process(Gameboy &gameboy) {
   const auto oldState               = previousState;
   const auto displayControlRegister = gameboy.mmu.readDisplayControlRegister(gameboy);

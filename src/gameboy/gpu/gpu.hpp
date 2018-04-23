@@ -38,16 +38,19 @@ namespace Gpu {
   struct Gpu {
     Gpu();
 
-    FrameBuffer frameBuffer;
-    Screen      *screen;
+
+    OptionalTick displayStartTick;
+    FrameBuffer  frameBuffer;
+    Screen       *screen;
 
     void reset();
     void process(Gameboy &gameboy);
     void drawScanline(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline);
 
+    Scanline getScanlineOfTick(const Tick &tick) const;
+
     private:
       OptionalState previousState;
-      OptionalTick  displayStartTick;
 
       void drawTiles(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline);
       void drawSprites(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline);

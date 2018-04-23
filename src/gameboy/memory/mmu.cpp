@@ -7,8 +7,9 @@
 #include "../gameboy.hpp"
 #include "display-control-register.hpp"
 
-constexpr uint16_t dmaControlRegister = 0xff46;
-constexpr uint16_t oamStart           = 0xfe00;
+constexpr uint16_t dmaControlRegister    = 0xff46;
+constexpr uint16_t scanlineRegister      = 0xff44;
+constexpr uint16_t oamStart              = 0xfe00;
 
 bool Mmu::inShadowRam(uint16_t address) {
   return address >= 0xe000 && address < 0xfe00;
@@ -52,6 +53,8 @@ void Mmu::write(Gameboy &gameboy, uint16_t address, uint8_t byte) {
     oamDmaTransfer(gameboy, byte);
   } else if (Mmu::inShadowRam(address)) {
     memory[Mmu::convertShadowRamAddressToRamAddress(address)] = byte;
+  } else if (address == scanlineRegister) {
+    gameboy.gpu.displayStartTick = OptionalTick(gameboy.cpu.ticks);
   } else {
     memory[address] = byte;
   }
@@ -85,9 +88,11 @@ uint8_t Mmu::readDisplayControlRegister(const Gameboy &gameboy) const {
   return read(gameboy, DisplayControlRegister::address);
 }
 
-uint8_t Mmu::read(const Gameboy &, uint16_t address) const {
+uint8_t Mmu::read(const Gameboy &gameboy, uint16_t address) const {
   if (inShadowRam(address)) {
     return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
+  } else if (address == scanlineRegister) {
+    return gameboy.gpu.getScanlineOfTick(gameboy.cpu.ticks);
   }
 
   return memory[address];
