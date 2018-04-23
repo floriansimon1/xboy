@@ -11,9 +11,6 @@ Cpu::Cpu() {
 void Cpu::reset() {
   ticks = 0;
 
-  interruptsEnabled = true;
-  inInterrupt       = false;
-
   af = 0;
   bc = 0;
   de = 0;
@@ -123,6 +120,16 @@ void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_
   uint16_t otherByte  = registerValue & otherByteMask;
 
   this->*cpuRegister = widerValue | otherByte;
+}
+
+void Cpu::returnFromFunction(Gameboy &gameboy) {
+  gameboy.cpu.pc = gameboy.mmu.popWordFromStack(gameboy);
+}
+
+void Cpu::call(Gameboy &gameboy, uint16_t address) {
+  gameboy.mmu.pushWordToStack(gameboy, gameboy.cpu.pc);
+
+  gameboy.cpu.pc = address;
 }
 
 const unsigned short Cpu::zeroFlag;

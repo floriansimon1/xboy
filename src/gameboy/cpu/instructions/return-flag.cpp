@@ -14,7 +14,7 @@ ReturnFlag::ReturnFlag(bool conditional, unsigned short flag, bool negate):
 
 void ReturnFlag::execute(Gameboy &gameboy, const uint8_t *) const {
   if (shouldJump(gameboy)) {
-    gameboy.cpu.pc = gameboy.mmu.popWordFromStack(gameboy);
+    gameboy.cpu.returnFromFunction(gameboy);
   }
 }
 

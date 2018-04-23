@@ -36,6 +36,9 @@ struct Cpu {
 
   void reset();
 
+  void returnFromFunction(Gameboy &gameboy);
+  void call(Gameboy &gameboy, uint16_t address);
+
   void process(Gameboy &gameboy);
 
   bool anyFlagSet() const;

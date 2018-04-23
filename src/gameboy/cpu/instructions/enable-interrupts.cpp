@@ -5,7 +5,7 @@ EnableInterrupts::EnableInterrupts(bool enable): ConstantTimeInstruction(4, 0, 1
 }
 
 void EnableInterrupts::execute(Gameboy &gameboy, const uint8_t *) const {
-  gameboy.cpu.interruptsEnabled = enable;
+  gameboy.interrupts.enabled = enable;
 }
 
 std::string EnableInterrupts::toString() const {

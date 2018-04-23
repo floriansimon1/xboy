@@ -26,6 +26,7 @@ void Gameboy::reset() {
 void Gameboy::tick() {
   cpu.process(*this);
   gpu.process(*this);
+  interrupts.process(*this);
 
   sleep();
 }

@@ -6,14 +6,16 @@
 #include "gpu/gpu.hpp"
 #include "cpu/cpu.hpp"
 #include "memory/mmu.hpp"
+#include "interrupts.hpp"
 
 struct Gameboy {
   sf::Clock          clock;
   unsigned long long lastPause;
 
-  Gpu::Gpu gpu;
-  Mmu      mmu;
-  Cpu      cpu;
+  Interrupts interrupts;
+  Gpu::Gpu   gpu;
+  Mmu        mmu;
+  Cpu        cpu;
 
   bool lowPowerMode;
 

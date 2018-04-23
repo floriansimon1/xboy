@@ -10,7 +10,7 @@ ReturnFromInterrupt::ReturnFromInterrupt():
 void ReturnFromInterrupt::execute(Gameboy &gameboy, const uint8_t *data) const {
   returnInstruction.execute(gameboy, data);
 
-  gameboy.cpu.inInterrupt = false;
+  gameboy.interrupts.inInterrupt = false;
 }
 
 std::string ReturnFromInterrupt::toString() const {
