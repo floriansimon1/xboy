@@ -44,6 +44,8 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
 
   if (isStartOfVblank) {
     screen->display(frameBuffer);
+
+    gameboy.interrupts.requestVblankInterrupt(gameboy);
   } else if (isStartOfNewScanline) {
     drawScanline(gameboy, displayControlRegister, newState.scanline);
   }
