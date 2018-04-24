@@ -2,9 +2,8 @@
 #include <thread>
 #include <chrono>
 
+#include "timers/timer-frequencies.hpp"
 #include "gameboy.hpp"
-
-constexpr Tick ticksPerSecond = 4194304;
 
 constexpr auto frameDurationMilliseconds = ticksPerFrame * 1000 / ticksPerSecond;
 

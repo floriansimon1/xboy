@@ -19,6 +19,7 @@ struct Mmu {
 
   void writeWord(Gameboy &gameboy, uint16_t address, uint16_t word);
   void write(Gameboy &gameboy, uint16_t address, uint8_t byte);
+  void sideEffectFreeWrite(uint16_t address, uint8_t byte);
 
   static uint16_t convertShadowRamAddressToRamAddress(uint16_t address);
   static bool inShadowRam(uint16_t address);

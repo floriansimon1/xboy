@@ -3,13 +3,15 @@
 
 #include <experimental/optional>
 
+template <typename T> using Optional = std::experimental::optional<T>;
+
 typedef unsigned long long Tick;
 typedef uint8_t            Pixel;
 typedef uint8_t            Palette;
 typedef unsigned short     Scanline;
 typedef unsigned short     Coordinate;
 
-typedef std::experimental::optional<Tick>     OptionalTick;
-typedef std::experimental::optional<Scanline> OptionalScanline;
+typedef Optional<Tick>     OptionalTick;
+typedef Optional<Scanline> OptionalScanline;
 
 #endif

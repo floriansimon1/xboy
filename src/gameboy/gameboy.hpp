@@ -3,11 +3,11 @@
 
 #include <SFML/System.hpp>
 
-#include "timer.hpp"
 #include "gpu/gpu.hpp"
 #include "cpu/cpu.hpp"
 #include "memory/mmu.hpp"
 #include "interrupts.hpp"
+#include "timers/timer.hpp"
 
 struct Gameboy {
   sf::Clock          clock;

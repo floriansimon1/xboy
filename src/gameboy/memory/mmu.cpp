@@ -5,6 +5,8 @@
 #include "../bios.hpp"
 #include "../../bit.hpp"
 #include "../gameboy.hpp"
+#include "../timers/timer.hpp"
+#include "timer-control-register.hpp"
 #include "display-control-register.hpp"
 
 constexpr uint16_t dmaControlRegister    = 0xff46;
@@ -55,6 +57,14 @@ void Mmu::write(Gameboy &gameboy, uint16_t address, uint8_t byte) {
     memory[Mmu::convertShadowRamAddressToRamAddress(address)] = byte;
   } else if (address == scanlineRegister) {
     gameboy.gpu.displayStartTick = OptionalTick(gameboy.cpu.ticks);
+  } else if (address == timerCounterAddress) {
+    memory[timerCounterAddress] = 0;
+
+    gameboy.timer.resetTimer(gameboy.cpu.ticks);
+  } else if (address == dividerAddress) {
+    memory[dividerAddress] = 0;
+
+    gameboy.timer.resetDivider(gameboy.cpu.ticks);
   } else {
     memory[address] = byte;
   }
@@ -93,9 +103,15 @@ uint8_t Mmu::read(const Gameboy &gameboy, uint16_t address) const {
     return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
   } else if (address == scanlineRegister) {
     return gameboy.gpu.getScanlineOfTick(gameboy.cpu.ticks);
+  } else if (address == dividerAddress) {
+    return gameboy.timer.getDividerOfTick(gameboy.cpu.ticks);
   }
 
   return memory[address];
+}
+
+void Mmu::sideEffectFreeWrite(uint16_t address, uint8_t value) {
+  memory[address] = value;
 }
 
 /*
