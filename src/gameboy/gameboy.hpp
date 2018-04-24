@@ -3,6 +3,7 @@
 
 #include <SFML/System.hpp>
 
+#include "timer.hpp"
 #include "gpu/gpu.hpp"
 #include "cpu/cpu.hpp"
 #include "memory/mmu.hpp"
@@ -13,6 +14,7 @@ struct Gameboy {
   unsigned long long lastPause;
 
   Interrupts interrupts;
+  Timer      timer;
   Gpu::Gpu   gpu;
   Mmu        mmu;
   Cpu        cpu;

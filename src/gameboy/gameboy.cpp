@@ -16,6 +16,8 @@ void Gameboy::reset() {
   lowPowerMode = false;
   lastPause    = 0;
 
+  interrupts.reset();
+  timer.reset();
   cpu.reset();
   mmu.reset();
   gpu.reset();
@@ -24,9 +26,10 @@ void Gameboy::reset() {
 }
 
 void Gameboy::tick() {
-  cpu.process(*this);
+  timer.process(*this);
   gpu.process(*this);
   interrupts.process(*this);
+  cpu.process(*this);
 
   sleep();
 }
