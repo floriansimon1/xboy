@@ -8,12 +8,14 @@
 #include "memory/mmu.hpp"
 #include "interrupts.hpp"
 #include "timers/timer.hpp"
+#include "joypad/joypad.hpp"
 
 struct Gameboy {
   sf::Clock          clock;
   unsigned long long lastPause;
 
   Interrupts interrupts;
+  Joypad     joypad;
   Timer      timer;
   Gpu::Gpu   gpu;
   Mmu        mmu;
@@ -23,9 +25,9 @@ struct Gameboy {
 
   Gameboy();
 
-  void tick();
   void reset();
   void sleep();
+  void tick(const InputMedium &inputMedium);
 };
 
 #endif

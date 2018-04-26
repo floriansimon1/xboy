@@ -11,7 +11,7 @@ int main(int, char **) {
   gameboy.gpu.screen = &gui;
 
   for (uint16_t i = 0; gui.window.isOpen(); i++) {
-    gameboy.tick();
+    gameboy.tick(gui);
 
     // Polling event at each iteration is way too slow.
     if (!i) {

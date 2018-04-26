@@ -18,3 +18,35 @@ void Gui::display(const FrameBuffer &frameBuffer) {
 
   window.display();
 }
+
+bool Gui::aIsPressed() const {
+  return sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+}
+
+bool Gui::bIsPressed() const {
+  return sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+}
+
+bool Gui::upIsPressed() const {
+  return sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+}
+
+bool Gui::downIsPressed() const {
+return sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+}
+
+bool Gui::leftIsPressed() const {
+  return sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+}
+
+bool Gui::rightIsPressed() const {
+  return sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+}
+
+bool Gui::startIsPressed() const {
+  return sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+}
+
+bool Gui::selectIsPressed() const {
+  return sf::Keyboard::isKeyPressed(sf::Keyboard::Return);
+}

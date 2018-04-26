@@ -3,6 +3,7 @@
 #include <chrono>
 
 #include "timers/timer-frequencies.hpp"
+#include "joypad/input-medium.hpp"
 #include "gameboy.hpp"
 
 constexpr auto frameDurationMilliseconds = ticksPerFrame * 1000 / ticksPerSecond;
@@ -24,9 +25,10 @@ void Gameboy::reset() {
   clock.restart();
 }
 
-void Gameboy::tick() {
+void Gameboy::tick(const InputMedium &inputMedium) {
   timer.process(*this);
   gpu.process(*this);
+  joypad.process(*this, inputMedium);
   interrupts.process(*this);
   cpu.process(*this);
 
