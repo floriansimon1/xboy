@@ -26,13 +26,21 @@ void Gameboy::reset() {
 }
 
 void Gameboy::tick(const InputMedium &inputMedium) {
-  timer.process(*this);
-  gpu.process(*this);
   joypad.process(*this, inputMedium);
-  interrupts.process(*this);
-  cpu.process(*this);
 
-  sleep();
+  if (!lowPowerMode) {
+    timer.process(*this);
+    gpu.process(*this);
+    interrupts.process(*this);
+
+    if (!cpu.halted) {
+      cpu.process(*this);
+    }
+
+    sleep();
+  } else {
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
 }
 
 void Gameboy::sleep() {

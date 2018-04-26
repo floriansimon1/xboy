@@ -37,6 +37,7 @@ namespace Gpu {
     Screen       *screen;
 
     void reset();
+    void displayStopScreen();
     void process(Gameboy &gameboy);
     void drawScanline(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline);
 

@@ -36,6 +36,7 @@ struct Cpu {
 
   void reset();
 
+  void unhalt();
   void returnFromFunction(Gameboy &gameboy);
   void call(Gameboy &gameboy, uint16_t address);
 

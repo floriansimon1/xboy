@@ -51,6 +51,8 @@ void Joypad::process(Gameboy &gameboy, const InputMedium &input) {
   );
 
   if (triggerInterrupt) {
+    gameboy.cpu.unhalt();
+
     gameboy.interrupts.requestJoypadInterrupt(gameboy);
   }
 

@@ -19,6 +19,23 @@ Scanline Gpu::Gpu::getScanlineOfTick(const Tick &tick) const {
   return ::Gpu::getScanlineOfTick(displayStartTick, tick).value_or(0);
 }
 
+void Gpu::Gpu::displayStopScreen() {
+  // The top line should be black, the rest should be white.
+  for (auto i = 0; i < screenWidth; i++) {
+    frameBuffer[i * 4 + 0] = 0;
+    frameBuffer[i * 4 + 1] = 0;
+    frameBuffer[i * 4 + 2] = 0;
+
+    for (auto j = 1; j < screenHeight; j++) {
+      frameBuffer[(j * screenWidth + i) * 4 + 0] = maxUint8;
+      frameBuffer[(j * screenWidth + i) * 4 + 1] = maxUint8;
+      frameBuffer[(j * screenWidth + i) * 4 + 2] = maxUint8;
+    }
+
+    screen->display(frameBuffer);
+  }
+}
+
 void Gpu::Gpu::process(Gameboy &gameboy) {
   const auto oldState               = previousState;
   const auto displayControlRegister = gameboy.mmu.readDisplayControlRegister(gameboy);

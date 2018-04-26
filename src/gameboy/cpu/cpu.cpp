@@ -110,6 +110,10 @@ bool Cpu::flagHasValue(unsigned short flag, bool value) const {
   return static_cast<bool>(getBit(af, flag)) == value;
 }
 
+void Cpu::unhalt() {
+  halted = false;
+}
+
 void Cpu::setSingleByteRegister(CpuRegisterPointer cpuRegister, bool low, uint8_t value) {
   const auto registerValue = this->*cpuRegister;
   const auto otherIsLow    = !low;
