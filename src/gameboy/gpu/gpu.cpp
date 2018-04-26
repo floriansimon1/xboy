@@ -21,12 +21,12 @@ Scanline Gpu::Gpu::getScanlineOfTick(const Tick &tick) const {
 
 void Gpu::Gpu::displayStopScreen() {
   // The top line should be black, the rest should be white.
-  for (auto i = 0; i < screenWidth; i++) {
+  for (uint8_t i = 0; i < screenWidth; i++) {
     frameBuffer[i * 4 + 0] = 0;
     frameBuffer[i * 4 + 1] = 0;
     frameBuffer[i * 4 + 2] = 0;
 
-    for (auto j = 1; j < screenHeight; j++) {
+    for (uint8_t j = 1; j < screenHeight; j++) {
       frameBuffer[(j * screenWidth + i) * 4 + 0] = maxUint8;
       frameBuffer[(j * screenWidth + i) * 4 + 1] = maxUint8;
       frameBuffer[(j * screenWidth + i) * 4 + 2] = maxUint8;

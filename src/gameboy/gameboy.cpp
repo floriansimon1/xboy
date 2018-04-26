@@ -6,6 +6,7 @@
 #include "joypad/input-medium.hpp"
 #include "gameboy.hpp"
 
+constexpr uint16_t programStartAddress   = 0x100;
 constexpr auto frameDurationMilliseconds = ticksPerFrame * 1000 / ticksPerSecond;
 
 Gameboy::Gameboy() {
@@ -14,6 +15,7 @@ Gameboy::Gameboy() {
 
 void Gameboy::reset() {
   lowPowerMode = false;
+  inBios       = true;
   lastPause    = 0;
 
   interrupts.reset();
@@ -35,6 +37,10 @@ void Gameboy::tick(const InputMedium &inputMedium) {
 
     if (!cpu.halted) {
       cpu.process(*this);
+    }
+
+    if (cpu.pc == programStartAddress && inBios) {
+      inBios = false;
     }
 
     sleep();

@@ -2,7 +2,6 @@
 #include <cstdint>
 
 #include "mmu.hpp"
-#include "../bios.hpp"
 #include "../../bit.hpp"
 #include "../gameboy.hpp"
 #include "../timers/timer.hpp"
@@ -27,7 +26,6 @@ uint16_t Mmu::convertShadowRamAddressToRamAddress(uint16_t address) {
 
 void Mmu::reset() {
   memset(memory, 0, maxUint16);
-  memcpy(memory, bios, biosLength);
 }
 
 uint16_t Mmu::popWordFromStack(Gameboy &gameboy) {

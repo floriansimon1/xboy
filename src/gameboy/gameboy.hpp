@@ -5,14 +5,17 @@
 
 #include "gpu/gpu.hpp"
 #include "cpu/cpu.hpp"
+#include "cartridge.hpp"
 #include "memory/mmu.hpp"
 #include "interrupts.hpp"
 #include "timers/timer.hpp"
 #include "joypad/joypad.hpp"
 
 struct Gameboy {
-  sf::Clock          clock;
-  unsigned long long lastPause;
+  sf::Clock            clock;
+  bool                 inBios;
+  Optional<Cartridge*> cartridge;
+  unsigned long long   lastPause;
 
   Interrupts interrupts;
   Joypad     joypad;
