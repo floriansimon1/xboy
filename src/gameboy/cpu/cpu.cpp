@@ -23,10 +23,10 @@ void Cpu::reset() {
 void Cpu::process(Gameboy &gameboy) {
   const auto readByte = [&gameboy] (uint16_t address) {
     if (gameboy.inBios) {
-      return gameboy.mmu.read(gameboy, address);
+      return bios[address];
     }
 
-    return bios[address];
+    return gameboy.mmu.read(gameboy, address);
   };
 
   const auto firstOpcodeByte = readByte(pc);
