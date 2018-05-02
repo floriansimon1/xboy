@@ -44,7 +44,7 @@ void Cpu::process(Gameboy &gameboy) {
     readByte(pc + instruction->opcodeSize + 1)
   };
 
-  // std::cout << instruction->toString() << std::endl;
+  // std::cout << pc << ": " << instruction->toString() << std::endl;
 
   ticks += instruction->ticks(gameboy);
 
