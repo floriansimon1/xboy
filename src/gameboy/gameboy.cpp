@@ -40,6 +40,7 @@ void Gameboy::tick(const InputMedium &inputMedium) {
     }
 
     if (cpu.pc == programStartAddress && inBios) {
+      std::cout << "no longer in BIOS" << std::endl;
       inBios = false;
     }
 

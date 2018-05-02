@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cstring>
 #include <cstdint>
 
@@ -102,6 +103,7 @@ uint8_t Mmu::readDisplayControlRegister(const Gameboy &gameboy) const {
 
 uint8_t Mmu::read(const Gameboy &gameboy, uint16_t address) const {
   if (inFirstRomBank(address)) {
+    std::cout << "Read from ROM (" << (unsigned int) address << ")" << std::endl;
     return gameboy.cartridge->rom[address];
   } else if (inShadowRam(address)) {
     return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
