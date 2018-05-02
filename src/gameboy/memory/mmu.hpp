@@ -22,6 +22,7 @@ struct Mmu {
   void sideEffectFreeWrite(uint16_t address, uint8_t byte);
 
   static uint16_t convertShadowRamAddressToRamAddress(uint16_t address);
+  static bool inFirstRomBank(uint16_t address);
   static bool inShadowRam(uint16_t address);
   static bool inRom(uint16_t address);
 

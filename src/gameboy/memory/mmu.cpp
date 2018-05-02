@@ -20,6 +20,10 @@ bool Mmu::inRom(uint16_t address) {
   return address < 0x8000;
 }
 
+bool Mmu::inFirstRomBank(uint16_t address) {
+  return address < 0x4000;
+}
+
 uint16_t Mmu::convertShadowRamAddressToRamAddress(uint16_t address) {
   return address - 0x2000;
 }
@@ -97,7 +101,9 @@ uint8_t Mmu::readDisplayControlRegister(const Gameboy &gameboy) const {
 }
 
 uint8_t Mmu::read(const Gameboy &gameboy, uint16_t address) const {
-  if (inShadowRam(address)) {
+  if (inFirstRomBank(address)) {
+    return gameboy.cartridge->rom[address];
+  } else if (inShadowRam(address)) {
     return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
   } else if (address == scanlineRegister) {
     return gameboy.gpu.getScanlineOfTick(gameboy.cpu.ticks);

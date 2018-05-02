@@ -11,9 +11,9 @@ Cartridge::Cartridge(const std::string path) {
 
   const auto romSize = maxRomSize < fileSize ? maxRomSize : fileSize;
 
-  rom = new char[romSize];
+  rom = new uint8_t[romSize];
 
-  file.read(rom, fileSize);
+  file.read(reinterpret_cast<char*>(rom), fileSize);
 
   file.close();
 }

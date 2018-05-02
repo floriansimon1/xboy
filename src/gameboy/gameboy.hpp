@@ -12,10 +12,9 @@
 #include "joypad/joypad.hpp"
 
 struct Gameboy {
-  sf::Clock            clock;
-  bool                 inBios;
-  Optional<Cartridge*> cartridge;
-  unsigned long long   lastPause;
+  sf::Clock          clock;
+  bool               inBios;
+  unsigned long long lastPause;
 
   Interrupts interrupts;
   Joypad     joypad;
@@ -31,6 +30,8 @@ struct Gameboy {
   void reset();
   void sleep();
   void tick(const InputMedium &inputMedium);
+
+  const Cartridge* cartridge;
 };
 
 #endif

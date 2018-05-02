@@ -1,14 +1,14 @@
 #ifndef CARTRIDGE_HPP
 #define CARTRIDGE_HPP
 
+#include <cstdint>
 #include <string>
 
 struct Cartridge {
   Cartridge(const std::string path);
   ~Cartridge();
 
-  private:
-    char *rom;
+  uint8_t *rom;
 };
 
 #endif
