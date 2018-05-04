@@ -1,9 +1,9 @@
 #include <iostream>
 
 #include "cpu.hpp"
-#include "../bios.hpp"
 #include "../../bit.hpp"
 #include "../gameboy.hpp"
+#include "program-readers.hpp"
 
 Cpu::Cpu() {
   reset();
@@ -21,27 +21,30 @@ void Cpu::reset() {
 }
 
 void Cpu::process(Gameboy &gameboy) {
-  const auto readByte = [&gameboy] (uint16_t address) {
-    if (gameboy.inBios) {
-      return bios[address];
-    }
+  static BiosProgramReader biosReader;
+  static RomProgramReader  romReader;
 
-    return gameboy.mmu.read(gameboy, address);
-  };
+  const auto inBios = gameboy.mmu.inBios();
 
-  const auto firstOpcodeByte = readByte(pc);
+  auto &reader = (
+    inBios
+    ? static_cast<const ProgramReader&>(biosReader)
+    : static_cast<const ProgramReader&>(romReader)
+  );
+
+  const auto firstOpcodeByte = reader.read(gameboy, pc);
 
   const auto readSecondByte = Instruction::isExtendedInstruction(firstOpcodeByte);
 
   const auto instruction = table.get(
     readSecondByte,
-    readSecondByte ? readByte(pc + 1) : firstOpcodeByte
+    readSecondByte ? reader.read(gameboy, pc + 1) : firstOpcodeByte
   );
 
   // We can have at most 2 bytes of data from what I've seen.
   const uint8_t data[2] = {
-    readByte(pc + instruction->opcodeSize),
-    readByte(pc + instruction->opcodeSize + 1)
+    reader.read(gameboy, pc + instruction->opcodeSize),
+    reader.read(gameboy, pc + instruction->opcodeSize + 1)
   };
 
   // std::cout << pc << ": " << instruction->toString() << std::endl;
