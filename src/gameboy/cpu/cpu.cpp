@@ -47,7 +47,7 @@ void Cpu::process(Gameboy &gameboy) {
     reader.read(gameboy, pc + instruction->opcodeSize + 1)
   };
 
-  // std::cout << pc << ": " << instruction->toString() << std::endl;
+  std::cout << std::hex << (int) pc << ": " << instruction->toString() << std::endl;
 
   ticks += instruction->ticks(gameboy);
 
