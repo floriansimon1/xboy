@@ -12,9 +12,14 @@
 constexpr uint16_t dmaControlRegister    = 0xff46;
 constexpr uint16_t scanlineRegister      = 0xff44;
 constexpr uint16_t oamStart              = 0xfe00;
+constexpr uint16_t inBiosAddress         = 0xfe;
 
 bool Mmu::inShadowRam(uint16_t address) {
   return address >= 0xe000 && address < 0xfe00;
+}
+
+bool Mmu::inBios() const {
+  return !memory[inBiosAddress];
 }
 
 bool Mmu::inRom(uint16_t address) {

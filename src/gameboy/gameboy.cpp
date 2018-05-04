@@ -15,7 +15,7 @@ Gameboy::Gameboy() {
 
 void Gameboy::reset() {
   lowPowerMode = false;
-  inBios       = true;
+  bootFailed   = false;
   lastPause    = 0;
 
   interrupts.reset();
@@ -30,7 +30,7 @@ void Gameboy::reset() {
 void Gameboy::tick(const InputMedium &inputMedium) {
   joypad.process(*this, inputMedium);
 
-  if (!lowPowerMode) {
+  if (!bootFailed && !lowPowerMode) {
     timer.process(*this);
     gpu.process(*this);
     interrupts.process(*this);
@@ -39,9 +39,10 @@ void Gameboy::tick(const InputMedium &inputMedium) {
       cpu.process(*this);
     }
 
-    if (cpu.pc == programStartAddress && inBios) {
-      std::cout << "no longer in BIOS" << std::endl;
-      inBios = false;
+    if (cpu.pc == programStartAddress && mmu.inBios()) {
+      std::cout << "Boot failed!" << std::endl;
+
+      bootFailed = true;
     }
 
     sleep();

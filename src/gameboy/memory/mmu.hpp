@@ -16,6 +16,7 @@ struct Mmu {
 
   uint16_t readWord(const Gameboy &gameboy, uint16_t address) const;
   uint8_t read(const Gameboy &gameboy, uint16_t address) const;
+  bool inBios() const;
 
   void writeWord(Gameboy &gameboy, uint16_t address, uint16_t word);
   void write(Gameboy &gameboy, uint16_t address, uint8_t byte);

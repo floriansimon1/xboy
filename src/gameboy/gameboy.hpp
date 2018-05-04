@@ -13,7 +13,6 @@
 
 struct Gameboy {
   sf::Clock          clock;
-  bool               inBios;
   unsigned long long lastPause;
 
   Interrupts interrupts;
@@ -23,6 +22,7 @@ struct Gameboy {
   Mmu        mmu;
   Cpu        cpu;
 
+  bool bootFailed;
   bool lowPowerMode;
 
   Gameboy();
