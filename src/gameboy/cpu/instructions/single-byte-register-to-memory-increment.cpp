@@ -28,7 +28,7 @@ std::string SingleByteRegisterToMemoryIncrement::toString() const {
   const auto signChar = sign == -1 ? '-' : '+';
 
   result << "LD (" << registerString(dereferenceInstruction.memoryPointer, false, false) << signChar << ')'
-         << ", " << registerString(dereferenceInstruction.cpuRegister, true, true);
+         << ", " << registerString(dereferenceInstruction.cpuRegister, true, dereferenceInstruction.low);
 
   return result.str();
 }
