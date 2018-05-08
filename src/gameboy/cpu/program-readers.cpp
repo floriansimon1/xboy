@@ -5,7 +5,7 @@
 * See http://gbdev.gg8.se/wiki/articles/Gameboy_Bootstrap_ROM
 *
 * Note: relative jumps numbers include the length of the jump
-*       instructions.
+*       instructions (2 bytes).
 */
 constexpr uint8_t bios[] = {
   // Set stack pointer to its initial value.
