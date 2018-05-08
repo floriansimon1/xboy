@@ -14,9 +14,10 @@ Gameboy::Gameboy() {
 }
 
 void Gameboy::reset() {
-  lowPowerMode = false;
-  bootFailed   = false;
-  lastPause    = 0;
+  bootFailed              = false;
+  lowPowerMode            = false;
+  lastPause               = 0;
+  joypadProcessingCounter = 0;
 
   interrupts.reset();
   timer.reset();
@@ -28,7 +29,10 @@ void Gameboy::reset() {
 }
 
 void Gameboy::tick(const InputMedium &inputMedium) {
-  joypad.process(*this, inputMedium);
+  // If the counter overflows...
+  if (!joypadProcessingCounter) {
+    joypad.process(*this, inputMedium);
+  }
 
   if (!bootFailed && !lowPowerMode) {
     timer.process(*this);
@@ -49,6 +53,8 @@ void Gameboy::tick(const InputMedium &inputMedium) {
   } else {
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
+
+  joypadProcessingCounter++;
 }
 
 void Gameboy::sleep() {

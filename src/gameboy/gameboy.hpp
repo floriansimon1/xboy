@@ -14,6 +14,7 @@
 struct Gameboy {
   sf::Clock          clock;
   unsigned long long lastPause;
+  uint8_t            joypadProcessingCounter;
 
   Interrupts interrupts;
   Joypad     joypad;
