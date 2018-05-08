@@ -60,9 +60,11 @@ void Gameboy::sleep() {
 
   const auto elapsedTime = clock.getElapsedTime().asMilliseconds();
 
-  const auto timeCorrection = frameDurationMilliseconds - elapsedTime;
+  if (elapsedTime < frameDurationMilliseconds) {
+    const auto timeCorrection = frameDurationMilliseconds - elapsedTime;
 
-  std::this_thread::sleep_for(std::chrono::milliseconds(timeCorrection));
+    std::this_thread::sleep_for(std::chrono::milliseconds(timeCorrection));
+  }
 
   lastPause = cpu.ticks;
 
