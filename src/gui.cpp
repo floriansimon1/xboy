@@ -3,16 +3,37 @@
 constexpr float scale = 2;
 
 Gui::Gui(): window(sf::VideoMode(screenWidth * scale, screenHeight * scale), "XBoy") {
-  sprite.setPosition(0, 0);
-  sprite.setScale(scale, scale);
 }
 
-void Gui::display(const FrameBuffer &frameBuffer) {
-  image.create(screenWidth, screenHeight, frameBuffer);
+void SfmlFrameBuffer::setPixel(Coordinate x, Coordinate y, const Color &color) {
+  sf::Color sfmlPixel(color.r, color.g, color.b);
 
-  texture.loadFromImage(image);
+  image.setPixel(x, y, sfmlPixel);
+}
 
-  sprite.setTexture(texture);
+Color SfmlFrameBuffer::getPixel(Coordinate x, Coordinate y) const {
+  const auto sfmlPixel = image.getPixel(x, y);
+
+  return Color { sfmlPixel.r, sfmlPixel.g, sfmlPixel.b };
+}
+
+SfmlFrameBuffer::SfmlFrameBuffer() {
+  image.create(screenWidth, screenHeight, sf::Color::Black);
+}
+
+FrameBuffer& Gui::getFrameBuffer() {
+  return frameBuffer;
+}
+
+void Gui::display() {
+  sf::Texture texture;
+
+  texture.loadFromImage(frameBuffer.image);
+
+  sf::Sprite sprite(texture);
+
+  sprite.setPosition(0, 0);
+  sprite.setScale(scale, scale);
 
   window.draw(sprite);
 

@@ -11,7 +11,7 @@ constexpr uint16_t backgroundYAddress = 0xff42;
 constexpr uint16_t windowXAddress     = 0xff4b;
 constexpr uint16_t windowYAddress     = 0xff4a;
 
-Gpu::Gpu::Gpu() {
+Gpu::Gpu::Gpu(): screen(nullptr) {
   reset();
 }
 
@@ -19,20 +19,18 @@ Scanline Gpu::Gpu::getScanlineOfTick(const Tick &tick) const {
   return ::Gpu::getScanlineOfTick(displayStartTick, tick).value_or(0);
 }
 
+// The top line should be black, the rest should be white.
 void Gpu::Gpu::displayStopScreen() {
-  // The top line should be black, the rest should be white.
   for (uint8_t i = 0; i < screenWidth; i++) {
-    frameBuffer[i * 4 + 0] = 0;
-    frameBuffer[i * 4 + 1] = 0;
-    frameBuffer[i * 4 + 2] = 0;
+    auto &frameBuffer = screen->getFrameBuffer();
+
+    frameBuffer.setPixel(i, 0, black);
 
     for (uint8_t j = 1; j < screenHeight; j++) {
-      frameBuffer[(j * screenWidth + i) * 4 + 0] = maxUint8;
-      frameBuffer[(j * screenWidth + i) * 4 + 1] = maxUint8;
-      frameBuffer[(j * screenWidth + i) * 4 + 2] = maxUint8;
+      frameBuffer.setPixel(i, 0, white);
     }
 
-    screen->display(frameBuffer);
+    screen->display();
   }
 }
 
@@ -58,7 +56,7 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
   const auto isStartOfMode        = !oldState || newState.mode != oldState.value().mode;
 
   if (isStartOfMode && newState.mode == Mode::Vblank) {
-    screen->display(frameBuffer);
+    screen->display();
 
     gameboy.interrupts.requestVblankInterrupt(gameboy);
   } else if (isStartOfNewScanline) {
@@ -76,8 +74,12 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
 void Gpu::Gpu::reset() {
   displayStartTick = {};
 
-  for (size_t i = 0; i < frameSize; i++) {
-    frameBuffer[i] = i % 4 == 3 ? maxUint8 : 0;
+  if (screen) {
+    for (Coordinate x = 0; x < screenWidth; x++) {
+      for (Coordinate y = 0; y < screenHeight; y++) {
+        screen->getFrameBuffer().setPixel(x, y, white);
+      }
+    }
   }
 }
 
@@ -97,6 +99,8 @@ void Gpu::Gpu::drawScanline(const Gameboy &gameboy, uint8_t displayControlRegist
 void Gpu::Gpu::drawSprites(const Gameboy &gameboy, uint8_t displayControlRegister, Scanline scanline) {
   const SpriteConfiguration spriteConfiguration(displayControlRegister);
 
+  auto &frameBuffer = screen->getFrameBuffer();
+
   // Iterate in reverse to stop once prioritary sprites have been displayed.
   for (Coordinate x = 0; x < screenWidth; x++) {
     const sf::IntRect  pixelRectangle(x, scanline, 1, 1);
@@ -106,7 +110,7 @@ void Gpu::Gpu::drawSprites(const Gameboy &gameboy, uint8_t displayControlRegiste
       const Sprite sprite(gameboy, spriteConfiguration, i);
 
       // Non-prioritary sprites cannot be drawn over non-white backgrounds.
-      if (sprite.backgroundPrioritary && !pixelIsWhite(frameBuffer, x, scanline)) {
+      if (sprite.backgroundPrioritary && !frameBuffer.pixelIsWhite(x, scanline)) {
         continue;
       }
 
@@ -131,6 +135,8 @@ void Gpu::Gpu::drawTiles(const Gameboy &gameboy, uint8_t displayControlRegister,
   const auto backgroundStartX = gameboy.mmu.read(gameboy, backgroundXAddress);
   const auto backgroundStartY = gameboy.mmu.read(gameboy, backgroundYAddress);
   const auto windowStartY     = gameboy.mmu.read(gameboy, windowYAddress);
+
+  auto &frameBuffer = screen->getFrameBuffer();
 
   // Don't ask me why, but windowXAddress points to the window's X minus 7.
   const auto windowStartX = gameboy.mmu.read(gameboy, windowXAddress - 7);
@@ -194,7 +200,7 @@ bool Gpu::drawObjectPixel(
 
   const auto translatedPixel = translatePixel(object.palette, pixel);
 
-  writeColor(frameBuffer, screenX, screenY, pixelToColor(translatedPixel));
+  frameBuffer.setPixel(screenX, screenY, pixelToColor(translatedPixel));
 
   return !translatedPixel;
 }
@@ -248,7 +254,7 @@ Gpu::State Gpu::displayDisabledStatus() {
   return State { Mode::Vblank, 0, false };
 }
 
-sf::Color Gpu::pixelToColor(Pixel pixel) {
+Color Gpu::pixelToColor(Pixel pixel) {
   switch (pixel) {
     default:
 

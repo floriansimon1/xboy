@@ -33,7 +33,6 @@ namespace Gpu {
     Gpu();
 
     OptionalTick displayStartTick;
-    FrameBuffer  frameBuffer;
     Screen       *screen;
 
     void reset();
@@ -54,7 +53,7 @@ namespace Gpu {
   State getStateOfTick(OptionalTick displayStartTick, bool displayEnabled, Tick tick);
   OptionalScanline getScanlineOfTick(OptionalTick displayStartTick, Tick tick);
   Pixel translatePixel(Palette palette, Pixel pixel);
-  sf::Color pixelToColor(Pixel pixel);
+  Color pixelToColor(Pixel pixel);
   State displayDisabledStatus();
 
   // Returns true if the pixel is transparent.

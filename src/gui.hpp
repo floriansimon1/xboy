@@ -6,12 +6,21 @@
 #include "gameboy/gpu/screen.hpp"
 #include "gameboy/joypad/input-medium.hpp"
 
+struct SfmlFrameBuffer: FrameBuffer {
+  void setPixel(Coordinate x, Coordinate y, const Color &color) override;
+  Color getPixel(Coordinate x, Coordinate y) const override;
+  SfmlFrameBuffer();
+
+  sf::Image image;
+};
+
 struct Gui: Screen, InputMedium {
   Gui();
 
   sf::RenderWindow window;
 
-  virtual void display(const FrameBuffer &frameBuffer) override;
+  virtual void display() override;
+  virtual FrameBuffer &getFrameBuffer() override;
 
   virtual bool aIsPressed() const override;
   virtual bool bIsPressed() const override;
@@ -23,9 +32,7 @@ struct Gui: Screen, InputMedium {
   virtual bool selectIsPressed() const override;
 
   private:
-    sf::Texture texture;
-    sf::Sprite  sprite;
-    sf::Image   image;
+    SfmlFrameBuffer frameBuffer;
 };
 
 #endif
