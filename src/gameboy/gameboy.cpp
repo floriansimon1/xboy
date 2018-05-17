@@ -64,7 +64,7 @@ void Gameboy::sleep() {
     return;
   }
 
-  const auto elapsedTime = clock.getElapsedTime().asMilliseconds();
+  const unsigned int elapsedTime = clock.getElapsedTime().asMilliseconds();
 
   if (elapsedTime < frameDurationMilliseconds) {
     const auto timeCorrection = frameDurationMilliseconds - elapsedTime;
