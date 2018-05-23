@@ -7,7 +7,7 @@
 * Note: relative jumps numbers include the length of the jump
 *       instructions (2 bytes).
 */
-constexpr uint8_t bios[] = {
+constexpr uint8_t bios[biosSize] = {
   // Set stack pointer to its initial value.
   0x31, 0xFE, 0xFF,             // 0x00: LD SP, 0xfffe
 
@@ -157,7 +157,7 @@ constexpr uint8_t bios[] = {
 };
 
 uint8_t RomProgramReader::read(const Gameboy &gameboy, uint16_t address) const {
-  return gameboy.mmu.read(gameboy, address);
+  return gameboy.cartridge->rom[address];
 }
 
 uint8_t BiosProgramReader::read(const Gameboy &, uint16_t address) const {

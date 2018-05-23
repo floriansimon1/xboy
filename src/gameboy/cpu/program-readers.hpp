@@ -2,6 +2,9 @@
 #define PROGRAM_READER_HPP
 
 #include <cstdint>
+#include <cstdlib>
+
+constexpr size_t biosSize = 256;
 
 struct Gameboy;
 

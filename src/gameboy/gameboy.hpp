@@ -23,7 +23,6 @@ struct Gameboy {
   Mmu        mmu;
   Cpu        cpu;
 
-  bool bootFailed;
   bool lowPowerMode;
 
   Gameboy();

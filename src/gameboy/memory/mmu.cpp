@@ -6,6 +6,7 @@
 #include "../../bit.hpp"
 #include "../gameboy.hpp"
 #include "../timers/timer.hpp"
+#include "../cpu/program-readers.hpp"
 #include "timer-control-register.hpp"
 #include "display-control-register.hpp"
 
@@ -107,9 +108,19 @@ uint8_t Mmu::readDisplayControlRegister(const Gameboy &gameboy) const {
 }
 
 uint8_t Mmu::read(const Gameboy &gameboy, uint16_t address) const {
+  static BiosProgramReader biosReader;
+  static RomProgramReader  romReader;
+
   if (inFirstRomBank(address)) {
-    std::cout << "Read from ROM (" << (unsigned int) address << ")" << std::endl;
-    return gameboy.cartridge->rom[address];
+    const auto inBios = gameboy.mmu.inBios();
+
+    auto &reader = (
+      inBios && address < biosSize
+      ? static_cast<const ProgramReader&>(biosReader)
+      : static_cast<const ProgramReader&>(romReader)
+    );
+
+    return reader.read(gameboy, address);
   } else if (inShadowRam(address)) {
     return memory[Mmu::convertShadowRamAddressToRamAddress(address)];
   } else if (address == scanlineRegister) {

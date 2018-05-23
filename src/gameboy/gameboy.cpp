@@ -6,7 +6,6 @@
 #include "joypad/input-medium.hpp"
 #include "gameboy.hpp"
 
-constexpr uint16_t programStartAddress   = 0x100;
 constexpr auto frameDurationMilliseconds = ticksPerFrame * 1000 / ticksPerSecond;
 
 Gameboy::Gameboy() {
@@ -14,7 +13,6 @@ Gameboy::Gameboy() {
 }
 
 void Gameboy::reset() {
-  bootFailed              = false;
   lowPowerMode            = false;
   lastPause               = 0;
   joypadProcessingCounter = 0;
@@ -34,19 +32,13 @@ void Gameboy::tick(const InputMedium &inputMedium) {
     joypad.process(*this, inputMedium);
   }
 
-  if (!bootFailed && !lowPowerMode) {
+  if (!lowPowerMode) {
     timer.process(*this);
     gpu.process(*this);
     interrupts.process(*this);
 
     if (!cpu.halted) {
       cpu.process(*this);
-    }
-
-    if (cpu.pc == programStartAddress && mmu.inBios()) {
-      std::cout << "Boot failed!" << std::endl;
-
-      bootFailed = true;
     }
 
     sleep();
