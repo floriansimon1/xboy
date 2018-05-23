@@ -54,7 +54,7 @@ SpriteConfiguration::SpriteConfiguration(uint8_t displayControlRegister):
 Sprite::Sprite(const Gameboy &gameboy, const SpriteConfiguration &spriteConfiguration, uint8_t spriteNumber) {
   const uint16_t spriteConfigurationStart = spriteSetAddress + spriteNumber * spriteSize;
 
-  // For some reason, we read x - 8 and y -16...
+  // For some reason, we read x - 8 and y - 16...
   // http://www.codeslinger.co.uk/pages/projects/gameboy/graphics.html
   x = gameboy.mmu.read(gameboy, spriteConfigurationStart + xByte) + 8;
   y = gameboy.mmu.read(gameboy, spriteConfigurationStart + yByte) + 16;
