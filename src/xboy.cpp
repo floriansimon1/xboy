@@ -8,7 +8,7 @@ int main(int, char **) {
   Gui       gui;
   sf::Event event;
   Gameboy   gameboy;
-  Cartridge cartridge("../tests/roms/cpu_instrs.gb");
+  Cartridge cartridge("./tests/roms/cpu_instrs.gb");
 
   gameboy.cartridge  = &cartridge;
   gameboy.gpu.screen = &gui;
