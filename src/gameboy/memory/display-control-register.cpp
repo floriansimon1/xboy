@@ -13,7 +13,7 @@ bool DisplayControlRegister::useBigSprites(uint8_t value) {
   return getBit(value, bigSpritesBit);
 }
 
-bool DisplayControlRegister::useTileSet0(uint8_t value) {
+bool DisplayControlRegister::useUnsignedTileset(uint8_t value) {
   return getBit(value, tilesetSelectBit);
 }
 
@@ -34,9 +34,9 @@ bool DisplayControlRegister::showWindow(uint8_t value) {
 }
 
 bool DisplayControlRegister::useBackgroundTileMap0(uint8_t value) {
-  return getBit(value, useBackgroundTileMap0Bit);
+  return !getBit(value, useBackgroundTileMap0Bit);
 }
 
 bool DisplayControlRegister::useWindowTileMap0(uint8_t value) {
-  return getBit(value, useWindowTileMap0Bit);
+  return !getBit(value, useWindowTileMap0Bit);
 }

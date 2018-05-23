@@ -10,6 +10,7 @@ Call::Call(bool conditional, unsigned short flag, bool negate):
   negate(negate),
   flag(flag)
 {
+  incrementProgramCounter = false;
 }
 
 void Call::execute(Gameboy &gameboy, const uint8_t *data) const {

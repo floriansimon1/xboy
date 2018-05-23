@@ -9,6 +9,8 @@ struct Gameboy;
 struct Instruction {
   virtual ~Instruction() = default;
 
+  bool incrementProgramCounter = true;
+
   const unsigned short opcodeSize;
   const unsigned short dataSize;
 
@@ -17,7 +19,7 @@ struct Instruction {
 
   static bool isExtendedInstruction(uint8_t firstOpcodeByte);
 
-  unsigned short totalSize();
+  unsigned short totalSize() const;
   virtual unsigned short ticks(Gameboy &gameboy) const = 0;
 
   protected:

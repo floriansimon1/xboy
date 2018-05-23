@@ -1,6 +1,6 @@
 libraries := -lsfml-graphics -lsfml-window -lsfml-system
-flags     := -Wall -Wextra -std=c++17
-compiler  := clang++-7
+flags     := -Wall -Wextra -std=c++17 -g
+compiler  := clang++-6.0
 
 sources := $(shell find src/ -iname "*.cpp" -not -iname "*xboy.cpp")
 tests   := $(shell find tests/ -iname "*.cpp")

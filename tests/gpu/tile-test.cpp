@@ -17,12 +17,12 @@ bool TileTest::run() {
   *
   * Example taken from http://www.codeslinger.co.uk/pages/projects/gameboy/graphics.html.
   */
-  gameboy.mmu.write(gameboy, tileset1 + 1, 0b10101110);
-  gameboy.mmu.write(gameboy, tileset1,     0b00110101);
+  gameboy.mmu.write(gameboy, unsignedTileset + 1, 0b10101110);
+  gameboy.mmu.write(gameboy, unsignedTileset,     0b00110101);
 
-  configuration.useTileset0            = false;
-  configuration.tilesetStart           = tileset1;
+  configuration.useUnsignedTileset     = true;
   configuration.backgroundTilemapStart = tilemap1;
+  configuration.tilesetStart           = unsignedTileset;
 
   const Tile tile(gameboy, configuration, true, 0, 0);
 

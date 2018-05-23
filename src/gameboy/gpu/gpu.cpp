@@ -154,9 +154,9 @@ void Gpu::Gpu::drawTiles(const Gameboy &gameboy, uint8_t displayControlRegister,
     }
 
     if (DisplayControlRegister::showWindow(displayControlRegister)) {
-        const Coordinate windowX = x - windowStartX;
+      const Coordinate windowX = x - windowStartX;
 
-        drawTile(false, gameboy, frameBuffer, tileConfiguration, windowX, windowY, x, scanline);
+      drawTile(false, gameboy, frameBuffer, tileConfiguration, windowX, windowY, x, scanline);
     }
   }
 }

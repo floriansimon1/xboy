@@ -10,6 +10,6 @@ Instruction::Instruction(unsigned short dataSize, unsigned short opcodeSize):
 {
 }
 
-unsigned short Instruction::totalSize() {
+unsigned short Instruction::totalSize() const {
   return dataSize + opcodeSize;
 }

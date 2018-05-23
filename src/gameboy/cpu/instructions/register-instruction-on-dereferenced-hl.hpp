@@ -4,8 +4,6 @@
 #include "../constant-time-instruction.hpp"
 #include "../../gameboy.hpp"
 
-#include <iostream>
-
 template <typename WrappedInstruction>
 struct RegisterInstructionOnDereferencedHl: ConstantTimeInstruction {
   const WrappedInstruction instruction;

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "cpu.hpp"
 #include "../../bit.hpp"
 #include "../gameboy.hpp"
@@ -35,15 +33,13 @@ void Cpu::process(Gameboy &gameboy) {
     gameboy.mmu.read(gameboy, pc + instruction->opcodeSize + 1)
   };
 
-  if (pc > 0xf0) {
-    std::cout << std::hex << (int) pc << ": " << instruction->toString() << std::endl;
-  }
-
   ticks += instruction->ticks(gameboy);
 
   instruction->execute(gameboy, data);
 
-  pc += instruction->totalSize();
+  if (instruction->incrementProgramCounter) {
+    pc += instruction->totalSize();
+  }
 }
 
 void Cpu::setTwoBytesRegister(CpuRegisterPointer cpuRegister, uint16_t value) {

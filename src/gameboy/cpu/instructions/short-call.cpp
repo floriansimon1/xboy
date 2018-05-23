@@ -10,6 +10,7 @@ ShortCall::ShortCall(uint8_t hardcodedAddress):
   hardcodedAddress(hardcodedAddress),
   call(true)
 {
+  incrementProgramCounter = false;
 }
 
 void ShortCall::execute(Gameboy &gameboy, const uint8_t *) const {
