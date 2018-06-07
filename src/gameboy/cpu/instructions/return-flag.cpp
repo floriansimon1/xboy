@@ -33,9 +33,13 @@ bool ReturnFlag::shouldJump(Gameboy &gameboy) const {
 }
 
 std::string ReturnFlag::toString() const {
-  std::ostringstream result;
+  if (conditional) {
+    std::ostringstream result;
 
-  result << "RET" << (negate ? " N" : " ") << flagString(flag);
+    result << "RET" << (negate ? " N" : " ") << flagString(flag);
 
-  return result.str();
+    return result.str();
+  }
+
+  return "RET";
 }
