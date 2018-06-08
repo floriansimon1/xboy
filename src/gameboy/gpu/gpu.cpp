@@ -59,7 +59,7 @@ void Gpu::Gpu::process(Gameboy &gameboy) {
     screen->display();
 
     gameboy.interrupts.requestVblankInterrupt(gameboy);
-  } else if (isStartOfNewScanline) {
+  } else if (isStartOfNewScanline && newState.scanline < realScanlines) {
     drawScanline(gameboy, displayControlRegister, newState.scanline);
   }
 
