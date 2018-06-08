@@ -9,8 +9,6 @@ struct Gameboy;
 struct Instruction {
   virtual ~Instruction() = default;
 
-  bool incrementProgramCounter = true;
-
   const unsigned short opcodeSize;
   const unsigned short dataSize;
 

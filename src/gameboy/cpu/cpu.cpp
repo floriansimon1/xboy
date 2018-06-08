@@ -35,11 +35,10 @@ void Cpu::process(Gameboy &gameboy) {
 
   ticks += instruction->ticks(gameboy);
 
-  instruction->execute(gameboy, data);
+  // Increments the program counter before execution to make sure CALLs and RETs go to the right address.
+  pc += instruction->totalSize();
 
-  if (instruction->incrementProgramCounter) {
-    pc += instruction->totalSize();
-  }
+  instruction->execute(gameboy, data);
 }
 
 void Cpu::setTwoBytesRegister(CpuRegisterPointer cpuRegister, uint16_t value) {
