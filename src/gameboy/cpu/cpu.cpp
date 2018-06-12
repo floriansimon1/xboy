@@ -35,6 +35,19 @@ void Cpu::process(Gameboy &gameboy) {
 
   ticks += instruction->ticks(gameboy);
 
+  const auto oldPc = pc;
+
+  if (oldPc > 0x100 && f) {
+      printf("PC: %02X, AF: %02X, BC: %02X, DE: %02X, HL: %02X, SP: %02X\n",
+          pc,
+          af,
+          bc,
+          de,
+          hl,
+          sp
+      );
+  }
+
   // Increments the program counter before execution to make sure CALLs and RETs go to the right address.
   pc += instruction->totalSize();
 

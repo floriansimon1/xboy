@@ -5,7 +5,7 @@
 #include "call.hpp"
 
 Call::Call(bool conditional, unsigned short flag, bool negate):
-  Instruction(1, 1),
+  Instruction(2, 1),
   conditional(conditional),
   negate(negate),
   flag(flag)
