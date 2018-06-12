@@ -37,9 +37,9 @@ bool SingleByteIncrementTest::run() {
     instruction.execute(gameboy, NULL);
 
     if (
-      gameboy.cpu.getZeroFlag()
-      || gameboy.cpu.getSubtractFlag()
+      gameboy.cpu.getSubtractFlag()
       || !gameboy.cpu.getHalfCarryFlag()
+      || gameboy.cpu.getZeroFlag() != (i == 16)
       || gameboy.cpu.bc != (i == 16 ? 0 : i * 16)
     ) {
       std::cout << "Half-carry #" << i << '\n'

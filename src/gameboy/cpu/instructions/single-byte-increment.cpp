@@ -16,7 +16,7 @@ SingleByteIncrement::SingleByteIncrement(CpuRegisterPointer cpuRegister, bool lo
 void SingleByteIncrement::execute(Gameboy &gameboy, const uint8_t*) const {
   const auto value = gameboy.cpu.singleByteRegister(cpuRegister, low);
 
-  const auto result = value + sign;
+  const uint8_t result = value + sign;
 
   gameboy.cpu.setZeroFlag(!result);
   gameboy.cpu.setSubtractFlag(sign == -1);
