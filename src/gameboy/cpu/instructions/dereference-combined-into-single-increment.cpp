@@ -19,7 +19,7 @@ DereferenceCombinedIntoSingleIncrement::DereferenceCombinedIntoSingleIncrement(
 void DereferenceCombinedIntoSingleIncrement::execute(Gameboy &gameboy, const uint8_t *data) const {
   dereferenceInstruction.execute(gameboy, data);
 
-  gameboy.cpu.*(dereferenceInstruction.targetRegister) += sign;
+  gameboy.cpu.*(dereferenceInstruction.pointerRegister) += sign;
 }
 
 std::string DereferenceCombinedIntoSingleIncrement::toString() const {

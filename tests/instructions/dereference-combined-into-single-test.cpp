@@ -1,3 +1,4 @@
+#include "../../src/gameboy/cpu/instructions/dereference-combined-into-single-increment.hpp"
 #include "../../src/gameboy/cpu/instructions/dereference-combined-into-single.hpp"
 #include "dereference-combined-into-single-test.hpp"
 #include "../../src/gameboy/gameboy.hpp"
@@ -8,8 +9,9 @@ DereferenceCombinedIntoSingleTest::DereferenceCombinedIntoSingleTest():
 }
 
 bool DereferenceCombinedIntoSingleTest::run() {
-  Gameboy                       gameboy;
-  DereferenceCombinedIntoSingle instruction(&Cpu::bc, &Cpu::af, true);
+  Gameboy                                gameboy;
+  DereferenceCombinedIntoSingle          instruction(&Cpu::bc, &Cpu::af, true);
+  DereferenceCombinedIntoSingleIncrement withIncrement(&Cpu::bc, &Cpu::af, 1, true);
 
   const auto value = 150;
 
@@ -20,5 +22,13 @@ bool DereferenceCombinedIntoSingleTest::run() {
 
   instruction.execute(gameboy, NULL);
 
-  return gameboy.cpu.af == value;
+  if (gameboy.cpu.af != value || gameboy.cpu.bc != Mmu::ramStart) {
+    return false;
+  }
+
+  gameboy.cpu.af = 0;
+
+  withIncrement.execute(gameboy, NULL);
+
+  return gameboy.cpu.af == value && gameboy.cpu.bc == Mmu::ramStart + 1;
 }
