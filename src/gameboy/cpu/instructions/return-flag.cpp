@@ -1,11 +1,11 @@
 #include <sstream>
 
 #include "../../../debug/flag-string.hpp"
-#include "return-flag.hpp"
 #include "../../gameboy.hpp"
+#include "return-flag.hpp"
 
 ReturnFlag::ReturnFlag(bool conditional, unsigned short flag, bool negate):
-  Instruction(1, 1),
+  Instruction(0, 1),
   conditional(conditional),
   negate(negate),
   flag(flag)
