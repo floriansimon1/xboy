@@ -8,7 +8,7 @@ UnsignedImmediateAddition::UnsignedImmediateAddition(bool carry):
 {
 }
 
-const char* UnsignedImmediateAddition::mnemonic() const {
+std::string UnsignedImmediateAddition::mnemonic() const {
   return carry ? "ADC A, " : "ADD A, ";
 }
 
@@ -34,5 +34,5 @@ void UnsignedImmediateAddition::execute(Gameboy &gameboy, const uint8_t *data) c
 }
 
 std::string UnsignedImmediateAddition::toString() const {
-  return "ADD A, d8";
+  return mnemonic() + "d8";
 }

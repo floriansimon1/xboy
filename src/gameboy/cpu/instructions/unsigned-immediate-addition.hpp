@@ -11,7 +11,7 @@ struct UnsignedImmediateAddition: ConstantTimeInstruction {
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;
-  const char* mnemonic() const;
+  std::string mnemonic() const;
 };
 
 #endif
