@@ -38,7 +38,7 @@ void Cpu::process(Gameboy &gameboy) {
   const auto oldPc = pc;
 
   if (oldPc > 0x100) {
-      printf("PC: %02X, AF: %02X, BC: %02X, DE: %02X, HL: %02X, SP: %02X, (SP): %04X - %02X: %s\n",
+      printf("PC: %02X, AF: %02X, BC: %02X, DE: %02X, HL: %02X, SP: %02X, (SP): %04X, (HL): %04X - %02X: %s\n",
           pc,
           af,
           bc,
@@ -46,6 +46,7 @@ void Cpu::process(Gameboy &gameboy) {
           hl,
           sp,
           gameboy.mmu.readWord(gameboy, sp),
+          gameboy.mmu.readWord(gameboy, hl),
           firstOpcodeByte,
           instruction->toString().c_str()
       );
