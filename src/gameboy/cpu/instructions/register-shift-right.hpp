@@ -40,7 +40,7 @@ struct RegisterShiftRight: ConstantTimeInstruction {
   std::string toString() const override {
     std::ostringstream result;
 
-    result << "SRA " << registerString(cpuRegister, true, low);
+    result << (arithmetic ? "SRA " : "SRL ") << registerString(cpuRegister, true, low);
 
     return result.str();
   }
