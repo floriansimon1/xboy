@@ -17,9 +17,9 @@ void IncrementDereference::execute(Gameboy &gameboy, const uint8_t *) const {
 
   const auto value = gameboy.mmu.read(gameboy, registerValue);
 
-  const auto result = value + 1;
+  const auto result = value + sign;
 
-  gameboy.mmu.write(gameboy, registerValue, value + 1);
+  gameboy.mmu.write(gameboy, registerValue, result);
 
   gameboy.cpu.setHalfCarryFlag(!(result & lowHalfByteMask));
   gameboy.cpu.setZeroFlag(!result);
