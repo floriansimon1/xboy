@@ -22,7 +22,7 @@ void SingleByteRegisterToMemory::execute(Gameboy &gameboy, const uint8_t *) cons
 std::string SingleByteRegisterToMemory::toString() const {
   std::ostringstream result;
 
-  result << "LD (" << registerString(memoryPointer, false, false) << "), " << registerString(cpuRegister, true, true);
+  result << "LD (" << registerString(memoryPointer, false, false) << "), " << registerString(cpuRegister, true, low);
 
   return result.str();
 }
