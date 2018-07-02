@@ -1,6 +1,6 @@
 #include <fstream>
-#include <iostream>
 
+#include "../errors/rom-not-found-error.hpp"
 #include "cartridge.hpp"
 
 constexpr auto maxRomSize = 0x200000;
@@ -9,9 +9,7 @@ Cartridge::Cartridge(const std::string path) {
   std::ifstream file(path, std::ios::binary);
 
   if (!file) {
-    std::cout << path << std::endl;
-
-    throw "Cannot open " + path;
+    throw RomNotFoundError(path);
   }
 
   const size_t fileSize = file.rdbuf()->pubseekoff(0, file.end, file.in);
