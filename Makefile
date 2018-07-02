@@ -1,4 +1,4 @@
-libraries := -lsfml-graphics -lsfml-window -lsfml-system
+libraries := -lsfml-graphics -lsfml-window -lsfml-system -lSDL2
 flags     := -Wall -Wextra -std=c++17 -g
 compiler  := clang++-6.0
 
