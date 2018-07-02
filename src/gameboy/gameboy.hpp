@@ -12,6 +12,8 @@
 #include "joypad/joypad.hpp"
 
 struct Gameboy {
+  bool debug = false;
+
   sf::Clock          clock;
   unsigned long long lastPause;
   uint8_t            joypadProcessingCounter;

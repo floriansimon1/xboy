@@ -17,8 +17,6 @@ void Cpu::reset() {
   sp = 0xfffe;
 }
 
-#include <signal.h>
-
 void Cpu::process(Gameboy &gameboy) {
   const auto firstOpcodeByte = gameboy.mmu.read(gameboy, pc);
 
@@ -37,10 +35,8 @@ void Cpu::process(Gameboy &gameboy) {
 
   ticks += instruction->ticks(gameboy);
 
-  const auto oldPc = pc;
-
-  if (oldPc > 0x100) {
-      printf("PC: %02X, AF: %02X, BC: %02X, DE: %02X, HL: %02X, SP: %02X, (SP): %04X, (HL): %04X, ($d600): %02X - %s %02X: %s\n",
+  if (pc >= 0x100 && gameboy.debug) {
+      printf("PC: %02X, AF: %04X, BC: %04X, DE: %04X, HL: %04X, SP: %04X, (SP16): %04X, (HL16): %04X - %s %02X: %s\n",
           pc,
           af,
           bc,
@@ -49,7 +45,6 @@ void Cpu::process(Gameboy &gameboy) {
           sp,
           gameboy.mmu.readWord(gameboy, sp),
           gameboy.mmu.readWord(gameboy, hl),
-          gameboy.mmu.read(gameboy, 0xd600),
           (readSecondByte ? "2" : "1"),
           (readSecondByte ? gameboy.mmu.read(gameboy, pc + 1) : firstOpcodeByte),
           instruction->toString().c_str()
