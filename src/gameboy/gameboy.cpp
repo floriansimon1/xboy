@@ -22,7 +22,7 @@ void Gameboy::reset() {
   mmu.reset();
   gpu.reset();
 
-  clock.restart();
+  epoch = std::chrono::high_resolution_clock::now();
 }
 
 void Gameboy::tick(const InputMedium &inputMedium) {
@@ -55,7 +55,9 @@ void Gameboy::sleep() {
     return;
   }
 
-  const unsigned int elapsedTime = clock.getElapsedTime().asMilliseconds();
+  const auto now = std::chrono::high_resolution_clock::now();
+
+  const unsigned int elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - epoch).count();
 
   if (elapsedTime < frameDurationMilliseconds) {
     const auto timeCorrection = frameDurationMilliseconds - elapsedTime;
@@ -65,5 +67,5 @@ void Gameboy::sleep() {
 
   lastPause = cpu.ticks;
 
-  clock.restart();
+  epoch = now;
 }

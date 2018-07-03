@@ -11,7 +11,7 @@ constexpr unsigned int screenHeight  = 144;
 constexpr unsigned int bitsPerPixel  = 2;
 constexpr unsigned int bytesPerColor = 4;
 
-struct Color { unsigned short r; unsigned short g; unsigned short b; };
+struct Color { unsigned short red; unsigned short green; unsigned short blue; };
 
 const Color black     = { 0,   0,   0   };
 const Color darkGrey  = { 96,  96,  96  };

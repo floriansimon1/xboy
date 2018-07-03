@@ -1,7 +1,7 @@
 #ifndef GAMEBOY_HPP
 #define GAMEBOY_HPP
 
-#include <SFML/System.hpp>
+#include <chrono>
 
 #include "gpu/gpu.hpp"
 #include "cpu/cpu.hpp"
@@ -14,7 +14,7 @@
 struct Gameboy {
   bool debug = false;
 
-  sf::Clock          clock;
+  TimePoint          epoch;
   unsigned long long lastPause;
   uint8_t            joypadProcessingCounter;
 

@@ -6,7 +6,7 @@ Gui::Gui(): window(sf::VideoMode(screenWidth * scale, screenHeight * scale), "XB
 }
 
 void SfmlFrameBuffer::setPixel(Coordinate x, Coordinate y, const Color &color) {
-  sf::Color sfmlPixel(color.r, color.g, color.b);
+  sf::Color sfmlPixel(color.red, color.green, color.blue);
 
   image.setPixel(x, y, sfmlPixel);
 }
