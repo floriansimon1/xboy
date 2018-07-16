@@ -8,7 +8,7 @@
 ShortCall::ShortCall(uint8_t hardcodedAddress):
   ConstantTimeInstruction(16, 0, 1),
   hardcodedAddress(hardcodedAddress),
-  call(true)
+  call(false)
 {
 }
 
