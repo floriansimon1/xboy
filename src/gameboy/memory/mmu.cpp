@@ -140,8 +140,8 @@ void Mmu::sideEffectFreeWrite(uint16_t address, uint8_t value) {
 * and http://www.codeslinger.co.uk/pages/projects/gameboy/dma.html
 */
 void Mmu::oamDmaTransfer(Gameboy &gameboy, uint8_t codedAddress) {
-  constexpr uint8_t divisor     = 160;
-  constexpr uint8_t bytesToCopy = 160;
+  constexpr uint16_t divisor     = 256;
+  constexpr uint16_t bytesToCopy = 160;
 
   const uint16_t decodedAddress = codedAddress * divisor;
 
