@@ -35,7 +35,7 @@ void Cpu::process(Gameboy &gameboy) {
 
   ticks += instruction->ticks(gameboy);
 
-  if (pc >= 0x100 && gameboy.debug) {
+  if (gameboy.debug && !gameboy.mmu.inBios()) {
       printf("PC: %02X, AF: %04X, BC: %04X, DE: %04X, HL: %04X, SP: %04X, (SP16): %04X, (HL16): %04X - %s %02X: %s\n",
           pc,
           af,
