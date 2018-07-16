@@ -1,17 +1,17 @@
-#ifndef DEREFERENCE_SINGLE_REGISTER_HPP
-#define DEREFERENCE_SINGLE_REGISTER_HPP
+#ifndef WRITE_REGISTER_AT_SHORT_ADDRESS_HPP
+#define WRITE_REGISTER_AT_SHORT_ADDRESS_HPP
 
 #include "../constant-time-instruction.hpp"
 #include "register-rotate-left.hpp"
 #include "../cpu.hpp"
 
-struct DereferenceSingleRegister: ConstantTimeInstruction {
+struct WriteRegisterAtShortAddress: ConstantTimeInstruction {
   CpuRegisterPointer source;
   const bool         sourceLow;
   CpuRegisterPointer destination;
   const bool         destinationLow;
 
-  DereferenceSingleRegister(
+  WriteRegisterAtShortAddress(
     CpuRegisterPointer source,
     const bool         sourceLow,
     CpuRegisterPointer destination,

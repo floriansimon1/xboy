@@ -1,10 +1,10 @@
 #include <sstream>
 
-#include "dereference-into-single-register.hpp"
+#include "write-register-at-short-address.hpp"
 #include "../../../debug/register-string.hpp"
 #include "../../gameboy.hpp"
 
-DereferenceIntoSingleRegister::DereferenceIntoSingleRegister(
+WriteRegisterAtShortAddress::WriteRegisterAtShortAddress(
   CpuRegisterPointer source,
   const bool         sourceLow,
   CpuRegisterPointer destination,
@@ -18,16 +18,19 @@ DereferenceIntoSingleRegister::DereferenceIntoSingleRegister(
 {
 }
 
-void DereferenceIntoSingleRegister::execute(Gameboy &gameboy, const uint8_t *) const {
-  const auto value = gameboy.mmu.read(gameboy, gameboy.cpu.singleByteRegister(source, sourceLow) + 0xff00);
-
-  gameboy.cpu.setSingleByteRegister(destination, destinationLow, value);
+void WriteRegisterAtShortAddress::execute(Gameboy &gameboy, const uint8_t *) const {
+  gameboy.mmu.write(
+    gameboy,
+    0xff00 + gameboy.cpu.singleByteRegister(destination, destinationLow),
+    gameboy.cpu.singleByteRegister(source, sourceLow)
+  );
 }
 
-std::string DereferenceIntoSingleRegister::toString() const {
+std::string WriteRegisterAtShortAddress::toString() const {
   std::ostringstream result;
 
-  result << "LD ("
+  result << "LD "
+         << "("
          << registerString(destination, true, destinationLow)
          << "), "
          << registerString(source, true, sourceLow);

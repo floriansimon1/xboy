@@ -4,13 +4,12 @@
 #include "instructions/write-two-bytes-register-to-address.hpp"
 #include "instructions/subtract-memory-byte-to-register.hpp"
 #include "instructions/dereference-combined-into-single.hpp"
-#include "instructions/dereference-into-single-register.hpp"
+#include "instructions/write-register-at-short-address.hpp"
 #include "instructions/unsigned-registers-subtraction.hpp"
 #include "instructions/single-byte-register-to-memory.hpp"
 #include "instructions/two-bytes-registers-addition.hpp"
 #include "instructions/add-memory-byte-to-register.hpp"
 #include "instructions/unsigned-registers-addition.hpp"
-#include "instructions/dereference-single-register.hpp"
 #include "instructions/unsigned-immediate-addition.hpp"
 #include "instructions/write-immediate-to-address.hpp"
 #include "instructions/dereference-into-high-byte.hpp"
@@ -311,7 +310,7 @@ void InstructionsTable::mapFirstTable() {
 
   oneByteOpcodes[0xe0] = std::make_shared<DereferenceIntoHighByte>();
   oneByteOpcodes[0xe1] = std::make_shared<PopWord>(&Cpu::hl);
-  oneByteOpcodes[0xe2] = std::make_shared<DereferenceIntoSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
+  oneByteOpcodes[0xe2] = std::make_shared<WriteRegisterAtShortAddress>(&Cpu::af, false, &Cpu::bc, true);
   oneByteOpcodes[0xe3] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xe4] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xe5] = std::make_shared<PushWord>(&Cpu::hl);
@@ -328,7 +327,7 @@ void InstructionsTable::mapFirstTable() {
 
   oneByteOpcodes[0xf0] = std::make_shared<DereferenceHighByte>();
   oneByteOpcodes[0xf1] = std::make_shared<PopWord>(&Cpu::af);
-  oneByteOpcodes[0xf2] = std::make_shared<DereferenceSingleRegister>(&Cpu::bc, true, &Cpu::af, false);
+  oneByteOpcodes[0xf2] = std::make_shared<WriteRegisterAtShortAddress>(&Cpu::bc, true, &Cpu::af, false);
   oneByteOpcodes[0xf3] = std::make_shared<EnableInterrupts>(false);
   oneByteOpcodes[0xf4] = std::make_shared<Unmapped>();
   oneByteOpcodes[0xf5] = std::make_shared<PushWord>(&Cpu::af);
