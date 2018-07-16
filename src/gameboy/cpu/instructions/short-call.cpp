@@ -22,7 +22,7 @@ std::string ShortCall::toString() const {
 
   result << "RST "
          << std::hex << std::setfill('0') << std::setw(2)
-         << ((unsigned int) hardcodedAddress) << 'h';
+         << "0x" << ((unsigned int) hardcodedAddress);
 
   return result.str();
 }
