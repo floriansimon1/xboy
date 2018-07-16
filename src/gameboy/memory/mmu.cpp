@@ -110,7 +110,7 @@ uint8_t Mmu::read(const Gameboy &gameboy, uint16_t address) const {
   static BiosProgramReader biosReader;
   static RomProgramReader  romReader;
 
-  if (inFirstRomBank(address)) {
+  if (Mmu::inRom(address)) {
     const auto inBios = gameboy.mmu.inBios();
 
     auto &reader = (
