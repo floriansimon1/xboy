@@ -27,7 +27,10 @@ void Timer::process(Gameboy &gameboy) {
   const auto willOverflow = timerValue == maxUint8;
 
   if (!controlRegister.timersEnabled()) {
-    gameboy.mmu.write(gameboy, timerCounterAddress, 0);
+    // Prevent unnecessary writes (helps for debugging).
+    if (timerValue) {
+      gameboy.mmu.write(gameboy, timerCounterAddress, 0);
+    }
 
     lastTimerIncrementTick = gameboy.cpu.ticks;
     timerStart             = gameboy.cpu.ticks;
