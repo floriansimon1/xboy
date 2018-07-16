@@ -5,15 +5,16 @@
 #include "../../gameboy.hpp"
 #include "short-call.hpp"
 
-ShortCall::ShortCall(uint8_t hardcodedAddress):
+ShortCall::ShortCall(uint16_t hardcodedAddress):
   ConstantTimeInstruction(16, 0, 1),
   hardcodedAddress(hardcodedAddress),
   call(false)
 {
 }
 
+#include <signal.h>
 void ShortCall::execute(Gameboy &gameboy, const uint8_t *) const {
-  call.execute(gameboy, &hardcodedAddress);
+  call.execute(gameboy, reinterpret_cast<const uint8_t*>(&hardcodedAddress));
 }
 
 std::string ShortCall::toString() const {

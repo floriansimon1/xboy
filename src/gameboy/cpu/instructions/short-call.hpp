@@ -6,12 +6,12 @@
 #include "call.hpp"
 
 struct ShortCall: ConstantTimeInstruction {
-  const uint8_t hardcodedAddress;
+  const uint16_t hardcodedAddress;
 
   void execute(Gameboy &gameboy, const uint8_t *data) const override;
   std::string toString() const override;
 
-  ShortCall(uint8_t hardcodedAddress);
+  ShortCall(uint16_t hardcodedAddress);
 
   private:
     const Call call;
