@@ -55,6 +55,9 @@ uint8_t Mmu::popByteFromStack(Gameboy &gameboy) {
 }
 
 void Mmu::write(Gameboy &gameboy, uint16_t address, uint8_t byte) {
+  if (gameboy.cpu.pc > 0x100)
+    printf("write %04X: %02X\n", address, byte);
+
   if (Mmu::inRom(address)) {
     return;
   }

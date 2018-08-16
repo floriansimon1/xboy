@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     Gui       gui;
     sf::Event event;
     Gameboy   gameboy;
-    Cartridge cartridge("./tests/roms/cpu_instrs.gb");
+    Cartridge cartridge(argv[argc - 1]);
 
     for (auto i = 1; i < argc; i++) {
       if (!strcmp(argv[i], "--debug")) {
